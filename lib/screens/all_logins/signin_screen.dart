@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:draft_screens/screens/owner_only/owner_landingpage.dart'; 
+import 'package:draft_screens/screens/employee_only/employee_dashboard.dart';
 import 'package:draft_screens/screens/all_logins/forgotpass_step1.dart';
 
 class SignInScreen extends StatefulWidget {
@@ -32,9 +33,18 @@ class _SignInScreenState extends State<SignInScreen> {
   // Variable to track if login credentials are incorrect
   bool _showLoginError = false;
   
-  // for checking!!! Hardcoded correct credentials (admin credentials)
-  static const String _correctEmail = 'admin@gmail.com';
-  static const String _correctPassword = 'Pass123!';
+  // for checking!!! Hardcoded correct credentials for both owner and employee
+  // Map structure to store multiple credentials
+  static const Map<String, Map<String, String>> _userCredentials = {
+    'owner@gmail.com': {
+      'password': 'Owner123!',
+      'userType': 'owner',
+    },
+    'employee@gmail.com': {
+      'password': 'Employee123!',
+      'userType': 'employee',
+    }
+  };
   
   // Check if both fields are filled (for enabling/disabling login button)
   bool get _isLoginEnabled => _emailValue.isNotEmpty && _passwordValue.isNotEmpty;
@@ -183,7 +193,7 @@ class _SignInScreenState extends State<SignInScreen> {
               obscuringCharacter: '*',  // Character to show instead of text
               decoration: InputDecoration(
                 label: const Text('Password'),
-                hintText: 'Enter Password',
+                hintText: 'Enter Password',  
                 hintStyle: const TextStyle(
                   color: Colors.black26,
                 ),
@@ -263,13 +273,30 @@ class _SignInScreenState extends State<SignInScreen> {
             child: ElevatedButton(
               // Button is only enabled when both fields have text
               onPressed: _isLoginEnabled ? () {
-                if (_emailValue == _correctEmail && _passwordValue == _correctPassword) {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const EmployeeLandingPage(),
-                    ),
-                  );
+                // Check credentials against hardcoded values for both owner and employee
+                if (_userCredentials.containsKey(_emailValue) &&
+                    _userCredentials[_emailValue]!['password'] == _passwordValue) {
+                  
+                  // Get user type from credentials map
+                  final userType = _userCredentials[_emailValue]!['userType'];
+                  
+                  if (userType == 'owner') {
+                    // Owner goes to OwnerLandingPage
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const OwnerLandingPage(),
+                      ),
+                    );
+                  } else if (userType == 'employee') {
+                    // Employee goes directly to EmployeeDashboardScreen
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const EmployeeDashboardScreen(),
+                      ),
+                    );
+                  }
                 } else {
                   // Credentials are incorrect - show error message
                   setState(() {
