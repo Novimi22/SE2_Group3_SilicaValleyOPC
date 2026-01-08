@@ -16,6 +16,8 @@ class _EmployeeDashboardScreenState extends State<EmployeeDashboardScreen> {
   static const Color largeTextColor = Color(0xFF202020);
   static const Color grayColor = Color(0xFF9E9E9E);
   static const Color appBarColor = Color(0xFFE8B73A);
+  static const Color primaryColor = Color(0xFFCC9304);
+  static const Color dialogBackgroundColor = Color(0xFFFFFBFB);
 
   // hardcoded username
   final String userName = "Juan Dela Cruz";
@@ -168,7 +170,7 @@ class _EmployeeDashboardScreenState extends State<EmployeeDashboardScreen> {
                   // Tiles section
                   Column(
                     children: [
-                      // First tile
+                      // First tile - Create Order (now with dialog)
                       SizedBox(
                         height: 120,
                         child: Center(
@@ -179,11 +181,7 @@ class _EmployeeDashboardScreenState extends State<EmployeeDashboardScreen> {
                               smallText: 'Create',
                               largeText: 'Order',
                               onTap: () {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                    content: Text('Create Order tile tapped'),
-                                  ),
-                                );
+                                _showCreateOrderDialog(context);
                               },
                             ),
                           ),
@@ -371,6 +369,441 @@ class _EmployeeDashboardScreenState extends State<EmployeeDashboardScreen> {
           ],
         ),
       ),
+    );
+  }
+
+  // Show Create Order Dialog (First Dialog)
+  void _showCreateOrderDialog(BuildContext context) {
+    String purchaseOrderNumber = '';
+    bool showError = false;
+    String errorMessage = '';
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return StatefulBuilder(
+          builder: (context, setState) {
+            return Dialog(
+              elevation: 20,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: dialogBackgroundColor,
+                  borderRadius: BorderRadius.circular(20),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.3),
+                      blurRadius: 15,
+                      offset: const Offset(0, 5),
+                    ),
+                  ],
+                ),
+                child: Container(
+                  padding: const EdgeInsets.all(30),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      // Main Title
+                      Text(
+                        'CREATE ORDER',
+                        style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.w900,
+                          color: Colors.black,
+                        ),
+                      ),
+                      
+                      const SizedBox(height: 20),
+                      
+                      // Gray subtitle
+                      SizedBox(
+                        width: 400,
+                        child: Text(
+                          'Enter a non-existing Purchase Order Number',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: grayColor,
+                          ),
+                        ),
+                      ),
+                      
+                      const SizedBox(height: 30),
+                      
+                      // Purchase Order Number Text Field
+                      SizedBox(
+                        width: 400,
+                        child: TextField(
+                          decoration: InputDecoration(
+                            label: const Text('Purchase Order Number'),
+                            hintText: 'Enter Purchase Order Number',
+                            hintStyle: const TextStyle(color: Colors.black26),
+                            border: OutlineInputBorder(
+                              borderSide: const BorderSide(color: Color(0xFF19191B)),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: const BorderSide(color: Color(0xFF19191B)),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            contentPadding: const EdgeInsets.all(16),
+                          ),
+                          onChanged: (value) {
+                            // Automatically capitalize if user types "po" in lowercase
+                            String formattedValue = value;
+                            if (value.toLowerCase().startsWith('po')) {
+                              formattedValue = 'PO' + value.substring(2);
+                            }
+                            
+                            setState(() {
+                              purchaseOrderNumber = formattedValue;
+                              showError = false;
+                              errorMessage = '';
+                            });
+                          },
+                        ),
+                      ),
+                      
+                      // Error message if field is invalid or PO already exists
+                      if (showError && errorMessage.isNotEmpty)
+                        SizedBox(
+                          width: 400,
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 16.0),
+                            child: Row(
+                              children: [
+                                const Icon(
+                                  Icons.error_outline,
+                                  color: Colors.red,
+                                  size: 20,
+                                ),
+                                const SizedBox(width: 8),
+                                Expanded(
+                                  child: Text(
+                                    errorMessage,
+                                    style: TextStyle(
+                                      color: Colors.red,
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      
+                      const SizedBox(height: 30),
+                      
+                      // Next button
+                      SizedBox(
+                        width: 200,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            if (purchaseOrderNumber.isEmpty) {
+                              setState(() {
+                                showError = true;
+                                errorMessage = 'Please enter a Purchase Order Number';
+                              });
+                              return;
+                            }
+
+                            // Validate PO format: PO followed by exactly 8 digits
+                            final RegExp poPattern = RegExp(r'^PO\d{8}$');
+                            if (!poPattern.hasMatch(purchaseOrderNumber)) {
+                              setState(() {
+                                showError = true;
+                                errorMessage = 'Purchase Order Number invalid/already exists';
+                              });
+                              return;
+                            }
+
+                            // TODO: Check if PO already exists in your data
+                            // For now, we'll assume it's valid and proceed to next dialog
+                            Navigator.of(context).pop();
+                            _showCustomerNameDialog(context, purchaseOrderNumber);
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: primaryColor,
+                            foregroundColor: Colors.white,
+                            elevation: 5.0,
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 20,
+                              vertical: 16,
+                            ),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                          ),
+                          child: const Text(
+                            'Next',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
+                      ),
+                      
+                      const SizedBox(height: 15),
+                      
+                      // Cancel button
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        style: TextButton.styleFrom(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 20,
+                            vertical: 12,
+                          ),
+                        ),
+                        child: Text(
+                          'Cancel',
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Colors.black,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            );
+          },
+        );
+      },
+    );
+  }
+
+  // Show Customer Name Dialog (Second Dialog)
+  void _showCustomerNameDialog(BuildContext context, String purchaseOrderNumber) {
+    String customerName = '';
+    bool showError = false;
+    String errorMessage = '';
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return StatefulBuilder(
+          builder: (context, setState) {
+            return Dialog(
+              elevation: 20,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: dialogBackgroundColor,
+                  borderRadius: BorderRadius.circular(20),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.3),
+                      blurRadius: 15,
+                      offset: const Offset(0, 5),
+                    ),
+                  ],
+                ),
+                child: Container(
+                  padding: const EdgeInsets.all(30),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      // Main Title
+                      Text(
+                        'CREATE ORDER',
+                        style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.w900,
+                          color: Colors.black,
+                        ),
+                      ),
+                      
+                      const SizedBox(height: 20),
+                      
+                      // Gray subtitle with dynamic PO number
+                      SizedBox(
+                        width: 400,
+                        child: Text(
+                          'Enter customer\'s name for $purchaseOrderNumber',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: grayColor,
+                          ),
+                        ),
+                      ),
+                      
+                      const SizedBox(height: 30),
+                      
+                      // Customer Name Text Field
+                      SizedBox(
+                        width: 400,
+                        child: TextField(
+                          decoration: InputDecoration(
+                            label: const Text('Customer Name'),
+                            hintText: 'Enter Customer Name',
+                            hintStyle: const TextStyle(color: Colors.black26),
+                            border: OutlineInputBorder(
+                              borderSide: const BorderSide(color: Color(0xFF19191B)),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: const BorderSide(color: Color(0xFF19191B)),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            contentPadding: const EdgeInsets.all(16),
+                          ),
+                          onChanged: (value) {
+                            setState(() {
+                              customerName = value;
+                              showError = false;
+                              errorMessage = '';
+                            });
+                          },
+                        ),
+                      ),
+                      
+                      // Error message if field is empty
+                      if (showError && errorMessage.isNotEmpty)
+                        SizedBox(
+                          width: 400,
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 16.0),
+                            child: Row(
+                              children: [
+                                const Icon(
+                                  Icons.error_outline,
+                                  color: Colors.red,
+                                  size: 20,
+                                ),
+                                const SizedBox(width: 8),
+                                Expanded(
+                                  child: Text(
+                                    errorMessage,
+                                    style: TextStyle(
+                                      color: Colors.red,
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      
+                      const SizedBox(height: 30),
+                      
+                      // Create button
+                      SizedBox(
+                        width: 200,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            if (customerName.isEmpty) {
+                              setState(() {
+                                showError = true;
+                                errorMessage = 'Please enter customer name';
+                              });
+                              return;
+                            }
+
+                            // Close the dialog
+                            Navigator.of(context).pop();
+                            
+                            // Show success snackbar
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Row(
+                                  children: [
+                                    Container(
+                                      width: 30,
+                                      height: 30,
+                                      decoration: const BoxDecoration(
+                                        color: Colors.white,
+                                        shape: BoxShape.circle,
+                                      ),
+                                      child: const Icon(
+                                        Icons.check,
+                                        color: Colors.green,
+                                        size: 20,
+                                      ),
+                                    ),
+                                    const SizedBox(width: 12),
+                                    Expanded(
+                                      child: Text(
+                                        'Successfully created order: $purchaseOrderNumber',
+                                        style: const TextStyle(
+                                          fontSize: 14,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                backgroundColor: Colors.green,
+                              ),
+                            );
+                            
+                            // TODO: Add the order to your data structure here
+                            // TODO: In the future, replace snackbar with full screen dialog
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: primaryColor,
+                            foregroundColor: Colors.white,
+                            elevation: 5.0,
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 20,
+                              vertical: 16,
+                            ),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                          ),
+                          child: const Text(
+                            'Create',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
+                      ),
+                      
+                      const SizedBox(height: 15),
+                      
+                      // Cancel button
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        style: TextButton.styleFrom(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 20,
+                            vertical: 12,
+                          ),
+                        ),
+                        child: Text(
+                          'Cancel',
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Colors.black,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            );
+          },
+        );
+      },
     );
   }
 
