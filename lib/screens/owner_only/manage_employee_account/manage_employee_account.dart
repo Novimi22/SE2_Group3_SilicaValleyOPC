@@ -460,7 +460,7 @@ class _ManageEmployeeAccountScreenState extends State<ManageEmployeeAccountScree
                   
                   const SizedBox(height: 15),
                   
-                  // Cancel button (black text only, no background)
+                  // Cancel button
                   TextButton(
                     onPressed: () {
                       Navigator.of(context).pop();

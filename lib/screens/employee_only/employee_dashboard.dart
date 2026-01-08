@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:draft_screens/screens/all_logins/signin_screen.dart';
+import 'package:draft_screens/screens/employee_only/create_order_dialog.dart';
 
 class EmployeeDashboardScreen extends StatefulWidget {
   const EmployeeDashboardScreen({super.key});
 
   @override
-  State<EmployeeDashboardScreen> createState() => _EmployeeDashboardScreenState();
+  State<EmployeeDashboardScreen> createState() =>
+      _EmployeeDashboardScreenState();
 }
 
 class _EmployeeDashboardScreenState extends State<EmployeeDashboardScreen> {
@@ -75,10 +77,7 @@ class _EmployeeDashboardScreenState extends State<EmployeeDashboardScreen> {
               const Expanded(child: SizedBox()),
 
               // Empty container to balance layout
-              SizedBox(
-                width: 48,
-                height: 80,
-              ),
+              SizedBox(width: 48, height: 80),
             ],
           ),
         ),
@@ -100,7 +99,9 @@ class _EmployeeDashboardScreenState extends State<EmployeeDashboardScreen> {
                     margin: const EdgeInsets.only(bottom: 30),
                     decoration: BoxDecoration(
                       color: Colors.white,
-                      borderRadius: BorderRadius.circular(0), // No rounded corners
+                      borderRadius: BorderRadius.circular(
+                        0,
+                      ), // No rounded corners
                       boxShadow: [
                         BoxShadow(
                           color: Colors.black.withOpacity(0.3),
@@ -149,7 +150,11 @@ class _EmployeeDashboardScreenState extends State<EmployeeDashboardScreen> {
                             ),
                             child: Row(
                               children: [
-                                Icon(Icons.exit_to_app, color: Colors.red, size: 20),
+                                Icon(
+                                  Icons.exit_to_app,
+                                  color: Colors.red,
+                                  size: 20,
+                                ),
                                 const SizedBox(width: 8),
                                 Text(
                                   'Logout',
@@ -225,7 +230,9 @@ class _EmployeeDashboardScreenState extends State<EmployeeDashboardScreen> {
                               onTap: () {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   const SnackBar(
-                                    content: Text('Track Order Record tile tapped'),
+                                    content: Text(
+                                      'Track Order Record tile tapped',
+                                    ),
                                   ),
                                 );
                               },
@@ -415,24 +422,21 @@ class _EmployeeDashboardScreenState extends State<EmployeeDashboardScreen> {
                           color: Colors.black,
                         ),
                       ),
-                      
+
                       const SizedBox(height: 20),
-                      
+
                       // Gray subtitle
                       SizedBox(
                         width: 400,
                         child: Text(
                           'Enter a non-existing Purchase Order Number',
                           textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: 16,
-                            color: grayColor,
-                          ),
+                          style: TextStyle(fontSize: 16, color: grayColor),
                         ),
                       ),
-                      
+
                       const SizedBox(height: 30),
-                      
+
                       // Purchase Order Number Text Field
                       SizedBox(
                         width: 400,
@@ -442,11 +446,15 @@ class _EmployeeDashboardScreenState extends State<EmployeeDashboardScreen> {
                             hintText: 'Enter Purchase Order Number',
                             hintStyle: const TextStyle(color: Colors.black26),
                             border: OutlineInputBorder(
-                              borderSide: const BorderSide(color: Color(0xFF19191B)),
+                              borderSide: const BorderSide(
+                                color: Color(0xFF19191B),
+                              ),
                               borderRadius: BorderRadius.circular(10),
                             ),
                             enabledBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(color: Color(0xFF19191B)),
+                              borderSide: const BorderSide(
+                                color: Color(0xFF19191B),
+                              ),
                               borderRadius: BorderRadius.circular(10),
                             ),
                             contentPadding: const EdgeInsets.all(16),
@@ -457,16 +465,58 @@ class _EmployeeDashboardScreenState extends State<EmployeeDashboardScreen> {
                             if (value.toLowerCase().startsWith('po')) {
                               formattedValue = 'PO' + value.substring(2);
                             }
-                            
+
                             setState(() {
                               purchaseOrderNumber = formattedValue;
                               showError = false;
                               errorMessage = '';
                             });
                           },
+                          // ADD THIS: Handle Enter key press
+                          onSubmitted: (value) {
+                            // Format the value
+                            String formattedValue = value;
+                            if (value.toLowerCase().startsWith('po')) {
+                              formattedValue = 'PO' + value.substring(2);
+                            }
+
+                            // Update the state
+                            setState(() {
+                              purchaseOrderNumber = formattedValue;
+                            });
+
+                            // Perform validation
+                            if (purchaseOrderNumber.isEmpty) {
+                              setState(() {
+                                showError = true;
+                                errorMessage =
+                                    'Please enter a Purchase Order Number';
+                              });
+                              return;
+                            }
+
+                            // Validate PO format: PO followed by exactly 8 digits
+                            final RegExp poPattern = RegExp(r'^PO\d{8}$');
+                            if (!poPattern.hasMatch(purchaseOrderNumber)) {
+                              setState(() {
+                                showError = true;
+                                errorMessage =
+                                    'Purchase Order Number invalid/already exists';
+                              });
+                              return;
+                            }
+
+                            // TODO: Check if PO already exists in your data
+                            // For now, we'll assume it's valid and proceed to next dialog
+                            Navigator.of(context).pop();
+                            _showCustomerNameDialog(
+                              context,
+                              purchaseOrderNumber,
+                            );
+                          },
                         ),
                       ),
-                      
+
                       // Error message if field is invalid or PO already exists
                       if (showError && errorMessage.isNotEmpty)
                         SizedBox(
@@ -494,9 +544,9 @@ class _EmployeeDashboardScreenState extends State<EmployeeDashboardScreen> {
                             ),
                           ),
                         ),
-                      
+
                       const SizedBox(height: 30),
-                      
+
                       // Next button
                       SizedBox(
                         width: 200,
@@ -505,7 +555,8 @@ class _EmployeeDashboardScreenState extends State<EmployeeDashboardScreen> {
                             if (purchaseOrderNumber.isEmpty) {
                               setState(() {
                                 showError = true;
-                                errorMessage = 'Please enter a Purchase Order Number';
+                                errorMessage =
+                                    'Please enter a Purchase Order Number';
                               });
                               return;
                             }
@@ -515,7 +566,8 @@ class _EmployeeDashboardScreenState extends State<EmployeeDashboardScreen> {
                             if (!poPattern.hasMatch(purchaseOrderNumber)) {
                               setState(() {
                                 showError = true;
-                                errorMessage = 'Purchase Order Number invalid/already exists';
+                                errorMessage =
+                                    'Purchase Order Number invalid/already exists';
                               });
                               return;
                             }
@@ -523,7 +575,10 @@ class _EmployeeDashboardScreenState extends State<EmployeeDashboardScreen> {
                             // TODO: Check if PO already exists in your data
                             // For now, we'll assume it's valid and proceed to next dialog
                             Navigator.of(context).pop();
-                            _showCustomerNameDialog(context, purchaseOrderNumber);
+                            _showCustomerNameDialog(
+                              context,
+                              purchaseOrderNumber,
+                            );
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: primaryColor,
@@ -546,9 +601,9 @@ class _EmployeeDashboardScreenState extends State<EmployeeDashboardScreen> {
                           ),
                         ),
                       ),
-                      
+
                       const SizedBox(height: 15),
-                      
+
                       // Cancel button
                       TextButton(
                         onPressed: () {
@@ -581,7 +636,10 @@ class _EmployeeDashboardScreenState extends State<EmployeeDashboardScreen> {
   }
 
   // Show Customer Name Dialog (Second Dialog)
-  void _showCustomerNameDialog(BuildContext context, String purchaseOrderNumber) {
+  void _showCustomerNameDialog(
+    BuildContext context,
+    String purchaseOrderNumber,
+  ) {
     String customerName = '';
     bool showError = false;
     String errorMessage = '';
@@ -623,24 +681,21 @@ class _EmployeeDashboardScreenState extends State<EmployeeDashboardScreen> {
                           color: Colors.black,
                         ),
                       ),
-                      
+
                       const SizedBox(height: 20),
-                      
+
                       // Gray subtitle with dynamic PO number
                       SizedBox(
                         width: 400,
                         child: Text(
                           'Enter customer\'s name for $purchaseOrderNumber',
                           textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: 16,
-                            color: grayColor,
-                          ),
+                          style: TextStyle(fontSize: 16, color: grayColor),
                         ),
                       ),
-                      
+
                       const SizedBox(height: 30),
-                      
+
                       // Customer Name Text Field
                       SizedBox(
                         width: 400,
@@ -650,11 +705,15 @@ class _EmployeeDashboardScreenState extends State<EmployeeDashboardScreen> {
                             hintText: 'Enter Customer Name',
                             hintStyle: const TextStyle(color: Colors.black26),
                             border: OutlineInputBorder(
-                              borderSide: const BorderSide(color: Color(0xFF19191B)),
+                              borderSide: const BorderSide(
+                                color: Color(0xFF19191B),
+                              ),
                               borderRadius: BorderRadius.circular(10),
                             ),
                             enabledBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(color: Color(0xFF19191B)),
+                              borderSide: const BorderSide(
+                                color: Color(0xFF19191B),
+                              ),
                               borderRadius: BorderRadius.circular(10),
                             ),
                             contentPadding: const EdgeInsets.all(16),
@@ -666,9 +725,42 @@ class _EmployeeDashboardScreenState extends State<EmployeeDashboardScreen> {
                               errorMessage = '';
                             });
                           },
+                          // ADD THIS: Handle Enter key press
+                          onSubmitted: (value) {
+                            // Update the state
+                            setState(() {
+                              customerName = value;
+                            });
+
+                            // Perform validation
+                            if (customerName.isEmpty) {
+                              setState(() {
+                                showError = true;
+                                errorMessage = 'Please enter customer name';
+                              });
+                              return;
+                            }
+
+                            // Close the dialog
+                            Navigator.of(context).pop();
+
+                            // Close the dialog and navigate to full-screen order details dialog
+                            Navigator.of(context).pop();
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    CreateOrderFullScreenDialog(
+                                      purchaseOrderNumber: purchaseOrderNumber,
+                                      customerName: customerName,
+                                    ),
+                                fullscreenDialog: true,
+                              ),
+                            );
+                          },
                         ),
                       ),
-                      
+
                       // Error message if field is empty
                       if (showError && errorMessage.isNotEmpty)
                         SizedBox(
@@ -696,9 +788,9 @@ class _EmployeeDashboardScreenState extends State<EmployeeDashboardScreen> {
                             ),
                           ),
                         ),
-                      
+
                       const SizedBox(height: 30),
-                      
+
                       // Create button
                       SizedBox(
                         width: 200,
@@ -714,43 +806,20 @@ class _EmployeeDashboardScreenState extends State<EmployeeDashboardScreen> {
 
                             // Close the dialog
                             Navigator.of(context).pop();
-                            
-                            // Show success snackbar
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: Row(
-                                  children: [
-                                    Container(
-                                      width: 30,
-                                      height: 30,
-                                      decoration: const BoxDecoration(
-                                        color: Colors.white,
-                                        shape: BoxShape.circle,
-                                      ),
-                                      child: const Icon(
-                                        Icons.check,
-                                        color: Colors.green,
-                                        size: 20,
-                                      ),
+
+                            // Close the dialog and navigate to full-screen order details dialog
+                            Navigator.of(context).pop();
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    CreateOrderFullScreenDialog(
+                                      purchaseOrderNumber: purchaseOrderNumber,
+                                      customerName: customerName,
                                     ),
-                                    const SizedBox(width: 12),
-                                    Expanded(
-                                      child: Text(
-                                        'Successfully created order: $purchaseOrderNumber',
-                                        style: const TextStyle(
-                                          fontSize: 14,
-                                          color: Colors.white,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                backgroundColor: Colors.green,
+                                fullscreenDialog: true,
                               ),
                             );
-                            
-                            // TODO: Add the order to your data structure here
-                            // TODO: In the future, replace snackbar with full screen dialog
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: primaryColor,
@@ -773,9 +842,9 @@ class _EmployeeDashboardScreenState extends State<EmployeeDashboardScreen> {
                           ),
                         ),
                       ),
-                      
+
                       const SizedBox(height: 15),
-                      
+
                       // Cancel button
                       TextButton(
                         onPressed: () {

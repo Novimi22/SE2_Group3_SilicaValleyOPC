@@ -20,23 +20,23 @@ class _ManageOrderScreenState extends State<ManageOrderScreen> {
   static const Color tileColor = Color(0xFFF4F4FA);
   static const Color dialogBackgroundColor = Color(0xFFFFFBFB);
   static const Color deleteButtonColor = Color(0xFFB71B1B);
-  
+
   // Filter state
   String _selectedSortBy = 'Creation Date';
   String _selectedSortOrder = 'Ascending';
-  
+
   // Search controller
   final TextEditingController _searchController = TextEditingController();
-  
+
   // Global key for filter icon position
   final GlobalKey _filterIconKey = GlobalKey();
-  
+
   // Track search input for clear button visibility
   bool _showClearButton = false;
-  
+
   // Track expanded state for each order tile
   List<bool> _isExpandedList = [];
-  
+
   // Sample data for orders
   final List<Map<String, String>> _allOrders = List.generate(10, (index) {
     final poNumber = (1000000 + index).toString().padLeft(8, '0');
@@ -48,10 +48,10 @@ class _ManageOrderScreenState extends State<ManageOrderScreen> {
       'netPrice': '\₱${(index + 1) * 1000}.00',
     };
   });
-  
+
   // Filtered data based on search
   List<Map<String, String>> _filteredOrders = [];
-  
+
   @override
   void initState() {
     super.initState();
@@ -61,7 +61,7 @@ class _ManageOrderScreenState extends State<ManageOrderScreen> {
     _applySorting();
     // Initialize expanded states
     _isExpandedList = List.generate(_filteredOrders.length, (index) => false);
-    
+
     // Add listener to search controller
     _searchController.addListener(() {
       setState(() {
@@ -70,11 +70,11 @@ class _ManageOrderScreenState extends State<ManageOrderScreen> {
       });
     });
   }
-  
+
   // Filter data based on search text
   void _filterData() {
     final searchText = _searchController.text.toLowerCase();
-    
+
     if (searchText.isEmpty) {
       setState(() {
         _filteredOrders = List.from(_allOrders);
@@ -84,7 +84,7 @@ class _ManageOrderScreenState extends State<ManageOrderScreen> {
       setState(() {
         _filteredOrders = _allOrders.where((order) {
           return order['poNumber']!.toLowerCase().contains(searchText) ||
-                 order['clientName']!.toLowerCase().contains(searchText);
+              order['clientName']!.toLowerCase().contains(searchText);
         }).toList();
         _applySorting(); // Apply current sorting to filtered data
       });
@@ -92,14 +92,14 @@ class _ManageOrderScreenState extends State<ManageOrderScreen> {
     // Reset expanded states for filtered items
     _updateExpandedStates();
   }
-  
+
   // Update expanded states based on filtered orders
   void _updateExpandedStates() {
     setState(() {
       _isExpandedList = List.generate(_filteredOrders.length, (index) => false);
     });
   }
-  
+
   // Clear search input
   void _clearSearch() {
     _searchController.clear();
@@ -110,13 +110,13 @@ class _ManageOrderScreenState extends State<ManageOrderScreen> {
       _updateExpandedStates();
     });
   }
-  
+
   // Apply sorting based on current filter state
   void _applySorting() {
     setState(() {
       _filteredOrders.sort((a, b) {
         int comparison = 0;
-        
+
         switch (_selectedSortBy) {
           case 'Client Name':
             comparison = a['clientName']!.compareTo(b['clientName']!);
@@ -128,37 +128,42 @@ class _ManageOrderScreenState extends State<ManageOrderScreen> {
             comparison = a['creationDate']!.compareTo(b['creationDate']!);
             break;
           case 'Net Price':
-            double priceA = double.parse(a['netPrice']!.replaceAll('\$', '').replaceAll(',', ''));
-            double priceB = double.parse(b['netPrice']!.replaceAll('\$', '').replaceAll(',', ''));
+            double priceA = double.parse(
+              a['netPrice']!.replaceAll('\$', '').replaceAll(',', ''),
+            );
+            double priceB = double.parse(
+              b['netPrice']!.replaceAll('\$', '').replaceAll(',', ''),
+            );
             comparison = priceA.compareTo(priceB);
             break;
           default:
             comparison = a['creationDate']!.compareTo(b['creationDate']!);
             break;
         }
-        
+
         // Apply sort order
         return _selectedSortOrder == 'Descending' ? -comparison : comparison;
       });
     });
   }
-  
+
   // Show filter dialog
   void _showFilterDialog(BuildContext context) {
     // Local variables for dialog state
     String dialogSortBy = _selectedSortBy;
     String dialogSortOrder = _selectedSortOrder;
-    
+
     // Get the position of the filter icon
-    final renderBox = _filterIconKey.currentContext?.findRenderObject() as RenderBox?;
+    final renderBox =
+        _filterIconKey.currentContext?.findRenderObject() as RenderBox?;
     if (renderBox == null) return;
-    
+
     final position = renderBox.localToGlobal(Offset.zero);
-    
+
     // Calculate position for the dialog
     final double dialogTop = position.dy + renderBox.size.height + 10;
     final double dialogLeft = position.dx - 200;
-    
+
     showDialog(
       context: context,
       barrierColor: Colors.transparent,
@@ -169,9 +174,7 @@ class _ManageOrderScreenState extends State<ManageOrderScreen> {
             Positioned.fill(
               child: GestureDetector(
                 onTap: () => Navigator.of(context).pop(),
-                child: Container(
-                  color: Colors.transparent,
-                ),
+                child: Container(color: Colors.transparent),
               ),
             ),
             // Filter dialog positioned below the icon
@@ -194,14 +197,17 @@ class _ManageOrderScreenState extends State<ManageOrderScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          // Sort By section 
+                          // Sort By section
                           Container(
                             width: double.infinity,
                             padding: const EdgeInsets.all(12),
                             decoration: BoxDecoration(
                               color: lightGrayColor,
                               borderRadius: BorderRadius.circular(8),
-                              border: Border.all(color: darkGrayColor, width: 1),
+                              border: Border.all(
+                                color: darkGrayColor,
+                                width: 1,
+                              ),
                             ),
                             child: Text(
                               'Sort By',
@@ -212,7 +218,7 @@ class _ManageOrderScreenState extends State<ManageOrderScreen> {
                               ),
                             ),
                           ),
-                          
+
                           // Client Name selection row
                           Container(
                             width: double.infinity,
@@ -224,9 +230,9 @@ class _ManageOrderScreenState extends State<ManageOrderScreen> {
                                   'Client Name',
                                   style: TextStyle(
                                     fontSize: 14,
-                                    fontWeight: dialogSortBy == 'Client Name' 
-                                      ? FontWeight.bold 
-                                      : FontWeight.normal,
+                                    fontWeight: dialogSortBy == 'Client Name'
+                                        ? FontWeight.bold
+                                        : FontWeight.normal,
                                     color: Colors.black,
                                   ),
                                 ),
@@ -243,7 +249,7 @@ class _ManageOrderScreenState extends State<ManageOrderScreen> {
                               ],
                             ),
                           ),
-                          
+
                           // Purchase Order Number selection row
                           Container(
                             width: double.infinity,
@@ -255,9 +261,10 @@ class _ManageOrderScreenState extends State<ManageOrderScreen> {
                                   'Purchase Order Number',
                                   style: TextStyle(
                                     fontSize: 14,
-                                    fontWeight: dialogSortBy == 'Purchase Order Number' 
-                                      ? FontWeight.bold 
-                                      : FontWeight.normal,
+                                    fontWeight:
+                                        dialogSortBy == 'Purchase Order Number'
+                                        ? FontWeight.bold
+                                        : FontWeight.normal,
                                     color: Colors.black,
                                   ),
                                 ),
@@ -274,7 +281,7 @@ class _ManageOrderScreenState extends State<ManageOrderScreen> {
                               ],
                             ),
                           ),
-                          
+
                           // Creation Date selection row
                           Container(
                             width: double.infinity,
@@ -286,9 +293,9 @@ class _ManageOrderScreenState extends State<ManageOrderScreen> {
                                   'Creation Date',
                                   style: TextStyle(
                                     fontSize: 14,
-                                    fontWeight: dialogSortBy == 'Creation Date' 
-                                      ? FontWeight.bold 
-                                      : FontWeight.normal,
+                                    fontWeight: dialogSortBy == 'Creation Date'
+                                        ? FontWeight.bold
+                                        : FontWeight.normal,
                                     color: Colors.black,
                                   ),
                                 ),
@@ -305,7 +312,7 @@ class _ManageOrderScreenState extends State<ManageOrderScreen> {
                               ],
                             ),
                           ),
-                          
+
                           // Net Price selection row
                           Container(
                             width: double.infinity,
@@ -317,9 +324,9 @@ class _ManageOrderScreenState extends State<ManageOrderScreen> {
                                   'Net Price',
                                   style: TextStyle(
                                     fontSize: 14,
-                                    fontWeight: dialogSortBy == 'Net Price' 
-                                      ? FontWeight.bold 
-                                      : FontWeight.normal,
+                                    fontWeight: dialogSortBy == 'Net Price'
+                                        ? FontWeight.bold
+                                        : FontWeight.normal,
                                     color: Colors.black,
                                   ),
                                 ),
@@ -336,17 +343,20 @@ class _ManageOrderScreenState extends State<ManageOrderScreen> {
                               ],
                             ),
                           ),
-                          
+
                           const SizedBox(height: 20),
-                          
-                          // Sort Order section - Only title in gray box
+
+                          // Sort Order section 
                           Container(
                             width: double.infinity,
                             padding: const EdgeInsets.all(12),
                             decoration: BoxDecoration(
                               color: lightGrayColor,
                               borderRadius: BorderRadius.circular(8),
-                              border: Border.all(color: darkGrayColor, width: 1),
+                              border: Border.all(
+                                color: darkGrayColor,
+                                width: 1,
+                              ),
                             ),
                             child: Text(
                               'Sort Order',
@@ -357,7 +367,7 @@ class _ManageOrderScreenState extends State<ManageOrderScreen> {
                               ),
                             ),
                           ),
-                          
+
                           // Ascending selection row
                           Container(
                             width: double.infinity,
@@ -369,9 +379,9 @@ class _ManageOrderScreenState extends State<ManageOrderScreen> {
                                   'Ascending',
                                   style: TextStyle(
                                     fontSize: 14,
-                                    fontWeight: dialogSortOrder == 'Ascending' 
-                                      ? FontWeight.bold 
-                                      : FontWeight.normal,
+                                    fontWeight: dialogSortOrder == 'Ascending'
+                                        ? FontWeight.bold
+                                        : FontWeight.normal,
                                     color: Colors.black,
                                   ),
                                 ),
@@ -388,7 +398,7 @@ class _ManageOrderScreenState extends State<ManageOrderScreen> {
                               ],
                             ),
                           ),
-                          
+
                           // Descending selection row
                           Container(
                             width: double.infinity,
@@ -400,9 +410,9 @@ class _ManageOrderScreenState extends State<ManageOrderScreen> {
                                   'Descending',
                                   style: TextStyle(
                                     fontSize: 14,
-                                    fontWeight: dialogSortOrder == 'Descending' 
-                                      ? FontWeight.bold 
-                                      : FontWeight.normal,
+                                    fontWeight: dialogSortOrder == 'Descending'
+                                        ? FontWeight.bold
+                                        : FontWeight.normal,
                                     color: Colors.black,
                                   ),
                                 ),
@@ -419,9 +429,9 @@ class _ManageOrderScreenState extends State<ManageOrderScreen> {
                               ],
                             ),
                           ),
-                          
+
                           const SizedBox(height: 20),
-                          
+
                           // Apply button - FIXED: Proper logic implementation
                           SizedBox(
                             width: double.infinity,
@@ -432,17 +442,19 @@ class _ManageOrderScreenState extends State<ManageOrderScreen> {
                                   _selectedSortBy = dialogSortBy;
                                   _selectedSortOrder = dialogSortOrder;
                                 });
-                                
+
                                 // Apply sorting to current filtered data
                                 _applySorting();
-                                
+
                                 // Close dialog
                                 Navigator.of(context).pop();
                               },
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: primaryColor,
                                 foregroundColor: Colors.white,
-                                padding: const EdgeInsets.symmetric(vertical: 12),
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 12,
+                                ),
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(8),
                                 ),
@@ -469,256 +481,281 @@ class _ManageOrderScreenState extends State<ManageOrderScreen> {
     );
   }
 
-// Show Delete Confirmation Dialog
-void _showDeleteConfirmationDialog(BuildContext context, String poNumber, String clientName) {
-  String purchaseOrderNumber = '';
-  bool showError = false;
-  String errorMessage = '';
+  // Show Delete Confirmation Dialog
+  void _showDeleteConfirmationDialog(
+    BuildContext context,
+    String poNumber,
+    String clientName,
+  ) {
+    String purchaseOrderNumber = '';
+    bool showError = false;
+    String errorMessage = '';
 
-  showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return StatefulBuilder(
-        builder: (context, setState) {
-          return Dialog(
-            elevation: 20,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(20),
-            ),
-            child: Container(
-              decoration: BoxDecoration(
-                color: dialogBackgroundColor,
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return StatefulBuilder(
+          builder: (context, setState) {
+            return Dialog(
+              elevation: 20,
+              shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(20),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.3),
-                    blurRadius: 15,
-                    offset: const Offset(0, 5),
-                  ),
-                ],
               ),
               child: Container(
-                padding: const EdgeInsets.all(30),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    // Main Title
-                    Text(
-                      'CONFIRM DELETE?',
-                      style: TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.w900,
-                        color: Colors.black,
-                      ),
-                    ),
-                    
-                    const SizedBox(height: 20),
-                    
-                    // Gray subtitle
-                    SizedBox(
-                      width: 400,
-                      child: Text(
-                        'Re-enter Purchase Order Number to confirm deletion',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: textGrayColor,
-                        ),
-                      ),
-                    ),
-                    
-                    const SizedBox(height: 30),
-                    
-                    // Purchase Order Number Text Field
-                    SizedBox(
-                      width: 400,
-                      child: TextField(
-                        decoration: InputDecoration(
-                          label: const Text('Purchase Order Number'),
-                          hintText: 'Enter Purchase Order Number',
-                          hintStyle: const TextStyle(color: Colors.black26),
-                          border: OutlineInputBorder(
-                            borderSide: const BorderSide(color: Color(0xFF19191B)),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: const BorderSide(color: Color(0xFF19191B)),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          contentPadding: const EdgeInsets.all(16),
-                        ),
-                        onChanged: (value) {
-                          setState(() {
-                            purchaseOrderNumber = value;
-                            showError = false;
-                            errorMessage = '';
-                          });
-                        },
-                      ),
-                    ),
-                    
-                    // Error message if field is empty on confirm or incorrect PO number
-                    if (showError && errorMessage.isNotEmpty)
-                      SizedBox(
-                        width: 400,
-                        child: Padding(
-                          padding: const EdgeInsets.only(top: 16.0),
-                          child: Row(
-                            children: [
-                              const Icon(
-                                Icons.error_outline,
-                                color: Colors.red,
-                                size: 20,
-                              ),
-                              const SizedBox(width: 8),
-                              Expanded(
-                                child: Text(
-                                  errorMessage,
-                                  style: TextStyle(
-                                    color: Colors.red,
-                                    fontSize: 14,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    
-                    const SizedBox(height: 30),
-                    
-                    // Confirm button
-                    SizedBox(
-                      width: 200,
-                      child: ElevatedButton(
-                        onPressed: () {
-                          if (purchaseOrderNumber.isEmpty) {
-                            setState(() {
-                              showError = true;
-                              errorMessage = 'Please enter the Purchase Order Number';
-                            });
-                            return;
-                          }
-
-                          // Check if entered PO number matches
-                          if (purchaseOrderNumber != poNumber) {
-                            setState(() {
-                              showError = true;
-                              errorMessage = 'Purchase Order Number does not match';
-                            });
-                            return;
-                          }
-
-                          // Proceed with deletion
-                          Navigator.of(context).pop();
-                          _performDeleteOrder(poNumber, clientName);
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: primaryColor,
-                          foregroundColor: Colors.white,
-                          elevation: 5.0,
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 20,
-                            vertical: 16,
-                          ),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                        ),
-                        child: const Text(
-                          'Confirm',
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                      ),
-                    ),
-                    
-                    const SizedBox(height: 15),
-                    
-                    // Cancel button
-                    TextButton(
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                      style: TextButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 20,
-                          vertical: 12,
-                        ),
-                      ),
-                      child: Text(
-                        'Cancel',
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: Colors.black,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
+                decoration: BoxDecoration(
+                  color: dialogBackgroundColor,
+                  borderRadius: BorderRadius.circular(20),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.3),
+                      blurRadius: 15,
+                      offset: const Offset(0, 5),
                     ),
                   ],
                 ),
+                child: Container(
+                  padding: const EdgeInsets.all(30),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      // Main Title
+                      Text(
+                        'CONFIRM DELETE?',
+                        style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.w900,
+                          color: Colors.black,
+                        ),
+                      ),
+
+                      const SizedBox(height: 20),
+
+                      // Gray subtitle
+                      SizedBox(
+                        width: 400,
+                        child: Text(
+                          'Re-enter Purchase Order Number to confirm deletion',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(fontSize: 16, color: textGrayColor),
+                        ),
+                      ),
+
+                      const SizedBox(height: 30),
+
+                      // Purchase Order Number Text Field
+                      SizedBox(
+                        width: 400,
+                        child: TextField(
+                          decoration: InputDecoration(
+                            label: const Text('Purchase Order Number'),
+                            hintText: 'Enter Purchase Order Number',
+                            hintStyle: const TextStyle(color: Colors.black26),
+                            border: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                color: Color(0xFF19191B),
+                              ),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                color: Color(0xFF19191B),
+                              ),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            contentPadding: const EdgeInsets.all(16),
+                          ),
+                          onChanged: (value) {
+                            setState(() {
+                              purchaseOrderNumber = value;
+                              showError = false;
+                              errorMessage = '';
+                            });
+                          },
+                          // Handle Enter key press
+                          onSubmitted: (value) {
+                            // runs when user presses Enter/Return key
+                            if (value.isEmpty) {
+                              setState(() {
+                                showError = true;
+                                errorMessage =
+                                    'Please enter the Purchase Order Number';
+                              });
+                              return;
+                            }
+
+                            if (value != poNumber) {
+                              setState(() {
+                                showError = true;
+                                errorMessage =
+                                    'Purchase Order Number does not match';
+                              });
+                              return;
+                            }
+
+                            // If validation passes, proceed with deletion
+                            Navigator.of(context).pop();
+                            _performDeleteOrder(poNumber, clientName);
+                          },
+                        ),
+                      ),
+
+                      // Error message if field is empty on confirm or incorrect PO number
+                      if (showError && errorMessage.isNotEmpty)
+                        SizedBox(
+                          width: 400,
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 16.0),
+                            child: Row(
+                              children: [
+                                const Icon(
+                                  Icons.error_outline,
+                                  color: Colors.red,
+                                  size: 20,
+                                ),
+                                const SizedBox(width: 8),
+                                Expanded(
+                                  child: Text(
+                                    errorMessage,
+                                    style: TextStyle(
+                                      color: Colors.red,
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+
+                      const SizedBox(height: 30),
+
+                      // Confirm button
+                      SizedBox(
+                        width: 200,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            if (purchaseOrderNumber.isEmpty) {
+                              setState(() {
+                                showError = true;
+                                errorMessage =
+                                    'Please enter the Purchase Order Number';
+                              });
+                              return;
+                            }
+
+                            // Check if entered PO number matches
+                            if (purchaseOrderNumber != poNumber) {
+                              setState(() {
+                                showError = true;
+                                errorMessage =
+                                    'Purchase Order Number does not match';
+                              });
+                              return;
+                            }
+
+                            // Proceed with deletion
+                            Navigator.of(context).pop();
+                            _performDeleteOrder(poNumber, clientName);
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: primaryColor,
+                            foregroundColor: Colors.white,
+                            elevation: 5.0,
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 20,
+                              vertical: 16,
+                            ),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                          ),
+                          child: const Text(
+                            'Confirm',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
+                      ),
+
+                      const SizedBox(height: 15),
+
+                      // Cancel button
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        style: TextButton.styleFrom(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 20,
+                            vertical: 12,
+                          ),
+                        ),
+                        child: Text(
+                          'Cancel',
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Colors.black,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ),
-            ),
-          );
-        },
-      );
-    },
-  );
-}
+            );
+          },
+        );
+      },
+    );
+  }
 
-// Perform actual order deletion
-void _performDeleteOrder(String poNumber, String clientName) {
-  // Remove order from list
-  setState(() {
-    _allOrders.removeWhere((order) => order['poNumber'] == poNumber);
-    _filteredOrders.removeWhere((order) => order['poNumber'] == poNumber);
-    _updateExpandedStates();
-  });
+  // Perform actual order deletion
+  void _performDeleteOrder(String poNumber, String clientName) {
+    // Remove order from list
+    setState(() {
+      _allOrders.removeWhere((order) => order['poNumber'] == poNumber);
+      _filteredOrders.removeWhere((order) => order['poNumber'] == poNumber);
+      _updateExpandedStates();
+    });
 
-  // Show success message
-  ScaffoldMessenger.of(context).showSnackBar(
-    SnackBar(
-      content: Row(
-        children: [
-          Container(
-            width: 30,
-            height: 30,
-            decoration: const BoxDecoration(
-              color: Colors.white,
-              shape: BoxShape.circle,
-            ),
-            child: const Icon(
-              Icons.check,
-              color: Colors.green,
-              size: 20,
-            ),
-          ),
-          const SizedBox(width: 12),
-          Expanded(
-            child: Text(
-              'Successfully deleted order: $poNumber ($clientName)',
-              style: const TextStyle(
-                fontSize: 14,
+    // Show success message
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Row(
+          children: [
+            Container(
+              width: 30,
+              height: 30,
+              decoration: const BoxDecoration(
                 color: Colors.white,
+                shape: BoxShape.circle,
+              ),
+              child: const Icon(Icons.check, color: Colors.green, size: 20),
+            ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Text(
+                'Successfully deleted order: $poNumber ($clientName)',
+                style: const TextStyle(fontSize: 14, color: Colors.white),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
+        backgroundColor: Colors.green,
       ),
-      backgroundColor: Colors.green,
-    ),
-  );
-}
-  
+    );
+  }
+
   @override
   void dispose() {
     _searchController.dispose();
     super.dispose();
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -738,7 +775,7 @@ void _performDeleteOrder(String poNumber, String clientName) {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              // Back button - centered
+              // Back button
               Container(
                 height: 80,
                 alignment: Alignment.center,
@@ -811,7 +848,8 @@ void _performDeleteOrder(String poNumber, String clientName) {
                                 child: TextField(
                                   controller: _searchController,
                                   decoration: InputDecoration(
-                                    hintText: 'Search by PO number or client name...',
+                                    hintText:
+                                        'Search by PO number or client name...',
                                     hintStyle: TextStyle(color: textGrayColor),
                                     border: InputBorder.none,
                                     contentPadding: EdgeInsets.zero,
@@ -844,9 +882,9 @@ void _performDeleteOrder(String poNumber, String clientName) {
                           ),
                         ),
                       ),
-                      
+
                       const SizedBox(width: 12),
-                      
+
                       // Filter search icon button
                       Container(
                         key: _filterIconKey,
@@ -877,7 +915,7 @@ void _performDeleteOrder(String poNumber, String clientName) {
                 ),
               ),
             ),
-            
+
             // Orders list (scrollable)
             Expanded(
               child: Center(
@@ -902,13 +940,13 @@ void _performDeleteOrder(String poNumber, String clientName) {
                               ),
                             ),
                           ),
-                        
+
                         // Generate order tiles
                         ..._filteredOrders.asMap().entries.map((entry) {
                           final index = entry.key;
                           final order = entry.value;
                           final isExpanded = _isExpandedList[index];
-                          
+
                           return Container(
                             width: double.infinity,
                             decoration: BoxDecoration(
@@ -936,7 +974,8 @@ void _performDeleteOrder(String poNumber, String clientName) {
                                     // Order info
                                     Expanded(
                                       child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: [
                                           // PO Number (bold, black, larger text)
                                           Text(
@@ -948,7 +987,7 @@ void _performDeleteOrder(String poNumber, String clientName) {
                                             ),
                                           ),
                                           const SizedBox(height: 8),
-                                          
+
                                           // Last Updated (gray, smaller text)
                                           Text(
                                             'Last Updated: ${order['lastUpdated']!}',
@@ -960,14 +999,16 @@ void _performDeleteOrder(String poNumber, String clientName) {
                                         ],
                                       ),
                                     ),
-                                    
+
                                     // Expand button (centered vertically)
                                     Container(
                                       height: 40,
                                       width: 40,
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(20),
-                                        border: Border.all(color: darkGrayColor),
+                                        border: Border.all(
+                                          color: darkGrayColor,
+                                        ),
                                       ),
                                       child: Material(
                                         color: Colors.transparent,
@@ -975,12 +1016,17 @@ void _performDeleteOrder(String poNumber, String clientName) {
                                         child: InkWell(
                                           onTap: () {
                                             setState(() {
-                                              _isExpandedList[index] = !isExpanded;
+                                              _isExpandedList[index] =
+                                                  !isExpanded;
                                             });
                                           },
-                                          borderRadius: BorderRadius.circular(20),
+                                          borderRadius: BorderRadius.circular(
+                                            20,
+                                          ),
                                           child: Icon(
-                                            isExpanded ? Icons.expand_less : Icons.expand_more,
+                                            isExpanded
+                                                ? Icons.expand_less
+                                                : Icons.expand_more,
                                             color: darkGrayColor,
                                             size: 24,
                                           ),
@@ -989,13 +1035,14 @@ void _performDeleteOrder(String poNumber, String clientName) {
                                     ),
                                   ],
                                 ),
-                                
+
                                 // Expanded content (shown when expanded)
                                 if (isExpanded)
                                   Padding(
                                     padding: const EdgeInsets.only(top: 20),
                                     child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
                                         // Additional order details
                                         Row(
@@ -1018,7 +1065,7 @@ void _performDeleteOrder(String poNumber, String clientName) {
                                           ],
                                         ),
                                         const SizedBox(height: 4),
-                                        
+
                                         Row(
                                           children: [
                                             Text(
@@ -1039,7 +1086,7 @@ void _performDeleteOrder(String poNumber, String clientName) {
                                           ],
                                         ),
                                         const SizedBox(height: 4),
-                                        
+
                                         Row(
                                           children: [
                                             Text(
@@ -1059,16 +1106,21 @@ void _performDeleteOrder(String poNumber, String clientName) {
                                             ),
                                           ],
                                         ),
-                                        
+
                                         // Action buttons (Delete, Update, View)
                                         Padding(
-                                          padding: const EdgeInsets.only(top: 10),
+                                          padding: const EdgeInsets.only(
+                                            top: 10,
+                                          ),
                                           child: Row(
-                                            mainAxisAlignment: MainAxisAlignment.end,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.end,
                                             children: [
                                               // Delete button
                                               Container(
-                                                margin: const EdgeInsets.only(left: 12),
+                                                margin: const EdgeInsets.only(
+                                                  left: 12,
+                                                ),
                                                 child: TextButton(
                                                   onPressed: () {
                                                     _showDeleteConfirmationDialog(
@@ -1078,64 +1130,74 @@ void _performDeleteOrder(String poNumber, String clientName) {
                                                     );
                                                   },
                                                   style: TextButton.styleFrom(
-                                                    padding: const EdgeInsets.symmetric(
-                                                      horizontal: 20,
-                                                      vertical: 8,
-                                                    ),
+                                                    padding:
+                                                        const EdgeInsets.symmetric(
+                                                          horizontal: 20,
+                                                          vertical: 8,
+                                                        ),
                                                   ),
                                                   child: Text(
                                                     'Delete',
                                                     style: TextStyle(
                                                       fontSize: 16,
-                                                      fontWeight: FontWeight.bold,
+                                                      fontWeight:
+                                                          FontWeight.bold,
                                                       color: primaryColor,
                                                     ),
                                                   ),
                                                 ),
                                               ),
-                                              
+
                                               // Update button
                                               Container(
-                                                margin: const EdgeInsets.only(left: 12),
+                                                margin: const EdgeInsets.only(
+                                                  left: 12,
+                                                ),
                                                 child: TextButton(
                                                   onPressed: () {
                                                     // Handle update action
                                                   },
                                                   style: TextButton.styleFrom(
-                                                    padding: const EdgeInsets.symmetric(
-                                                      horizontal: 20,
-                                                      vertical: 8,
-                                                    ),
+                                                    padding:
+                                                        const EdgeInsets.symmetric(
+                                                          horizontal: 20,
+                                                          vertical: 8,
+                                                        ),
                                                   ),
                                                   child: Text(
                                                     'Update',
                                                     style: TextStyle(
                                                       fontSize: 16,
-                                                      fontWeight: FontWeight.bold,
+                                                      fontWeight:
+                                                          FontWeight.bold,
                                                       color: primaryColor,
                                                     ),
                                                   ),
                                                 ),
                                               ),
-                                              
+
                                               // View button
                                               Container(
-                                                margin: const EdgeInsets.only(left: 12),
+                                                margin: const EdgeInsets.only(
+                                                  left: 12,
+                                                ),
                                                 child: TextButton(
                                                   onPressed: () {
                                                     // Handle view action
                                                   },
                                                   style: TextButton.styleFrom(
-                                                    padding: const EdgeInsets.symmetric(
-                                                      horizontal: 20,
-                                                      vertical: 8,
-                                                    ),
+                                                    padding:
+                                                        const EdgeInsets.symmetric(
+                                                          horizontal: 20,
+                                                          vertical: 8,
+                                                        ),
                                                   ),
                                                   child: Text(
                                                     'View',
                                                     style: TextStyle(
                                                       fontSize: 16,
-                                                      fontWeight: FontWeight.bold,
+                                                      fontWeight:
+                                                          FontWeight.bold,
                                                       color: primaryColor,
                                                     ),
                                                   ),
@@ -1151,7 +1213,7 @@ void _performDeleteOrder(String poNumber, String clientName) {
                             ),
                           );
                         }).toList(),
-                        
+
                         // END indicator (outside the last tile)
                         if (_filteredOrders.isNotEmpty)
                           Container(

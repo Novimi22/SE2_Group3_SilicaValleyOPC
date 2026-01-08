@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:draft_screens/screens/owner_only/owner_dashboard.dart';
 
-class EmployeeLandingPage extends StatefulWidget {
-  const EmployeeLandingPage({super.key});
+class OwnerLandingPage extends StatefulWidget {
+  const OwnerLandingPage({super.key});
 
   @override
-  State<EmployeeLandingPage> createState() => _EmployeeLandingPageState();
+  State<OwnerLandingPage> createState() => _OwnerLandingPageState();
 }
 
-class _EmployeeLandingPageState extends State<EmployeeLandingPage> {
+class _OwnerLandingPageState extends State<OwnerLandingPage> {
   // Color constants as specified
   static const Color circleColor = Color(0xFFFFD15E); // Circle color
   static const Color tileColor = Color(0xFFFFEAB5); // Tile background color
