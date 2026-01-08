@@ -492,43 +492,44 @@ class _CreateOrderFullScreenDialogState
                             ),
                           ),
 
-                          // Add Item button 
-                          Material(
-                            color: primaryColor,
-                            borderRadius: BorderRadius.circular(8),
-                            child: InkWell(
-                              onTap: () {
-                                // Save any rows that are being edited before adding new item
-                                _saveAllEditingRows();
-                                _addNewItem();
-                              },
+                          // Add Item button - only show if not confirmed
+                          if (!isConfirmed)
+                            Material(
+                              color: primaryColor,
                               borderRadius: BorderRadius.circular(8),
-                              child: Container(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 10,
-                                  vertical: 6,
-                                ),
-                                child: Row(
-                                  children: [
-                                    const Icon(
-                                      Icons.add,
-                                      size: 20,
-                                      color: Colors.white,
-                                    ),
-                                    const SizedBox(width: 8),
-                                    Text(
-                                      'Add Item',
-                                      style: TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w600,
+                              child: InkWell(
+                                onTap: () {
+                                  // Save any rows that are being edited before adding new item
+                                  _saveAllEditingRows();
+                                  _addNewItem();
+                                },
+                                borderRadius: BorderRadius.circular(8),
+                                child: Container(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 10,
+                                    vertical: 6,
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      const Icon(
+                                        Icons.add,
+                                        size: 20,
                                         color: Colors.white,
                                       ),
-                                    ),
-                                  ],
+                                      const SizedBox(width: 8),
+                                      Text(
+                                        'Add Item',
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w600,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
                         ],
                       ),
 
@@ -579,10 +580,12 @@ class _CreateOrderFullScreenDialogState
                                           'Unit Price',
                                           compact: true,
                                         ),
-                                        _buildTableHeaderCell(
-                                          'Actions',
-                                          compact: true,
-                                        ),
+                                        // Only show Actions header if not confirmed
+                                        if (!isConfirmed)
+                                          _buildTableHeaderCell(
+                                            'Actions',
+                                            compact: true,
+                                          ),
                                       ],
                                     ),
                                   ],
@@ -621,7 +624,8 @@ class _CreateOrderFullScreenDialogState
                                           0: FlexColumnWidth(2.5), // Name
                                           1: FlexColumnWidth(0.8), // Qty
                                           2: FlexColumnWidth(0.8), // UoM
-                                          3: FlexColumnWidth(1.2), // Unit Price
+                                          3: FlexColumnWidth(
+                                              1.2), // Unit Price
                                           4: FixedColumnWidth(80), // Actions
                                         },
                                         defaultVerticalAlignment:
@@ -640,15 +644,13 @@ class _CreateOrderFullScreenDialogState
                                                             controllers['name'],
                                                         decoration:
                                                             const InputDecoration(
-                                                              hintText:
-                                                                  'Enter item name',
-                                                              border:
-                                                                  InputBorder
-                                                                      .none,
-                                                              contentPadding:
-                                                                  EdgeInsets
-                                                                      .zero,
-                                                            ),
+                                                          hintText:
+                                                              'Enter item name',
+                                                          border:
+                                                              InputBorder.none,
+                                                          contentPadding:
+                                                              EdgeInsets.zero,
+                                                        ),
                                                         style: TextStyle(
                                                           fontSize: 14,
                                                           color: Colors.black,
@@ -678,19 +680,18 @@ class _CreateOrderFullScreenDialogState
                                                         controller:
                                                             controllers['qty'],
                                                         keyboardType:
-                                                            TextInputType.numberWithOptions(
-                                                              decimal: true,
-                                                            ),
+                                                            TextInputType
+                                                                .numberWithOptions(
+                                                          decimal: true,
+                                                        ),
                                                         decoration:
                                                             const InputDecoration(
-                                                              hintText: 'Qty',
-                                                              border:
-                                                                  InputBorder
-                                                                      .none,
-                                                              contentPadding:
-                                                                  EdgeInsets
-                                                                      .zero,
-                                                            ),
+                                                          hintText: 'Qty',
+                                                          border:
+                                                              InputBorder.none,
+                                                          contentPadding:
+                                                              EdgeInsets.zero,
+                                                        ),
                                                         style: TextStyle(
                                                           fontSize: 14,
                                                           color: Colors.black,
@@ -724,14 +725,12 @@ class _CreateOrderFullScreenDialogState
                                                             controllers['uom'],
                                                         decoration:
                                                             const InputDecoration(
-                                                              hintText: 'UoM',
-                                                              border:
-                                                                  InputBorder
-                                                                      .none,
-                                                              contentPadding:
-                                                                  EdgeInsets
-                                                                      .zero,
-                                                            ),
+                                                          hintText: 'UoM',
+                                                          border:
+                                                              InputBorder.none,
+                                                          contentPadding:
+                                                              EdgeInsets.zero,
+                                                        ),
                                                         style: TextStyle(
                                                           fontSize: 14,
                                                           color: Colors.black,
@@ -758,22 +757,21 @@ class _CreateOrderFullScreenDialogState
                                                 ),
                                                 child: isEditing
                                                     ? TextField(
-                                                        controller:
-                                                            controllers['unitPrice'],
+                                                        controller: controllers[
+                                                            'unitPrice'],
                                                         keyboardType:
-                                                            TextInputType.numberWithOptions(
-                                                              decimal: true,
-                                                            ),
+                                                            TextInputType
+                                                                .numberWithOptions(
+                                                          decimal: true,
+                                                        ),
                                                         decoration:
                                                             const InputDecoration(
-                                                              hintText: 'Price',
-                                                              border:
-                                                                  InputBorder
-                                                                      .none,
-                                                              contentPadding:
-                                                                  EdgeInsets
-                                                                      .zero,
-                                                            ),
+                                                          hintText: 'Price',
+                                                          border:
+                                                              InputBorder.none,
+                                                          contentPadding:
+                                                              EdgeInsets.zero,
+                                                        ),
                                                         style: TextStyle(
                                                           fontSize: 14,
                                                           color: Colors.black,
@@ -796,64 +794,65 @@ class _CreateOrderFullScreenDialogState
                                                       ),
                                               ),
 
-                                              // Actions cell
-                                              Padding(
-                                                padding: const EdgeInsets.all(
-                                                  8,
-                                                ),
-                                                child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.center,
-                                                  children: [
-                                                    // Pencil icon - disabled when editing, enabled when saved
-                                                    IconButton(
-                                                      onPressed: isEditing
-                                                          ? null // Disabled during editing
-                                                          : () {
-                                                              _editItem(
-                                                                index,
-                                                              ); // Click to start editing
-                                                            },
-                                                      icon: Icon(
-                                                        Icons.edit,
-                                                        color: isEditing
-                                                            ? iconGrayColor
+                                              // Actions cell - only show if not confirmed
+                                              if (!isConfirmed)
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(8),
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      // Pencil icon - disabled when editing, enabled when saved
+                                                      IconButton(
+                                                        onPressed: isEditing
+                                                            ? null // Disabled during editing
+                                                            : () {
+                                                                _editItem(
+                                                                  index,
+                                                                ); // Click to start editing
+                                                              },
+                                                        icon: Icon(
+                                                          Icons.edit,
+                                                          color: isEditing
+                                                              ? iconGrayColor
                                                                   .withOpacity(
                                                                     0.3,
                                                                   )
                                                             : iconGrayColor,
-                                                        size: 18,
+                                                          size: 18,
+                                                        ),
+                                                        padding: EdgeInsets.zero,
+                                                        constraints:
+                                                            const BoxConstraints(
+                                                          minWidth: 24,
+                                                          minHeight: 24,
+                                                        ),
                                                       ),
-                                                      padding: EdgeInsets.zero,
-                                                      constraints:
-                                                          const BoxConstraints(
-                                                            minWidth: 24,
-                                                            minHeight: 24,
-                                                          ),
-                                                    ),
 
-                                                    const SizedBox(width: 4),
+                                                      const SizedBox(width: 4),
 
-                                                    // Trash bin icon (always enabled)
-                                                    IconButton(
-                                                      onPressed: () {
-                                                        _deleteItem(index);
-                                                      },
-                                                      icon: Icon(
-                                                        Icons.delete_outline,
-                                                        color: iconGrayColor,
-                                                        size: 18,
+                                                      // Trash bin icon (always enabled)
+                                                      IconButton(
+                                                        onPressed: () {
+                                                          _deleteItem(index);
+                                                        },
+                                                        icon: Icon(
+                                                          Icons.delete_outline,
+                                                          color: iconGrayColor,
+                                                          size: 18,
+                                                        ),
+                                                        padding: EdgeInsets.zero,
+                                                        constraints:
+                                                            const BoxConstraints(
+                                                          minWidth: 24,
+                                                          minHeight: 24,
+                                                        ),
                                                       ),
-                                                      padding: EdgeInsets.zero,
-                                                      constraints:
-                                                          const BoxConstraints(
-                                                            minWidth: 24,
-                                                            minHeight: 24,
-                                                          ),
-                                                    ),
-                                                  ],
+                                                    ],
+                                                  ),
                                                 ),
-                                              ),
                                             ],
                                           ),
                                         ],
@@ -872,7 +871,9 @@ class _CreateOrderFullScreenDialogState
                                   border: Border.all(color: borderColor),
                                 ),
                                 child: Text(
-                                  'No items added. Click "Add Item" to start.',
+                                  isConfirmed
+                                      ? 'No items in this order.'
+                                      : 'No items added. Click "Add Item" to start.',
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     fontSize: 16,
