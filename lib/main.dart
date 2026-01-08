@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:draft_screens/screens/employee_only/employee_dashboard.dart';
+import 'package:draft_screens/screens/manage_order/gen_manage_order.dart';
+
 
 void main() {
   runApp(const MyApp());
@@ -19,7 +20,7 @@ class MyApp extends StatelessWidget {
           Theme.of(context).textTheme, // Inherit other styles
       ),
     ),
-      home: const EmployeeDashboardScreen(),
+      home: const ManageOrderScreen(),
     );
   }
 }

@@ -1,6 +1,8 @@
 // TODO: Make it parameter-based (owner and employee)
 
 import 'package:flutter/material.dart';
+import 'package:draft_screens/screens/manage_order/update_order.dart';
+
 
 class ManageOrderScreen extends StatefulWidget {
   const ManageOrderScreen({super.key});
@@ -346,7 +348,7 @@ class _ManageOrderScreenState extends State<ManageOrderScreen> {
 
                           const SizedBox(height: 20),
 
-                          // Sort Order section 
+                          // Sort Order section
                           Container(
                             width: double.infinity,
                             padding: const EdgeInsets.all(12),
@@ -1155,7 +1157,22 @@ class _ManageOrderScreenState extends State<ManageOrderScreen> {
                                                 ),
                                                 child: TextButton(
                                                   onPressed: () {
-                                                    // Handle update action
+                                                    // Navigate to UpdateOrderScreen
+                                                    Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                        builder: (context) => UpdateOrderScreen(
+                                                          purchaseOrderNumber:
+                                                              order['poNumber']!,
+                                                          customerName:
+                                                              order['clientName']!,
+                                                          creationDate:
+                                                              order['creationDate']!,
+                                                          netPrice:
+                                                              order['netPrice']!,
+                                                        ),
+                                                      ),
+                                                    );
                                                   },
                                                   style: TextButton.styleFrom(
                                                     padding:
