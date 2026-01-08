@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:draft_screens/screens/manage_order/update_order.dart';
+import 'package:draft_screens/screens/manage_order/view_order.dart';
 
 
 class ManageOrderScreen extends StatefulWidget {
@@ -1200,7 +1201,22 @@ class _ManageOrderScreenState extends State<ManageOrderScreen> {
                                                 ),
                                                 child: TextButton(
                                                   onPressed: () {
-                                                    // Handle view action
+                                                    // Navigate to UpdateOrderScreen
+                                                    Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                        builder: (context) => ViewOrderScreen(
+                                                          purchaseOrderNumber:
+                                                              order['poNumber']!,
+                                                          customerName:
+                                                              order['clientName']!,
+                                                          creationDate:
+                                                              order['creationDate']!,
+                                                          netPrice:
+                                                              order['netPrice']!,
+                                                        ),
+                                                      ),
+                                                    );
                                                   },
                                                   style: TextButton.styleFrom(
                                                     padding:
