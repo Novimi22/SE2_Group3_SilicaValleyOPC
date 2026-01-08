@@ -18,6 +18,8 @@ class _ManageOrderScreenState extends State<ManageOrderScreen> {
   static const Color darkGrayColor = Color(0xFFCDCCCC);
   static const Color textGrayColor = Color(0xFF9E9E9E);
   static const Color tileColor = Color(0xFFF4F4FA);
+  static const Color dialogBackgroundColor = Color(0xFFFFFBFB);
+  static const Color deleteButtonColor = Color(0xFFB71B1B);
   
   // Filter state
   String _selectedSortBy = 'Creation Date';
@@ -37,7 +39,7 @@ class _ManageOrderScreenState extends State<ManageOrderScreen> {
   
   // Sample data for orders
   final List<Map<String, String>> _allOrders = List.generate(10, (index) {
-    final poNumber = (1000000 + index).toString().padLeft(10, '0');
+    final poNumber = (1000000 + index).toString().padLeft(8, '0');
     return {
       'poNumber': 'PO$poNumber',
       'lastUpdated': '01/${(index + 10).toString().padLeft(2, '0')}/2024',
@@ -466,6 +468,250 @@ class _ManageOrderScreenState extends State<ManageOrderScreen> {
       },
     );
   }
+
+// Show Delete Confirmation Dialog
+void _showDeleteConfirmationDialog(BuildContext context, String poNumber, String clientName) {
+  String purchaseOrderNumber = '';
+  bool showError = false;
+  String errorMessage = '';
+
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return StatefulBuilder(
+        builder: (context, setState) {
+          return Dialog(
+            elevation: 20,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20),
+            ),
+            child: Container(
+              decoration: BoxDecoration(
+                color: dialogBackgroundColor,
+                borderRadius: BorderRadius.circular(20),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.3),
+                    blurRadius: 15,
+                    offset: const Offset(0, 5),
+                  ),
+                ],
+              ),
+              child: Container(
+                padding: const EdgeInsets.all(30),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    // Main Title
+                    Text(
+                      'CONFIRM DELETE?',
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.w900,
+                        color: Colors.black,
+                      ),
+                    ),
+                    
+                    const SizedBox(height: 20),
+                    
+                    // Gray subtitle
+                    SizedBox(
+                      width: 400,
+                      child: Text(
+                        'Re-enter Purchase Order Number to confirm deletion',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: textGrayColor,
+                        ),
+                      ),
+                    ),
+                    
+                    const SizedBox(height: 30),
+                    
+                    // Purchase Order Number Text Field
+                    SizedBox(
+                      width: 400,
+                      child: TextField(
+                        decoration: InputDecoration(
+                          label: const Text('Purchase Order Number'),
+                          hintText: 'Enter Purchase Order Number',
+                          hintStyle: const TextStyle(color: Colors.black26),
+                          border: OutlineInputBorder(
+                            borderSide: const BorderSide(color: Color(0xFF19191B)),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: const BorderSide(color: Color(0xFF19191B)),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          contentPadding: const EdgeInsets.all(16),
+                        ),
+                        onChanged: (value) {
+                          setState(() {
+                            purchaseOrderNumber = value;
+                            showError = false;
+                            errorMessage = '';
+                          });
+                        },
+                      ),
+                    ),
+                    
+                    // Error message if field is empty on confirm or incorrect PO number
+                    if (showError && errorMessage.isNotEmpty)
+                      SizedBox(
+                        width: 400,
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 16.0),
+                          child: Row(
+                            children: [
+                              const Icon(
+                                Icons.error_outline,
+                                color: Colors.red,
+                                size: 20,
+                              ),
+                              const SizedBox(width: 8),
+                              Expanded(
+                                child: Text(
+                                  errorMessage,
+                                  style: TextStyle(
+                                    color: Colors.red,
+                                    fontSize: 14,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    
+                    const SizedBox(height: 30),
+                    
+                    // Confirm button
+                    SizedBox(
+                      width: 200,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          if (purchaseOrderNumber.isEmpty) {
+                            setState(() {
+                              showError = true;
+                              errorMessage = 'Please enter the Purchase Order Number';
+                            });
+                            return;
+                          }
+
+                          // Check if entered PO number matches
+                          if (purchaseOrderNumber != poNumber) {
+                            setState(() {
+                              showError = true;
+                              errorMessage = 'Purchase Order Number does not match';
+                            });
+                            return;
+                          }
+
+                          // Proceed with deletion
+                          Navigator.of(context).pop();
+                          _performDeleteOrder(poNumber, clientName);
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: primaryColor,
+                          foregroundColor: Colors.white,
+                          elevation: 5.0,
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 20,
+                            vertical: 16,
+                          ),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ),
+                        child: const Text(
+                          'Confirm',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ),
+                    ),
+                    
+                    const SizedBox(height: 15),
+                    
+                    // Cancel button
+                    TextButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      style: TextButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 20,
+                          vertical: 12,
+                        ),
+                      ),
+                      child: Text(
+                        'Cancel',
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.black,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          );
+        },
+      );
+    },
+  );
+}
+
+// Perform actual order deletion
+void _performDeleteOrder(String poNumber, String clientName) {
+  // Remove order from list
+  setState(() {
+    _allOrders.removeWhere((order) => order['poNumber'] == poNumber);
+    _filteredOrders.removeWhere((order) => order['poNumber'] == poNumber);
+    _updateExpandedStates();
+  });
+
+  // Show success message
+  ScaffoldMessenger.of(context).showSnackBar(
+    SnackBar(
+      content: Row(
+        children: [
+          Container(
+            width: 30,
+            height: 30,
+            decoration: const BoxDecoration(
+              color: Colors.white,
+              shape: BoxShape.circle,
+            ),
+            child: const Icon(
+              Icons.check,
+              color: Colors.green,
+              size: 20,
+            ),
+          ),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Text(
+              'Successfully deleted order: $poNumber ($clientName)',
+              style: const TextStyle(
+                fontSize: 14,
+                color: Colors.white,
+              ),
+            ),
+          ),
+        ],
+      ),
+      backgroundColor: Colors.green,
+    ),
+  );
+}
   
   @override
   void dispose() {
@@ -825,7 +1071,11 @@ class _ManageOrderScreenState extends State<ManageOrderScreen> {
                                                 margin: const EdgeInsets.only(left: 12),
                                                 child: TextButton(
                                                   onPressed: () {
-                                                    // Handle delete action
+                                                    _showDeleteConfirmationDialog(
+                                                      context,
+                                                      order['poNumber']!,
+                                                      order['clientName']!,
+                                                    );
                                                   },
                                                   style: TextButton.styleFrom(
                                                     padding: const EdgeInsets.symmetric(

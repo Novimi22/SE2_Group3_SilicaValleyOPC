@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:draft_screens/screens/histories/order_act_history.dart';
+import 'package:draft_screens/screens/gen_manage_order.dart';
 
 void main() {
   runApp(const MyApp());
@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
           Theme.of(context).textTheme, // Inherit other styles
       ),
     ),
-      home: const OrderActivityHistoryScreen(),
+      home: const ManageOrderScreen(),
     );
   }
 }

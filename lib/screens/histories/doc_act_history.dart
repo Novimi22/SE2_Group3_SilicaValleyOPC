@@ -531,7 +531,7 @@ class _DocumentActivityHistoryScreenState extends State<DocumentActivityHistoryS
                                 child: TextField(
                                   controller: _searchController,
                                   decoration: InputDecoration(
-                                    hintText: 'Search by name, activity type, or modification date...',
+                                    hintText: 'Search by name or activity type...',
                                     hintStyle: TextStyle(color: textGrayColor),
                                     border: InputBorder.none,
                                     contentPadding: EdgeInsets.zero,

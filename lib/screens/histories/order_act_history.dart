@@ -32,7 +32,7 @@ class _OrderActivityHistoryScreenState extends State<OrderActivityHistoryScreen>
   
   // Original sample data for activity history
   final List<Map<String, String>> _allActivityHistory = List.generate(15, (index) {
-    final poNumber = (1000000 + index).toString().padLeft(10, '0');
+    final poNumber = (1000000 + index).toString().padLeft(8, '0');
     return {
       'date': '01/${(index + 10).toString().padLeft(2, '0')}/2024',
       'poNumber': 'PO$poNumber',

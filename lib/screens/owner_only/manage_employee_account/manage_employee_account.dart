@@ -17,7 +17,6 @@ class _ManageEmployeeAccountScreenState extends State<ManageEmployeeAccountScree
   static const Color largeTextColor = Color(0xFF202020);
   static const Color smallTextColor = Color(0xFF5F5F5F);
   static const Color grayColor = Color(0xFF9E9E9E);
-  static const Color borderColorDark = Color(0xFF19191B);
   static const Color deleteButtonColor = Color(0xFFB71B1B);
   static const Color dialogBackgroundColor = Color(0xFFFFFBFB);
 
