@@ -1,6 +1,7 @@
 import 'package:draft_screens/screens/histories/order_act_history.dart';
 import 'package:draft_screens/screens/manage_order/gen_manage_order.dart';
 import 'package:draft_screens/screens/owner_only/approve_order.dart';
+import 'package:draft_screens/screens/track_order/track_order_searchpage.dart';
 import 'package:flutter/material.dart';
 import 'package:draft_screens/screens/all_logins/signin_screen.dart';
 
@@ -94,14 +95,14 @@ class _OwnerDashboardScreenState extends State<OwnerDashboardScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  // Welcome section - no rounded corners
+                  // Welcome section 
                   Container(
                     width: double.infinity,
                     padding: const EdgeInsets.all(30),
                     margin: const EdgeInsets.only(bottom: 30),
                     decoration: BoxDecoration(
                       color: Colors.white,
-                      borderRadius: BorderRadius.circular(0), // No rounded corners
+                      borderRadius: BorderRadius.circular(0), 
                       boxShadow: [
                         BoxShadow(
                           color: Colors.black.withOpacity(0.3),
@@ -176,7 +177,7 @@ class _OwnerDashboardScreenState extends State<OwnerDashboardScreen> {
                         height: 120,
                         child: Center(
                           child: SizedBox(
-                            width: 700, // Fixed width for all tiles
+                            width: 700, 
                             child: _buildDashboardTile(
                               imagePath: 'assets/images/approve_order.png',
                               smallText: 'Approve',
@@ -232,12 +233,11 @@ class _OwnerDashboardScreenState extends State<OwnerDashboardScreen> {
                               smallText: 'Track',
                               largeText: 'Order Record',
                               onTap: () {
-                                // TODO: change to correct navigation later
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) =>
-                                        const ManageOrderScreen(),
+                                        const TORSearchPage(),
                                   ),
                                 );
                               },

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:draft_screens/screens/manage_order/gen_manage_order.dart';
+import 'package:draft_screens/screens/all_logins/signin_screen.dart';
 
 
 void main() {
@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
           Theme.of(context).textTheme, // Inherit other styles
       ),
     ),
-      home: const ManageOrderScreen(),
+      home: const SignInScreen(),
     );
   }
 }

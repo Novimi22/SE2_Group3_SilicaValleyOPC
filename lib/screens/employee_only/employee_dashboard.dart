@@ -1,5 +1,6 @@
 import 'package:draft_screens/screens/histories/order_act_history.dart';
 import 'package:draft_screens/screens/manage_order/gen_manage_order.dart';
+import 'package:draft_screens/screens/track_order/track_order_searchpage.dart';
 import 'package:flutter/material.dart';
 import 'package:draft_screens/screens/all_logins/signin_screen.dart';
 import 'package:draft_screens/screens/employee_only/create_order_dialog.dart';
@@ -45,7 +46,7 @@ class _EmployeeDashboardScreenState extends State<EmployeeDashboardScreen> {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              // Back button - centered
+              // Back button 
               Container(
                 height: 80,
                 alignment: Alignment.center,
@@ -94,7 +95,7 @@ class _EmployeeDashboardScreenState extends State<EmployeeDashboardScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  // Welcome section - no rounded corners
+                  // Welcome section 
                   Container(
                     width: double.infinity,
                     padding: const EdgeInsets.all(30),
@@ -103,7 +104,7 @@ class _EmployeeDashboardScreenState extends State<EmployeeDashboardScreen> {
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(
                         0,
-                      ), // No rounded corners
+                      ), 
                       boxShadow: [
                         BoxShadow(
                           color: Colors.black.withOpacity(0.3),
@@ -177,12 +178,12 @@ class _EmployeeDashboardScreenState extends State<EmployeeDashboardScreen> {
                   // Tiles section
                   Column(
                     children: [
-                      // First tile - Create Order (now with dialog)
+                      // First tile - Create Order 
                       SizedBox(
                         height: 120,
                         child: Center(
                           child: SizedBox(
-                            width: 700, // Fixed width for all tiles
+                            width: 700, 
                             child: _buildDashboardTile(
                               imagePath: 'assets/images/create_order.png',
                               smallText: 'Create',
@@ -232,12 +233,11 @@ class _EmployeeDashboardScreenState extends State<EmployeeDashboardScreen> {
                               smallText: 'Track',
                               largeText: 'Order Record',
                               onTap: () {
-                                // TODO: Change into correct navigation
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) =>
-                                        const ManageOrderScreen(),
+                                        const TORSearchPage(),
                                   ),
                                 );
                               },
@@ -466,7 +466,7 @@ class _EmployeeDashboardScreenState extends State<EmployeeDashboardScreen> {
                             contentPadding: const EdgeInsets.all(16),
                           ),
                           onChanged: (value) {
-                            // Automatically capitalize if user types "po" in lowercase
+                            // Automatically capitalize if user types in lowercase
                             String formattedValue = value;
                             if (value.toLowerCase().startsWith('po')) {
                               formattedValue = 'PO' + value.substring(2);
@@ -478,7 +478,7 @@ class _EmployeeDashboardScreenState extends State<EmployeeDashboardScreen> {
                               errorMessage = '';
                             });
                           },
-                          // ADD THIS: Handle Enter key press
+                          // Handle Enter key press
                           onSubmitted: (value) {
                             // Format the value
                             String formattedValue = value;
@@ -512,7 +512,7 @@ class _EmployeeDashboardScreenState extends State<EmployeeDashboardScreen> {
                               return;
                             }
 
-                            // TODO: Check if PO already exists in your data
+                            // TODO: Check if PO already exists in the data
                             // For now, we 'll assume it's validand proceed to next dialog
                             Navigator.of(context).pop();
                             _showCustomerNameDialog(
@@ -578,7 +578,7 @@ class _EmployeeDashboardScreenState extends State<EmployeeDashboardScreen> {
                               return;
                             }
 
-                            // TODO: Check if PO already exists in your data
+                            // TODO: Check if PO already exists in the data
                             // For now, we'll assume it's valid and proceed to next dialog
                             Navigator.of(context).pop();
                             _showCustomerNameDialog(
