@@ -46,18 +46,6 @@ class _EmployeeDashboardScreenState extends State<EmployeeDashboardScreen> {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              // Back button 
-              Container(
-                height: 80,
-                alignment: Alignment.center,
-                child: IconButton(
-                  icon: const Icon(Icons.arrow_back, color: Colors.black),
-                  padding: const EdgeInsets.only(left: 30),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                ),
-              ),
 
               // Spacer
               const Expanded(child: SizedBox()),
@@ -212,7 +200,7 @@ class _EmployeeDashboardScreenState extends State<EmployeeDashboardScreen> {
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) =>
-                                        const ManageOrderScreen(),
+                                        const ManageOrderScreen(userType: 'employee',),
                                   ),
                                 );
                               },
@@ -258,7 +246,7 @@ class _EmployeeDashboardScreenState extends State<EmployeeDashboardScreen> {
                               smallText: 'View',
                               largeText: 'Order Record History',
                               onTap: () {
-                                // TODO: Forgot kung ano to. Change into correct navigation later
+                                // TODO: Correct navigation later
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   const SnackBar(
                                     content: Text(

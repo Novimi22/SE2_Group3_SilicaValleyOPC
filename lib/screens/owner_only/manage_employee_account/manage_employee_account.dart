@@ -1,3 +1,4 @@
+import 'package:draft_screens/screens/owner_only/owner_landingpage.dart';
 import 'package:flutter/material.dart';
 import 'package:draft_screens/screens/owner_only/manage_employee_account/delete_employee_account_otp.dart'; 
 
@@ -123,7 +124,12 @@ class _ManageEmployeeAccountScreenState extends State<ManageEmployeeAccountScree
                   icon: const Icon(Icons.arrow_back, color: Colors.black),
                   padding: EdgeInsets.only(left: 30),
                   onPressed: () {
-                    Navigator.pop(context);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const OwnerLandingPage(),
+                      ),
+                    );
                   },
                 ),
               ),
@@ -194,8 +200,8 @@ class _ManageEmployeeAccountScreenState extends State<ManageEmployeeAccountScree
                           borderRadius: BorderRadius.circular(8),
                           child: Container(
                             padding: const EdgeInsets.symmetric(
-                              horizontal: 20,
-                              vertical: 12,
+                              horizontal: 9,
+                              vertical: 8,
                             ),
                             child: Row(
                               children: [

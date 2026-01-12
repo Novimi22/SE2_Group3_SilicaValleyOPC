@@ -21,7 +21,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   bool _showEmailError = false;
 
   // Hardcoded correct email 
-  static const String _correctEmail = 'admin@gmail.com';
+  static const String _correctEmail = 'employee@gmail.com';
 
   // Check if email field has text
   bool get _isSendEnabled => _emailValue.isNotEmpty;

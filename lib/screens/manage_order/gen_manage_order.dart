@@ -1,12 +1,16 @@
 // TODO: Make it parameter-based (owner and employee)
 
 import 'package:flutter/material.dart';
+import 'package:draft_screens/screens/owner_only/owner_dashboard.dart';
+import 'package:draft_screens/screens/employee_only/employee_dashboard.dart';
 import 'package:draft_screens/screens/manage_order/update_order.dart';
 import 'package:draft_screens/screens/manage_order/view_order.dart';
-import 'package:draft_screens/screens/track_order/track_order.dart'; 
+import 'package:draft_screens/screens/track_order/track_order.dart';
 
 class ManageOrderScreen extends StatefulWidget {
-  const ManageOrderScreen({super.key});
+  final String userType;
+
+  const ManageOrderScreen({super.key, required this.userType});
 
   @override
   State<ManageOrderScreen> createState() => _ManageOrderScreenState();
@@ -266,8 +270,8 @@ class _ManageOrderScreenState extends State<ManageOrderScreen> {
                                     fontSize: 14,
                                     fontWeight:
                                         dialogSortBy == 'Purchase Order Number'
-                                            ? FontWeight.bold
-                                            : FontWeight.normal,
+                                        ? FontWeight.bold
+                                        : FontWeight.normal,
                                     color: Colors.black,
                                   ),
                                 ),
@@ -786,7 +790,24 @@ class _ManageOrderScreenState extends State<ManageOrderScreen> {
                   icon: const Icon(Icons.arrow_back, color: Colors.black),
                   padding: const EdgeInsets.only(left: 30),
                   onPressed: () {
-                    Navigator.pop(context);
+                    // Navigate back to appropriate dashboard based on userType
+                    if (widget.userType == 'owner') {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const OwnerDashboardScreen(),
+                        ),
+                      );
+                    } else if (widget.userType == 'employee') {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const EmployeeDashboardScreen(),
+                        ),
+                      );
+                    } else {
+                      Navigator.pop(context);
+                    }
                   },
                 ),
               ),
@@ -1248,12 +1269,13 @@ class _ManageOrderScreenState extends State<ManageOrderScreen> {
                                                     Navigator.push(
                                                       context,
                                                       MaterialPageRoute(
-                                                        builder: (context) => TrackRecordScreen(
-                                                          purchaseOrderNumber:
-                                                              order['poNumber']!,
-                                                          clientName:
-                                                              order['clientName']!,
-                                                        ),
+                                                        builder: (context) =>
+                                                            TrackRecordScreen(
+                                                              purchaseOrderNumber:
+                                                                  order['poNumber']!,
+                                                              clientName:
+                                                                  order['clientName']!,
+                                                            ),
                                                       ),
                                                     );
                                                   },

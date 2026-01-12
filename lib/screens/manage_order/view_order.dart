@@ -116,12 +116,7 @@ class _ViewOrderScreenState extends State<ViewOrderScreen> {
                 alignment: Alignment.center,
                 child: IconButton(
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const ManageOrderScreen(),
-                      ),
-                    );
+                    Navigator.pop(context);
                   },
                   icon: const Icon(
                     Icons.close,

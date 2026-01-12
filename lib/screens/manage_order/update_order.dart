@@ -48,7 +48,7 @@ class _UpdateOrderScreenState extends State<UpdateOrderScreen> {
   String? _pendingActionType;
   int? _pendingActionIndex;
   Map<String, dynamic>? _pendingEditOldValues;
-  
+
   // Track if a row was just added (so we don't show edit confirmation)
   bool _isNewlyAddedRow = false;
   int? _newlyAddedRowIndex;
@@ -57,8 +57,12 @@ class _UpdateOrderScreenState extends State<UpdateOrderScreen> {
   void initState() {
     super.initState();
     // Parse net price from string
-    currentNetPrice = double.tryParse(widget.netPrice.replaceAll('₱', '').replaceAll(',', '')) ?? 0.0;
-    
+    currentNetPrice =
+        double.tryParse(
+          widget.netPrice.replaceAll('₱', '').replaceAll(',', ''),
+        ) ??
+        0.0;
+
     // Initialize with sample data (in real app, this would come from API)
     _initializeSampleData();
   }
@@ -146,12 +150,12 @@ class _UpdateOrderScreenState extends State<UpdateOrderScreen> {
       });
       isEditingList.add(true); // Start in edit mode for new row
       controllersList.add(newControllers);
-      
+
       // Track this as a newly added row
       _isNewlyAddedRow = true;
       _newlyAddedRowIndex = items.length - 1;
     });
-    
+
     _showSnackbar('Item added', snackbarGreenColor);
   }
 
@@ -168,7 +172,10 @@ class _UpdateOrderScreenState extends State<UpdateOrderScreen> {
 
     for (int i = 0; i < items.length; i++) {
       if (isEditingList[i]) {
-        _saveRow(i, skipConfirmation: _isNewlyAddedRow && i == _newlyAddedRowIndex);
+        _saveRow(
+          i,
+          skipConfirmation: _isNewlyAddedRow && i == _newlyAddedRowIndex,
+        );
         anySaved = true;
       }
     }
@@ -190,12 +197,13 @@ class _UpdateOrderScreenState extends State<UpdateOrderScreen> {
 
     // Calculate total for this item
     final qty = double.tryParse(controllersList[index]['qty']!.text) ?? 0;
-    final unitPrice = double.tryParse(controllersList[index]['unitPrice']!.text) ?? 0;
+    final unitPrice =
+        double.tryParse(controllersList[index]['unitPrice']!.text) ?? 0;
     items[index]['total'] = qty * unitPrice;
 
     // Recalculate net price
     _calculateNetPrice();
-    
+
     // If this was a newly added row, clear the flag
     if (_isNewlyAddedRow && index == _newlyAddedRowIndex) {
       _isNewlyAddedRow = false;
@@ -213,7 +221,7 @@ class _UpdateOrderScreenState extends State<UpdateOrderScreen> {
       _pendingEditOldValues = Map.from(items[index]);
       _pendingActionType = 'edit';
       _pendingActionIndex = index;
-      
+
       // Start editing this row immediately
       isEditingList[index] = true;
     });
@@ -230,7 +238,8 @@ class _UpdateOrderScreenState extends State<UpdateOrderScreen> {
       if (isEditingList[i]) {
         // If editing, calculate from controller values
         final qty = double.tryParse(controllersList[i]['qty']!.text) ?? 0;
-        final unitPrice = double.tryParse(controllersList[i]['unitPrice']!.text) ?? 0;
+        final unitPrice =
+            double.tryParse(controllersList[i]['unitPrice']!.text) ?? 0;
         itemTotal = qty * unitPrice;
         items[i]['total'] = itemTotal; // Update the item total
       } else {
@@ -250,16 +259,19 @@ class _UpdateOrderScreenState extends State<UpdateOrderScreen> {
   void _showConfirmationDialog(String actionType) {
     String dialogTitle = 'Confirm Changes?';
     String dialogMessage = '';
-    
+
     switch (actionType) {
       case 'add':
-        dialogMessage = 'Are you sure you want to add a new item in this order?';
+        dialogMessage =
+            'Are you sure you want to add a new item in this order?';
         break;
       case 'edit':
-        dialogMessage = 'Are you sure you want to edit this item in this order?';
+        dialogMessage =
+            'Are you sure you want to edit this item in this order?';
         break;
       case 'delete':
-        dialogMessage = 'Are you sure you want to delete this item in this order?';
+        dialogMessage =
+            'Are you sure you want to delete this item in this order?';
         break;
       default:
         dialogMessage = 'Are you sure you want to perform this action?';
@@ -286,7 +298,8 @@ class _UpdateOrderScreenState extends State<UpdateOrderScreen> {
               autofocus: true,
               onKeyEvent: (node, event) {
                 // Handle Enter key press
-                if (event is KeyDownEvent && event.logicalKey == LogicalKeyboardKey.enter) {
+                if (event is KeyDownEvent &&
+                    event.logicalKey == LogicalKeyboardKey.enter) {
                   Navigator.of(context).pop();
                   _performPendingAction();
                   return KeyEventResult.handled;
@@ -325,24 +338,21 @@ class _UpdateOrderScreenState extends State<UpdateOrderScreen> {
                             color: Colors.black,
                           ),
                         ),
-                        
+
                         const SizedBox(height: 20),
-                        
+
                         // Gray paragraph text
                         SizedBox(
                           width: 300,
                           child: Text(
                             dialogMessage,
                             textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: grayColor,
-                            ),
+                            style: TextStyle(fontSize: 16, color: grayColor),
                           ),
                         ),
-                        
+
                         const SizedBox(height: 30),
-                        
+
                         // Confirm button
                         SizedBox(
                           width: 200,
@@ -372,9 +382,9 @@ class _UpdateOrderScreenState extends State<UpdateOrderScreen> {
                             ),
                           ),
                         ),
-                        
+
                         const SizedBox(height: 15),
-                        
+
                         // Cancel button
                         TextButton(
                           onPressed: () {
@@ -417,7 +427,7 @@ class _UpdateOrderScreenState extends State<UpdateOrderScreen> {
         // Actually add the item
         _performAddItem();
         break;
-        
+
       case 'edit':
         // For edit, we just show snackbar (saving happens when clicking outside or pressing Enter in the field)
         if (_pendingActionIndex != null) {
@@ -426,7 +436,7 @@ class _UpdateOrderScreenState extends State<UpdateOrderScreen> {
           _showSnackbar('Item edited', snackbarGreenColor);
         }
         break;
-        
+
       case 'delete':
         // Perform delete
         final index = _pendingActionIndex!;
@@ -435,19 +445,19 @@ class _UpdateOrderScreenState extends State<UpdateOrderScreen> {
           controllersList[index].values.forEach((controller) {
             controller.dispose();
           });
-          
+
           // Remove item
           items.removeAt(index);
           isEditingList.removeAt(index);
           controllersList.removeAt(index);
-          
+
           // Recalculate net price
           _calculateNetPrice();
         });
         _showSnackbar('Item deleted', snackbarRedColor);
         break;
     }
-    
+
     _clearPendingAction();
   }
 
@@ -471,20 +481,13 @@ class _UpdateOrderScreenState extends State<UpdateOrderScreen> {
                 color: Colors.white,
                 shape: BoxShape.circle,
               ),
-              child: Icon(
-                Icons.check,
-                color: backgroundColor,
-                size: 20,
-              ),
+              child: Icon(Icons.check, color: backgroundColor, size: 20),
             ),
             const SizedBox(width: 12),
             Expanded(
               child: Text(
                 message,
-                style: const TextStyle(
-                  fontSize: 14,
-                  color: Colors.white,
-                ),
+                style: const TextStyle(fontSize: 14, color: Colors.white),
               ),
             ),
           ],
@@ -560,18 +563,9 @@ class _UpdateOrderScreenState extends State<UpdateOrderScreen> {
                 alignment: Alignment.center,
                 child: IconButton(
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const ManageOrderScreen(),
-                      ),
-                    );
+                    Navigator.pop(context);
                   },
-                  icon: const Icon(
-                    Icons.close,
-                    color: Colors.black,
-                    size: 30,
-                  ),
+                  icon: const Icon(Icons.close, color: Colors.black, size: 30),
                   padding: const EdgeInsets.only(right: 30),
                 ),
               ),
@@ -794,18 +788,34 @@ class _UpdateOrderScreenState extends State<UpdateOrderScreen> {
                                     3: FlexColumnWidth(1.2), // Unit Price
                                     4: FixedColumnWidth(80), // Actions
                                   },
-                                  defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+                                  defaultVerticalAlignment:
+                                      TableCellVerticalAlignment.middle,
                                   children: [
                                     TableRow(
                                       decoration: BoxDecoration(
                                         color: Colors.grey[100],
                                       ),
                                       children: [
-                                        _buildTableHeaderCell('Name', compact: true),
-                                        _buildTableHeaderCell('Qty', compact: true),
-                                        _buildTableHeaderCell('UoM', compact: true),
-                                        _buildTableHeaderCell('Unit Price', compact: true),
-                                        _buildTableHeaderCell('Actions', compact: true),
+                                        _buildTableHeaderCell(
+                                          'Name',
+                                          compact: true,
+                                        ),
+                                        _buildTableHeaderCell(
+                                          'Qty',
+                                          compact: true,
+                                        ),
+                                        _buildTableHeaderCell(
+                                          'UoM',
+                                          compact: true,
+                                        ),
+                                        _buildTableHeaderCell(
+                                          'Unit Price',
+                                          compact: true,
+                                        ),
+                                        _buildTableHeaderCell(
+                                          'Actions',
+                                          compact: true,
+                                        ),
                                       ],
                                     ),
                                   ],
@@ -847,32 +857,50 @@ class _UpdateOrderScreenState extends State<UpdateOrderScreen> {
                                           3: FlexColumnWidth(1.2), // Unit Price
                                           4: FixedColumnWidth(80), // Actions
                                         },
-                                        defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+                                        defaultVerticalAlignment:
+                                            TableCellVerticalAlignment.middle,
                                         children: [
                                           TableRow(
                                             children: [
                                               // Name cell
                                               Padding(
-                                                padding: const EdgeInsets.all(8),
+                                                padding: const EdgeInsets.all(
+                                                  8,
+                                                ),
                                                 child: isEditing
                                                     ? TextField(
-                                                        controller: controllers['name'],
-                                                        decoration: const InputDecoration(
-                                                          hintText: 'Enter item name',
-                                                          hintStyle: TextStyle(color: Colors.grey),
-                                                          border: InputBorder.none,
-                                                          contentPadding: EdgeInsets.zero,
-                                                        ),
+                                                        controller:
+                                                            controllers['name'],
+                                                        decoration:
+                                                            const InputDecoration(
+                                                              hintText:
+                                                                  'Enter item name',
+                                                              hintStyle:
+                                                                  TextStyle(
+                                                                    color: Colors
+                                                                        .grey,
+                                                                  ),
+                                                              border:
+                                                                  InputBorder
+                                                                      .none,
+                                                              contentPadding:
+                                                                  EdgeInsets
+                                                                      .zero,
+                                                            ),
                                                         style: TextStyle(
                                                           fontSize: 14,
                                                           color: Colors.black,
                                                         ),
                                                         onSubmitted: (_) {
-                                                          _handleEditConfirmation(index);
+                                                          _handleEditConfirmation(
+                                                            index,
+                                                          );
                                                         },
                                                       )
                                                     : Text(
-                                                        item['name']?.toString() ?? '',
+                                                        item['name']
+                                                                ?.toString() ??
+                                                            '',
                                                         style: TextStyle(
                                                           fontSize: 14,
                                                           color: Colors.black,
@@ -882,17 +910,32 @@ class _UpdateOrderScreenState extends State<UpdateOrderScreen> {
 
                                               // Qty cell
                                               Padding(
-                                                padding: const EdgeInsets.all(8),
+                                                padding: const EdgeInsets.all(
+                                                  8,
+                                                ),
                                                 child: isEditing
                                                     ? TextField(
-                                                        controller: controllers['qty'],
-                                                        keyboardType: TextInputType.numberWithOptions(decimal: true),
-                                                        decoration: const InputDecoration(
-                                                          hintText: 'Qty',
-                                                          hintStyle: TextStyle(color: Colors.grey),
-                                                          border: InputBorder.none,
-                                                          contentPadding: EdgeInsets.zero,
-                                                        ),
+                                                        controller:
+                                                            controllers['qty'],
+                                                        keyboardType:
+                                                            TextInputType.numberWithOptions(
+                                                              decimal: true,
+                                                            ),
+                                                        decoration:
+                                                            const InputDecoration(
+                                                              hintText: 'Qty',
+                                                              hintStyle:
+                                                                  TextStyle(
+                                                                    color: Colors
+                                                                        .grey,
+                                                                  ),
+                                                              border:
+                                                                  InputBorder
+                                                                      .none,
+                                                              contentPadding:
+                                                                  EdgeInsets
+                                                                      .zero,
+                                                            ),
                                                         style: TextStyle(
                                                           fontSize: 14,
                                                           color: Colors.black,
@@ -901,11 +944,15 @@ class _UpdateOrderScreenState extends State<UpdateOrderScreen> {
                                                           _calculateNetPrice();
                                                         },
                                                         onSubmitted: (_) {
-                                                          _handleEditConfirmation(index);
+                                                          _handleEditConfirmation(
+                                                            index,
+                                                          );
                                                         },
                                                       )
                                                     : Text(
-                                                        item['qty']?.toString() ?? '',
+                                                        item['qty']
+                                                                ?.toString() ??
+                                                            '',
                                                         style: TextStyle(
                                                           fontSize: 14,
                                                           color: Colors.black,
@@ -915,26 +962,42 @@ class _UpdateOrderScreenState extends State<UpdateOrderScreen> {
 
                                               // UoM cell
                                               Padding(
-                                                padding: const EdgeInsets.all(8),
+                                                padding: const EdgeInsets.all(
+                                                  8,
+                                                ),
                                                 child: isEditing
                                                     ? TextField(
-                                                        controller: controllers['uom'],
-                                                        decoration: const InputDecoration(
-                                                          hintText: 'UoM',
-                                                          hintStyle: TextStyle(color: Colors.grey),
-                                                          border: InputBorder.none,
-                                                          contentPadding: EdgeInsets.zero,
-                                                        ),
+                                                        controller:
+                                                            controllers['uom'],
+                                                        decoration:
+                                                            const InputDecoration(
+                                                              hintText: 'UoM',
+                                                              hintStyle:
+                                                                  TextStyle(
+                                                                    color: Colors
+                                                                        .grey,
+                                                                  ),
+                                                              border:
+                                                                  InputBorder
+                                                                      .none,
+                                                              contentPadding:
+                                                                  EdgeInsets
+                                                                      .zero,
+                                                            ),
                                                         style: TextStyle(
                                                           fontSize: 14,
                                                           color: Colors.black,
                                                         ),
                                                         onSubmitted: (_) {
-                                                          _handleEditConfirmation(index);
+                                                          _handleEditConfirmation(
+                                                            index,
+                                                          );
                                                         },
                                                       )
                                                     : Text(
-                                                        item['uom']?.toString() ?? '',
+                                                        item['uom']
+                                                                ?.toString() ??
+                                                            '',
                                                         style: TextStyle(
                                                           fontSize: 14,
                                                           color: Colors.black,
@@ -944,17 +1007,32 @@ class _UpdateOrderScreenState extends State<UpdateOrderScreen> {
 
                                               // Unit Price cell
                                               Padding(
-                                                padding: const EdgeInsets.all(8),
+                                                padding: const EdgeInsets.all(
+                                                  8,
+                                                ),
                                                 child: isEditing
                                                     ? TextField(
-                                                        controller: controllers['unitPrice'],
-                                                        keyboardType: TextInputType.numberWithOptions(decimal: true),
-                                                        decoration: const InputDecoration(
-                                                          hintText: 'Price',
-                                                          hintStyle: TextStyle(color: Colors.grey),
-                                                          border: InputBorder.none,
-                                                          contentPadding: EdgeInsets.zero,
-                                                        ),
+                                                        controller:
+                                                            controllers['unitPrice'],
+                                                        keyboardType:
+                                                            TextInputType.numberWithOptions(
+                                                              decimal: true,
+                                                            ),
+                                                        decoration:
+                                                            const InputDecoration(
+                                                              hintText: 'Price',
+                                                              hintStyle:
+                                                                  TextStyle(
+                                                                    color: Colors
+                                                                        .grey,
+                                                                  ),
+                                                              border:
+                                                                  InputBorder
+                                                                      .none,
+                                                              contentPadding:
+                                                                  EdgeInsets
+                                                                      .zero,
+                                                            ),
                                                         style: TextStyle(
                                                           fontSize: 14,
                                                           color: Colors.black,
@@ -963,11 +1041,15 @@ class _UpdateOrderScreenState extends State<UpdateOrderScreen> {
                                                           _calculateNetPrice();
                                                         },
                                                         onSubmitted: (_) {
-                                                          _handleEditConfirmation(index);
+                                                          _handleEditConfirmation(
+                                                            index,
+                                                          );
                                                         },
                                                       )
                                                     : Text(
-                                                        item['unitPrice']?.toString() ?? '',
+                                                        item['unitPrice']
+                                                                ?.toString() ??
+                                                            '',
                                                         style: TextStyle(
                                                           fontSize: 14,
                                                           color: Colors.black,
@@ -977,9 +1059,12 @@ class _UpdateOrderScreenState extends State<UpdateOrderScreen> {
 
                                               // Actions cell
                                               Padding(
-                                                padding: const EdgeInsets.all(8),
+                                                padding: const EdgeInsets.all(
+                                                  8,
+                                                ),
                                                 child: Row(
-                                                  mainAxisAlignment: MainAxisAlignment.center,
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
                                                   children: [
                                                     // Pencil icon - disabled when editing, enabled when saved
                                                     IconButton(
@@ -991,15 +1076,19 @@ class _UpdateOrderScreenState extends State<UpdateOrderScreen> {
                                                       icon: Icon(
                                                         Icons.edit,
                                                         color: isEditing
-                                                            ? iconGrayColor.withOpacity(0.3)
+                                                            ? iconGrayColor
+                                                                  .withOpacity(
+                                                                    0.3,
+                                                                  )
                                                             : iconGrayColor,
                                                         size: 18,
                                                       ),
                                                       padding: EdgeInsets.zero,
-                                                      constraints: const BoxConstraints(
-                                                        minWidth: 24,
-                                                        minHeight: 24,
-                                                      ),
+                                                      constraints:
+                                                          const BoxConstraints(
+                                                            minWidth: 24,
+                                                            minHeight: 24,
+                                                          ),
                                                     ),
 
                                                     const SizedBox(width: 4),
@@ -1015,10 +1104,11 @@ class _UpdateOrderScreenState extends State<UpdateOrderScreen> {
                                                         size: 18,
                                                       ),
                                                       padding: EdgeInsets.zero,
-                                                      constraints: const BoxConstraints(
-                                                        minWidth: 24,
-                                                        minHeight: 24,
-                                                      ),
+                                                      constraints:
+                                                          const BoxConstraints(
+                                                            minWidth: 24,
+                                                            minHeight: 24,
+                                                          ),
                                                     ),
                                                   ],
                                                 ),

@@ -282,7 +282,7 @@ class _SignInScreenState extends State<SignInScreen> {
                   
                   if (userType == 'owner') {
                     // Owner goes to OwnerLandingPage
-                    Navigator.push(
+                    Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
                         builder: (context) => const OwnerLandingPage(),
@@ -290,7 +290,7 @@ class _SignInScreenState extends State<SignInScreen> {
                     );
                   } else if (userType == 'employee') {
                     // Employee goes directly to EmployeeDashboardScreen
-                    Navigator.push(
+                    Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
                         builder: (context) => const EmployeeDashboardScreen(),

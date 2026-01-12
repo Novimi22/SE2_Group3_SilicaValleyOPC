@@ -212,7 +212,7 @@ class _OwnerDashboardScreenState extends State<OwnerDashboardScreen> {
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) =>
-                                        const ManageOrderScreen(),
+                                        const ManageOrderScreen(userType: 'owner',),
                                   ),
                                 );
                               },
@@ -258,7 +258,7 @@ class _OwnerDashboardScreenState extends State<OwnerDashboardScreen> {
                               smallText: 'View',
                               largeText: 'Order Record History',
                               onTap: () {
-                                // TODO: di ko alam kung ano to. Correct navigation later
+                                // TODO: add proper navigation later
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   const SnackBar(
                                     content: Text(

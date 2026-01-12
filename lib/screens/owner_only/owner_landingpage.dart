@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:draft_screens/screens/owner_only/manage_employee_account/manage_employee_account.dart';
 import 'package:draft_screens/screens/owner_only/owner_dashboard.dart';
 
 class OwnerLandingPage extends StatefulWidget {
@@ -105,10 +106,12 @@ class _OwnerLandingPageState extends State<OwnerLandingPage> {
           // First tile - Manage Employee Account
           GestureDetector(
             onTap: () {
-              // TODO: Add navigation to Employee Account page
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Employee Account tile tapped')),
-              );
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const ManageEmployeeAccountScreen(),
+                      ),
+                    );
             },
             child: Container(
               width: 700,

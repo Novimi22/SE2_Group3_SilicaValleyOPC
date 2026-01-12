@@ -306,7 +306,7 @@ class _DocumentActivityHistoryScreenState extends State<DocumentActivityHistoryS
                                         isExpanded: true,
                                         underline: const SizedBox(),
                                         icon: const Icon(Icons.arrow_drop_down, color: Colors.black),
-                                        items: ['File Uploaded', 'File Edited', 'File Deleted', 'File Viewed', 'File Downloaded']
+                                        items: ['File Uploaded', 'File Edited', 'File Deleted', 'File Downloaded']
                                             .map((String value) {
                                           return DropdownMenuItem<String>(
                                             value: value,
@@ -359,7 +359,7 @@ class _DocumentActivityHistoryScreenState extends State<DocumentActivityHistoryS
                           
                           const SizedBox(height: 20),
                           
-                          // Sort Order section - Only title in gray box
+                          // Sort Order section 
                           Container(
                             width: double.infinity,
                             padding: const EdgeInsets.all(12),
@@ -512,7 +512,7 @@ class _DocumentActivityHistoryScreenState extends State<DocumentActivityHistoryS
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              // Back button - centered
+              // Back button 
               Container(
                 height: 80,
                 alignment: Alignment.center,
@@ -545,7 +545,7 @@ class _DocumentActivityHistoryScreenState extends State<DocumentActivityHistoryS
                       ),
                     ),
                     const SizedBox(height: 4),
-                    // Subtitle - Now shows PO number and client name
+                    // Subtitle 
                     Text(
                       widget.documentTitle,
                       style: TextStyle(fontSize: 12, color: Colors.white),
