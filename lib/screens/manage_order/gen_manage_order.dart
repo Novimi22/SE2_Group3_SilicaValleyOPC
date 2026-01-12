@@ -135,12 +135,12 @@ class _ManageOrderScreenState extends State<ManageOrderScreen> {
             comparison = a['creationDate']!.compareTo(b['creationDate']!);
             break;
           case 'Net Price':
-            double priceA = double.parse(
-              a['netPrice']!.replaceAll('\$', '').replaceAll(',', ''),
-            );
-            double priceB = double.parse(
-              b['netPrice']!.replaceAll('\$', '').replaceAll(',', ''),
-            );
+            double priceA = double.tryParse(
+              a['netPrice']!.replaceAll('\₱', '').replaceAll(',', ''),
+            ) ?? 0.0;
+            double priceB = double.tryParse(
+              b['netPrice']!.replaceAll('\₱', '').replaceAll(',', ''),
+            ) ?? 0.0;
             comparison = priceA.compareTo(priceB);
             break;
           default:

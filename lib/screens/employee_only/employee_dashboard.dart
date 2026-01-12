@@ -46,7 +46,6 @@ class _EmployeeDashboardScreenState extends State<EmployeeDashboardScreen> {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-
               // Spacer
               const Expanded(child: SizedBox()),
 

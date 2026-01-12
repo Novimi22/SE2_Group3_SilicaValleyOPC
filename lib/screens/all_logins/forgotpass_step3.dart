@@ -346,7 +346,7 @@ class _CreatePasswordScreenState extends State<CreatePasswordScreen> {
                                   
                                   // Only proceed if both validations pass
                                   if (isNewPasswordValid && passwordsMatch) {
-                                        Navigator.push(
+                                        Navigator.pushReplacement(
                                       context,
                                       MaterialPageRoute(
                                         builder: (context) =>
