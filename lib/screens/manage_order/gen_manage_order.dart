@@ -1264,6 +1264,7 @@ class _ManageOrderScreenState extends State<ManageOrderScreen> {
                                                           vertical: 8,
                                                         ),
                                                   ),
+                                                  // TODO: Remove after track order record is fixed
                                                   child: Text(
                                                     'Track',
                                                     style: TextStyle(

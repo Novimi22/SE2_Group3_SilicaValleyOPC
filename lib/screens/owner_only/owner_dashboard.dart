@@ -1,3 +1,6 @@
+import 'package:draft_screens/screens/histories/order_act_history.dart';
+import 'package:draft_screens/screens/manage_order/gen_manage_order.dart';
+import 'package:draft_screens/screens/owner_only/approve_order.dart';
 import 'package:flutter/material.dart';
 import 'package:draft_screens/screens/all_logins/signin_screen.dart';
 
@@ -179,9 +182,11 @@ class _OwnerDashboardScreenState extends State<OwnerDashboardScreen> {
                               smallText: 'Approve',
                               largeText: 'Order',
                               onTap: () {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                    content: Text('Approve Order tile tapped'),
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        const ApproveOrderScreen(),
                                   ),
                                 );
                               },
@@ -196,15 +201,17 @@ class _OwnerDashboardScreenState extends State<OwnerDashboardScreen> {
                         height: 120,
                         child: Center(
                           child: SizedBox(
-                            width: 700, // Same fixed width
+                            width: 700, 
                             child: _buildDashboardTile(
                               imagePath: 'assets/images/manage_order.png',
                               smallText: 'Manage',
                               largeText: 'Order',
                               onTap: () {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                    content: Text('Manage Order tile tapped'),
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        const ManageOrderScreen(),
                                   ),
                                 );
                               },
@@ -219,15 +226,18 @@ class _OwnerDashboardScreenState extends State<OwnerDashboardScreen> {
                         height: 120,
                         child: Center(
                           child: SizedBox(
-                            width: 700, // Same fixed width
+                            width: 700, 
                             child: _buildDashboardTile(
                               imagePath: 'assets/images/track_or.png',
                               smallText: 'Track',
                               largeText: 'Order Record',
                               onTap: () {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                    content: Text('Track Order Record tile tapped'),
+                                // TODO: change to correct navigation later
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        const ManageOrderScreen(),
                                   ),
                                 );
                               },
@@ -242,12 +252,13 @@ class _OwnerDashboardScreenState extends State<OwnerDashboardScreen> {
                         height: 120,
                         child: Center(
                           child: SizedBox(
-                            width: 700, // Same fixed width
+                            width: 700, 
                             child: _buildDashboardTile(
                               imagePath: 'assets/images/history.png',
                               smallText: 'View',
                               largeText: 'Order Record History',
                               onTap: () {
+                                // TODO: di ko alam kung ano to. Correct navigation later
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   const SnackBar(
                                     content: Text(
@@ -267,17 +278,17 @@ class _OwnerDashboardScreenState extends State<OwnerDashboardScreen> {
                         height: 120,
                         child: Center(
                           child: SizedBox(
-                            width: 700, // Same fixed width
+                            width: 700,
                             child: _buildDashboardTile(
                               imagePath: 'assets/images/history.png',
                               smallText: 'View',
                               largeText: 'Order Activity History',
                               onTap: () {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                    content: Text(
-                                      'View Order Activity History tile tapped',
-                                    ),
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        const OrderActivityHistoryScreen(),
                                   ),
                                 );
                               },

@@ -55,7 +55,7 @@ class _TrackRecordScreenState extends State<TrackRecordScreen> {
   List<File?> _attachedFiles = [];
   List<bool> _hasFileList = []; // true = green line, false = red/gray line
   List<String> _documentTitles = [];
-  List<String> _lastUpdatedDates = []; // Track last updated dates for each document
+  List<String?> _lastUpdatedDates = []; // Track last updated dates for each document (nullable)
 
   // Track miscellaneous documents
   int _miscellaneousCount = 1;
@@ -85,8 +85,8 @@ class _TrackRecordScreenState extends State<TrackRecordScreen> {
     _isExpandedList = List.generate(_documentTitles.length, (index) => false);
     _attachedFiles = List.generate(_documentTitles.length, (index) => null);
     _hasFileList = List.generate(_documentTitles.length, (index) => false);
-    // Initialize last updated dates with current date
-    _lastUpdatedDates = List.generate(_documentTitles.length, (index) => _getFormattedDate());
+    // Initialize last updated dates as null (initially blank)
+    _lastUpdatedDates = List.generate(_documentTitles.length, (index) => null);
   }
 
   // Calculate document count (tiles with uploaded files)
@@ -337,6 +337,7 @@ class _TrackRecordScreenState extends State<TrackRecordScreen> {
   // Generate report function
   void _generateReport() {
     // TODO: Implement report generation logic
+    print('Generating report for PO: ${widget.purchaseOrderNumber}');
     
     // Show success snackbar
     ScaffoldMessenger.of(context).showSnackBar(
@@ -371,8 +372,8 @@ class _TrackRecordScreenState extends State<TrackRecordScreen> {
     setState(() {
       _attachedFiles[index] = null;
       _hasFileList[index] = false;
-      // Update last updated date when file is deleted
-      _lastUpdatedDates[index] = _getFormattedDate();
+      // DO NOT clear the last updated date when file is deleted
+      // Keep the date to show when it was last updated
     });
     
     // Show red snackbar with check icon
@@ -411,10 +412,12 @@ class _TrackRecordScreenState extends State<TrackRecordScreen> {
         setState(() {
           _attachedFiles[index] = File(pickedFile.path);
           _hasFileList[index] = true;
-          // Update last updated date when file is attached
-          _lastUpdatedDates[index] = _getFormattedDate();
+          // Set last updated date when file is attached (only if not set before)
+          if (_lastUpdatedDates[index] == null) {
+            _lastUpdatedDates[index] = _getFormattedDate();
+          }
 
-          // If this is a miscellaneous document with a file, add another one
+          // If this miscellaneous tile has a file, add another one
           if (_isMiscellaneous(index) &&
               index == _miscellaneousIndices.last &&
               _hasFileList[index]) {
@@ -446,7 +449,7 @@ class _TrackRecordScreenState extends State<TrackRecordScreen> {
       _isExpandedList.add(false);
       _attachedFiles.add(null);
       _hasFileList.add(false);
-      _lastUpdatedDates.add(_getFormattedDate());
+      _lastUpdatedDates.add(null); // Start with null (blank) for new document
     });
   }
 
@@ -523,7 +526,7 @@ class _TrackRecordScreenState extends State<TrackRecordScreen> {
                 height: 80,
                 alignment: Alignment.center,
                 child: const Text(
-                  'Track Record',
+                  'Track Order Record',
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
@@ -555,12 +558,12 @@ class _TrackRecordScreenState extends State<TrackRecordScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // Purchase Order Number and Document Count row 
+                      // PO Number and Document Count row 
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          // Left side: PO Number and Payment Status 
+                          // PO Number and Payment Status 
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -653,10 +656,10 @@ class _TrackRecordScreenState extends State<TrackRecordScreen> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            // Legends (left side)
+                            // Legends 
                             Row(
                               children: [
-                                // First legend: Red circle with "File attached"
+                                // First legend: "File attached"
                                 Row(
                                   children: [
                                     Container(
@@ -680,7 +683,7 @@ class _TrackRecordScreenState extends State<TrackRecordScreen> {
                                 
                                 const SizedBox(width: 20),
                                 
-                                // Second legend: Green circle with "No file attached"
+                                // Second legend: "No file attached"
                                 Row(
                                   children: [
                                     Container(
@@ -704,7 +707,7 @@ class _TrackRecordScreenState extends State<TrackRecordScreen> {
                                 
                                 const SizedBox(width: 20),
                                 
-                                // Third legend: Gray circle with "Optional"
+                                // Third legend: "Optional"
                                 Row(
                                   children: [
                                     Container(
@@ -728,7 +731,7 @@ class _TrackRecordScreenState extends State<TrackRecordScreen> {
                               ],
                             ),
                             
-                            // Download Report button (right side)
+                            // Download Report button
                             Material(
                               color: primaryColor,
                               borderRadius: BorderRadius.circular(8),
@@ -739,8 +742,8 @@ class _TrackRecordScreenState extends State<TrackRecordScreen> {
                                 borderRadius: BorderRadius.circular(8),
                                 child: Container(
                                   padding: const EdgeInsets.symmetric(
-                                    horizontal: 20,
-                                    vertical: 12,
+                                    horizontal: 15,
+                                    vertical: 8,
                                   ),
                                   child: Row(
                                     children: [
@@ -871,9 +874,11 @@ class _TrackRecordScreenState extends State<TrackRecordScreen> {
                                               ),
                                               const SizedBox(height: 8),
 
-                                              // Always show "Last updated: MM/DD/YYYY" 
+                                              // Show "Last updated: MM/DD/YYYY" only if date is set
                                               Text(
-                                                'Last updated: ${_lastUpdatedDates[index]}',
+                                                _lastUpdatedDates[index] != null
+                                                    ? 'Last updated: ${_lastUpdatedDates[index]}'
+                                                    : '', // Blank initially
                                                 style: TextStyle(
                                                   fontSize: 14,
                                                   color: textGrayColor,
