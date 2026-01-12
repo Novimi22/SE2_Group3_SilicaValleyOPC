@@ -507,7 +507,7 @@ class _EmployeeDashboardScreenState extends State<EmployeeDashboardScreen> {
                             }
 
                             // TODO: Check if PO already exists in your data
-                            // For now, we'll assume it's valid and proceed to next dialog
+                            // For now, we 'll assume it's validand proceed to next dialog
                             Navigator.of(context).pop();
                             _showCustomerNameDialog(
                               context,

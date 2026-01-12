@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:draft_screens/screens/manage_order/update_order.dart';
 import 'package:draft_screens/screens/manage_order/view_order.dart';
-
+import 'package:draft_screens/screens/track_order.dart'; 
 
 class ManageOrderScreen extends StatefulWidget {
   const ManageOrderScreen({super.key});
@@ -266,8 +266,8 @@ class _ManageOrderScreenState extends State<ManageOrderScreen> {
                                     fontSize: 14,
                                     fontWeight:
                                         dialogSortBy == 'Purchase Order Number'
-                                        ? FontWeight.bold
-                                        : FontWeight.normal,
+                                            ? FontWeight.bold
+                                            : FontWeight.normal,
                                     color: Colors.black,
                                   ),
                                 ),
@@ -1110,7 +1110,7 @@ class _ManageOrderScreenState extends State<ManageOrderScreen> {
                                           ],
                                         ),
 
-                                        // Action buttons (Delete, Update, View)
+                                        // Action buttons (Delete, Update, View, Track)
                                         Padding(
                                           padding: const EdgeInsets.only(
                                             top: 10,
@@ -1201,7 +1201,7 @@ class _ManageOrderScreenState extends State<ManageOrderScreen> {
                                                 ),
                                                 child: TextButton(
                                                   onPressed: () {
-                                                    // Navigate to UpdateOrderScreen
+                                                    // Navigate to ViewOrderScreen
                                                     Navigator.push(
                                                       context,
                                                       MaterialPageRoute(
@@ -1227,6 +1227,45 @@ class _ManageOrderScreenState extends State<ManageOrderScreen> {
                                                   ),
                                                   child: Text(
                                                     'View',
+                                                    style: TextStyle(
+                                                      fontSize: 16,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: primaryColor,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+
+                                              // Track button - Added
+                                              Container(
+                                                margin: const EdgeInsets.only(
+                                                  left: 12,
+                                                ),
+                                                child: TextButton(
+                                                  onPressed: () {
+                                                    // Navigate to TrackRecordScreen
+                                                    Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                        builder: (context) => TrackRecordScreen(
+                                                          purchaseOrderNumber:
+                                                              order['poNumber']!,
+                                                          clientName:
+                                                              order['clientName']!,
+                                                        ),
+                                                      ),
+                                                    );
+                                                  },
+                                                  style: TextButton.styleFrom(
+                                                    padding:
+                                                        const EdgeInsets.symmetric(
+                                                          horizontal: 20,
+                                                          vertical: 8,
+                                                        ),
+                                                  ),
+                                                  child: Text(
+                                                    'Track',
                                                     style: TextStyle(
                                                       fontSize: 16,
                                                       fontWeight:

@@ -28,23 +28,23 @@ class _ManageEmployeeAccountScreenState extends State<ManageEmployeeAccountScree
       'role': 'Owner',
     },
     {
-      'name': 'Maria Santos',
-      'email': 'mariasantos@email.com',
+      'name': 'Will Byers',
+      'email': 'willbyers@email.com',
       'role': 'Employee',
     },
     {
-      'name': 'Pedro Reyes',
-      'email': 'pedroreyes@email.com',
+      'name': 'Mike Wheelers',
+      'email': 'mikewheelers@email.com',
       'role': 'Employee',
     },
     {
-      'name': 'Ana Torres',
-      'email': 'anatorres@email.com',
+      'name': 'Steve Harrington',
+      'email': 'steve_har@email.com',
       'role': 'Employee',
     },
     {
-      'name': 'Carlos Lim',
-      'email': 'carloslim@email.com',
+      'name': 'Jim Hopper',
+      'email': 'jim_hopper@email.com',
       'role': 'Employee',
     },
   ];

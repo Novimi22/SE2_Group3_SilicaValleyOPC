@@ -512,7 +512,7 @@ class _ApproveOrderScreenState extends State<ApproveOrderScreen> {
     );
   }
 
-  // NEW: Generic Confirmation Dialog
+  // Generic Confirmation Dialog
   void _showConfirmationDialog({
     required BuildContext context,
     required String title,
@@ -916,7 +916,7 @@ class _ApproveOrderScreenState extends State<ApproveOrderScreen> {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
-                                          // PO Number (bold, black, larger text)
+                                          // PO Number 
                                           Text(
                                             order['poNumber']!,
                                             style: const TextStyle(
@@ -927,7 +927,7 @@ class _ApproveOrderScreenState extends State<ApproveOrderScreen> {
                                           ),
                                           const SizedBox(height: 8),
 
-                                          // Last Updated (gray, smaller text)
+                                          // Last Updated 
                                           Text(
                                             'Last Updated: ${order['lastUpdated']!}',
                                             style: TextStyle(
