@@ -1,11 +1,10 @@
-// TODO: Make it parameter-based (owner and employee)
-
 import 'package:flutter/material.dart';
+import 'package:draft_screens/constants/colors.dart';
+
 import 'package:draft_screens/screens/owner_only/owner_dashboard.dart';
 import 'package:draft_screens/screens/employee_only/employee_dashboard.dart';
 import 'package:draft_screens/screens/manage_order/update_order.dart';
 import 'package:draft_screens/screens/manage_order/view_order.dart';
-import 'package:draft_screens/screens/track_order/track_order.dart';
 
 class ManageOrderScreen extends StatefulWidget {
   final String userType;
@@ -17,16 +16,6 @@ class ManageOrderScreen extends StatefulWidget {
 }
 
 class _ManageOrderScreenState extends State<ManageOrderScreen> {
-  // Color constants
-  static const Color appBarColor = Color(0xFFE8B73A);
-  static const Color primaryColor = Color(0xFFCC9304);
-  static const Color borderColor = Color(0xFFD0D0D0);
-  static const Color lightGrayColor = Color(0xFFF5F5F5);
-  static const Color darkGrayColor = Color(0xFFCDCCCC);
-  static const Color textGrayColor = Color(0xFF9E9E9E);
-  static const Color tileColor = Color(0xFFF4F4FA);
-  static const Color dialogBackgroundColor = Color(0xFFFFFBFB);
-  static const Color deleteButtonColor = Color(0xFFB71B1B);
 
   // Filter state
   String _selectedSortBy = 'Creation Date';
@@ -199,7 +188,7 @@ class _ManageOrderScreenState extends State<ManageOrderScreen> {
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(12),
-                        border: Border.all(color: darkGrayColor, width: 1),
+                        border: Border.all(color: AppColors.darkGrayColor, width: 1),
                       ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -209,10 +198,10 @@ class _ManageOrderScreenState extends State<ManageOrderScreen> {
                             width: double.infinity,
                             padding: const EdgeInsets.all(12),
                             decoration: BoxDecoration(
-                              color: lightGrayColor,
+                              color: AppColors.lightGrayColor,
                               borderRadius: BorderRadius.circular(8),
                               border: Border.all(
-                                color: darkGrayColor,
+                                color: AppColors.darkGrayColor,
                                 width: 1,
                               ),
                             ),
@@ -251,7 +240,7 @@ class _ManageOrderScreenState extends State<ManageOrderScreen> {
                                       dialogSortBy = value!;
                                     });
                                   },
-                                  activeColor: primaryColor,
+                                  activeColor: AppColors.primaryColor,
                                 ),
                               ],
                             ),
@@ -283,7 +272,7 @@ class _ManageOrderScreenState extends State<ManageOrderScreen> {
                                       dialogSortBy = value!;
                                     });
                                   },
-                                  activeColor: primaryColor,
+                                  activeColor: AppColors.primaryColor,
                                 ),
                               ],
                             ),
@@ -314,7 +303,7 @@ class _ManageOrderScreenState extends State<ManageOrderScreen> {
                                       dialogSortBy = value!;
                                     });
                                   },
-                                  activeColor: primaryColor,
+                                  activeColor: AppColors.primaryColor,
                                 ),
                               ],
                             ),
@@ -345,7 +334,7 @@ class _ManageOrderScreenState extends State<ManageOrderScreen> {
                                       dialogSortBy = value!;
                                     });
                                   },
-                                  activeColor: primaryColor,
+                                  activeColor: AppColors.primaryColor,
                                 ),
                               ],
                             ),
@@ -358,10 +347,10 @@ class _ManageOrderScreenState extends State<ManageOrderScreen> {
                             width: double.infinity,
                             padding: const EdgeInsets.all(12),
                             decoration: BoxDecoration(
-                              color: lightGrayColor,
+                              color: AppColors.lightGrayColor,
                               borderRadius: BorderRadius.circular(8),
                               border: Border.all(
-                                color: darkGrayColor,
+                                color: AppColors.darkGrayColor,
                                 width: 1,
                               ),
                             ),
@@ -400,7 +389,7 @@ class _ManageOrderScreenState extends State<ManageOrderScreen> {
                                       dialogSortOrder = value!;
                                     });
                                   },
-                                  activeColor: primaryColor,
+                                  activeColor: AppColors.primaryColor,
                                 ),
                               ],
                             ),
@@ -431,7 +420,7 @@ class _ManageOrderScreenState extends State<ManageOrderScreen> {
                                       dialogSortOrder = value!;
                                     });
                                   },
-                                  activeColor: primaryColor,
+                                  activeColor: AppColors.primaryColor,
                                 ),
                               ],
                             ),
@@ -457,7 +446,7 @@ class _ManageOrderScreenState extends State<ManageOrderScreen> {
                                 Navigator.of(context).pop();
                               },
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: primaryColor,
+                                backgroundColor: AppColors.primaryColor,
                                 foregroundColor: Colors.white,
                                 padding: const EdgeInsets.symmetric(
                                   vertical: 12,
@@ -510,7 +499,7 @@ class _ManageOrderScreenState extends State<ManageOrderScreen> {
               ),
               child: Container(
                 decoration: BoxDecoration(
-                  color: dialogBackgroundColor,
+                  color: AppColors.dialogBgColor,
                   borderRadius: BorderRadius.circular(20),
                   boxShadow: [
                     BoxShadow(
@@ -544,7 +533,7 @@ class _ManageOrderScreenState extends State<ManageOrderScreen> {
                         child: Text(
                           'Re-enter Purchase Order Number to confirm deletion',
                           textAlign: TextAlign.center,
-                          style: TextStyle(fontSize: 16, color: textGrayColor),
+                          style: TextStyle(fontSize: 16, color: AppColors.grayColor),
                         ),
                       ),
 
@@ -666,7 +655,7 @@ class _ManageOrderScreenState extends State<ManageOrderScreen> {
                             _performDeleteOrder(poNumber, clientName);
                           },
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: primaryColor,
+                            backgroundColor: AppColors.primaryColor,
                             foregroundColor: Colors.white,
                             elevation: 5.0,
                             padding: const EdgeInsets.symmetric(
@@ -770,7 +759,7 @@ class _ManageOrderScreenState extends State<ManageOrderScreen> {
         preferredSize: const Size.fromHeight(80),
         child: Container(
           decoration: BoxDecoration(
-            color: appBarColor,
+            color: AppColors.appBarColor,
             boxShadow: [
               BoxShadow(
                 color: Colors.black.withOpacity(0.3),
@@ -857,14 +846,14 @@ class _ManageOrderScreenState extends State<ManageOrderScreen> {
                           height: 50,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(25),
-                            border: Border.all(color: borderColor),
+                            border: Border.all(color: AppColors.borderColor),
                           ),
                           child: Row(
                             children: [
                               const SizedBox(width: 16),
                               const Icon(
                                 Icons.search,
-                                color: textGrayColor,
+                                color: AppColors.grayColor,
                                 size: 20,
                               ),
                               const SizedBox(width: 12),
@@ -874,7 +863,7 @@ class _ManageOrderScreenState extends State<ManageOrderScreen> {
                                   decoration: InputDecoration(
                                     hintText:
                                         'Search by PO number or client name...',
-                                    hintStyle: TextStyle(color: textGrayColor),
+                                    hintStyle: TextStyle(color: AppColors.grayColor),
                                     border: InputBorder.none,
                                     contentPadding: EdgeInsets.zero,
                                   ),
@@ -895,7 +884,7 @@ class _ManageOrderScreenState extends State<ManageOrderScreen> {
                                       margin: const EdgeInsets.only(right: 8),
                                       child: const Icon(
                                         Icons.close,
-                                        color: textGrayColor,
+                                        color: AppColors.grayColor,
                                         size: 18,
                                       ),
                                     ),
@@ -916,7 +905,7 @@ class _ManageOrderScreenState extends State<ManageOrderScreen> {
                         height: 50,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(25),
-                          border: Border.all(color: borderColor),
+                          border: Border.all(color: AppColors.borderColor),
                         ),
                         child: Material(
                           color: Colors.transparent,
@@ -948,7 +937,7 @@ class _ManageOrderScreenState extends State<ManageOrderScreen> {
                     width: 700,
                     margin: const EdgeInsets.symmetric(horizontal: 25),
                     decoration: BoxDecoration(
-                      border: Border.all(color: borderColor, width: 1),
+                      border: Border.all(color: AppColors.borderColor, width: 1),
                     ),
                     child: Column(
                       children: [
@@ -960,7 +949,7 @@ class _ManageOrderScreenState extends State<ManageOrderScreen> {
                               'No orders found${_searchController.text.isNotEmpty ? ' for "${_searchController.text}"' : ''}',
                               style: TextStyle(
                                 fontSize: 16,
-                                color: textGrayColor,
+                                color: AppColors.grayColor,
                               ),
                             ),
                           ),
@@ -974,11 +963,11 @@ class _ManageOrderScreenState extends State<ManageOrderScreen> {
                           return Container(
                             width: double.infinity,
                             decoration: BoxDecoration(
-                              color: tileColor,
+                              color: AppColors.tile2Color,
                               border: index > 0
                                   ? const Border(
                                       top: BorderSide(
-                                        color: borderColor,
+                                        color: AppColors.borderColor,
                                         width: 1,
                                       ),
                                     )
@@ -1001,7 +990,7 @@ class _ManageOrderScreenState extends State<ManageOrderScreen> {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
-                                          // PO Number (bold, black, larger text)
+                                          // PO Number 
                                           Text(
                                             order['poNumber']!,
                                             style: const TextStyle(
@@ -1012,26 +1001,26 @@ class _ManageOrderScreenState extends State<ManageOrderScreen> {
                                           ),
                                           const SizedBox(height: 8),
 
-                                          // Last Updated (gray, smaller text)
+                                          // Last Updated 
                                           Text(
                                             'Last Updated: ${order['lastUpdated']!}',
                                             style: TextStyle(
                                               fontSize: 14,
-                                              color: textGrayColor,
+                                              color: AppColors.grayColor,
                                             ),
                                           ),
                                         ],
                                       ),
                                     ),
 
-                                    // Expand button (centered vertically)
+                                    // Expand button 
                                     Container(
                                       height: 40,
                                       width: 40,
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(20),
                                         border: Border.all(
-                                          color: darkGrayColor,
+                                          color: AppColors.darkGrayColor,
                                         ),
                                       ),
                                       child: Material(
@@ -1051,7 +1040,7 @@ class _ManageOrderScreenState extends State<ManageOrderScreen> {
                                             isExpanded
                                                 ? Icons.expand_less
                                                 : Icons.expand_more,
-                                            color: darkGrayColor,
+                                            color: AppColors.darkGrayColor,
                                             size: 24,
                                           ),
                                         ),
@@ -1076,14 +1065,14 @@ class _ManageOrderScreenState extends State<ManageOrderScreen> {
                                               style: TextStyle(
                                                 fontSize: 14,
                                                 fontWeight: FontWeight.w500,
-                                                color: textGrayColor,
+                                                color: AppColors.grayColor,
                                               ),
                                             ),
                                             Text(
                                               order['clientName']!,
                                               style: TextStyle(
                                                 fontSize: 14,
-                                                color: textGrayColor,
+                                                color: AppColors.grayColor,
                                               ),
                                             ),
                                           ],
@@ -1097,14 +1086,14 @@ class _ManageOrderScreenState extends State<ManageOrderScreen> {
                                               style: TextStyle(
                                                 fontSize: 14,
                                                 fontWeight: FontWeight.w500,
-                                                color: textGrayColor,
+                                                color: AppColors.grayColor,
                                               ),
                                             ),
                                             Text(
                                               order['creationDate']!,
                                               style: TextStyle(
                                                 fontSize: 14,
-                                                color: textGrayColor,
+                                                color: AppColors.grayColor,
                                               ),
                                             ),
                                           ],
@@ -1118,14 +1107,14 @@ class _ManageOrderScreenState extends State<ManageOrderScreen> {
                                               style: TextStyle(
                                                 fontSize: 14,
                                                 fontWeight: FontWeight.w500,
-                                                color: textGrayColor,
+                                                color: AppColors.grayColor,
                                               ),
                                             ),
                                             Text(
                                               order['netPrice']!,
                                               style: TextStyle(
                                                 fontSize: 14,
-                                                color: textGrayColor,
+                                                color: AppColors.grayColor,
                                               ),
                                             ),
                                           ],
@@ -1166,7 +1155,7 @@ class _ManageOrderScreenState extends State<ManageOrderScreen> {
                                                       fontSize: 16,
                                                       fontWeight:
                                                           FontWeight.bold,
-                                                      color: primaryColor,
+                                                      color: AppColors.primaryColor,
                                                     ),
                                                   ),
                                                 ),
@@ -1209,7 +1198,7 @@ class _ManageOrderScreenState extends State<ManageOrderScreen> {
                                                       fontSize: 16,
                                                       fontWeight:
                                                           FontWeight.bold,
-                                                      color: primaryColor,
+                                                      color: AppColors.primaryColor,
                                                     ),
                                                   ),
                                                 ),
@@ -1252,48 +1241,7 @@ class _ManageOrderScreenState extends State<ManageOrderScreen> {
                                                       fontSize: 16,
                                                       fontWeight:
                                                           FontWeight.bold,
-                                                      color: primaryColor,
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-
-                                              // Track button - Added
-                                              Container(
-                                                margin: const EdgeInsets.only(
-                                                  left: 12,
-                                                ),
-                                                child: TextButton(
-                                                  onPressed: () {
-                                                    // Navigate to TrackRecordScreen
-                                                    Navigator.push(
-                                                      context,
-                                                      MaterialPageRoute(
-                                                        builder: (context) =>
-                                                            TrackRecordScreen(
-                                                              purchaseOrderNumber:
-                                                                  order['poNumber']!,
-                                                              clientName:
-                                                                  order['clientName']!,
-                                                            ),
-                                                      ),
-                                                    );
-                                                  },
-                                                  style: TextButton.styleFrom(
-                                                    padding:
-                                                        const EdgeInsets.symmetric(
-                                                          horizontal: 20,
-                                                          vertical: 8,
-                                                        ),
-                                                  ),
-                                                  // TODO: Remove after track order record is fixed
-                                                  child: Text(
-                                                    'Track',
-                                                    style: TextStyle(
-                                                      fontSize: 16,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      color: primaryColor,
+                                                      color: AppColors.primaryColor,
                                                     ),
                                                   ),
                                                 ),
@@ -1318,7 +1266,7 @@ class _ManageOrderScreenState extends State<ManageOrderScreen> {
                               style: TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.bold,
-                                color: textGrayColor,
+                                color: AppColors.grayColor,
                               ),
                               textAlign: TextAlign.center,
                             ),

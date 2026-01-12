@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:draft_screens/constants/colors.dart';
 import 'package:draft_screens/screens/employee_only/employee_dashboard.dart';
 
 class CreateOrderFullScreenDialog extends StatefulWidget {
@@ -18,14 +19,6 @@ class CreateOrderFullScreenDialog extends StatefulWidget {
 
 class _CreateOrderFullScreenDialogState
     extends State<CreateOrderFullScreenDialog> {
-  // Color constants
-  static const Color primaryColor = Color(0xFFCC9304);
-  static const Color appBarColor = Color(0xFFE8B73A);
-  static const Color grayColor = Color(0xFF9E9E9E);
-  static const Color borderColor = Color(0xFFD0D0D0);
-  static const Color infoBoxColor = Color(0xFFF3F3F8);
-  static const Color tableHeaderColor = Color(0xFF258651);
-  static const Color iconGrayColor = Color(0xFF636363);
 
   // Order details
   DateTime orderDate = DateTime.now();
@@ -235,7 +228,7 @@ class _CreateOrderFullScreenDialogState
         preferredSize: const Size.fromHeight(80),
         child: Container(
           decoration: BoxDecoration(
-            color: appBarColor,
+            color: AppColors.appBarColor,
             boxShadow: [
               BoxShadow(
                 color: Colors.black.withOpacity(0.3),
@@ -243,7 +236,7 @@ class _CreateOrderFullScreenDialogState
                 offset: const Offset(0, 4),
               ),
             ],
-            border: Border(bottom: BorderSide(color: borderColor, width: 1)),
+            border: Border(bottom: BorderSide(color: AppColors.borderColor, width: 1)),
           ),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -356,7 +349,7 @@ class _CreateOrderFullScreenDialogState
                   // Purchase Order Number section
                   Text(
                     'Purchase Order Number:',
-                    style: TextStyle(fontSize: 14, color: grayColor),
+                    style: TextStyle(fontSize: 14, color: AppColors.grayColor),
                   ),
                   const SizedBox(height: 8),
                   Text(
@@ -375,9 +368,9 @@ class _CreateOrderFullScreenDialogState
                     width: double.infinity,
                     padding: const EdgeInsets.all(20),
                     decoration: BoxDecoration(
-                      color: infoBoxColor,
+                      color: AppColors.infoBoxColor,
                       borderRadius: BorderRadius.circular(10),
-                      border: Border.all(color: borderColor, width: 1),
+                      border: Border.all(color: AppColors.borderColor, width: 1),
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -388,7 +381,7 @@ class _CreateOrderFullScreenDialogState
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
-                            color: primaryColor,
+                            color: AppColors.primaryColor,
                           ),
                         ),
 
@@ -455,14 +448,14 @@ class _CreateOrderFullScreenDialogState
                                 style: TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,
-                                  color: tableHeaderColor,
+                                  color: AppColors.tableHeaderColor,
                                 ),
                               ),
                               TextSpan(
                                 text: '₱${netPrice.toStringAsFixed(2)}',
                                 style: TextStyle(
                                   fontSize: 16,
-                                  color: tableHeaderColor,
+                                  color: AppColors.tableHeaderColor,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
@@ -488,14 +481,14 @@ class _CreateOrderFullScreenDialogState
                             style: TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
-                              color: primaryColor,
+                              color: AppColors.primaryColor,
                             ),
                           ),
 
                           // Add Item button - only show if not confirmed
                           if (!isConfirmed)
                             Material(
-                              color: primaryColor,
+                              color: AppColors.primaryColor,
                               borderRadius: BorderRadius.circular(8),
                               child: InkWell(
                                 onTap: () {
@@ -546,7 +539,7 @@ class _CreateOrderFullScreenDialogState
                             if (items.isNotEmpty)
                               Container(
                                 decoration: BoxDecoration(
-                                  border: Border.all(color: borderColor),
+                                  border: Border.all(color: AppColors.borderColor),
                                 ),
                                 child: Table(
                                   columnWidths: {
@@ -597,9 +590,9 @@ class _CreateOrderFullScreenDialogState
                               Container(
                                 decoration: BoxDecoration(
                                   border: Border(
-                                    left: BorderSide(color: borderColor),
-                                    right: BorderSide(color: borderColor),
-                                    bottom: BorderSide(color: borderColor),
+                                    left: BorderSide(color: AppColors.borderColor),
+                                    right: BorderSide(color: AppColors.borderColor),
+                                    bottom: BorderSide(color: AppColors.borderColor),
                                   ),
                                 ),
                                 child: Column(
@@ -816,11 +809,11 @@ class _CreateOrderFullScreenDialogState
                                                         icon: Icon(
                                                           Icons.edit,
                                                           color: isEditing
-                                                              ? iconGrayColor
+                                                              ? AppColors.iconGrayColor
                                                                   .withOpacity(
                                                                     0.3,
                                                                   )
-                                                            : iconGrayColor,
+                                                            : AppColors.iconGrayColor,
                                                           size: 18,
                                                         ),
                                                         padding: EdgeInsets.zero,
@@ -840,7 +833,7 @@ class _CreateOrderFullScreenDialogState
                                                         },
                                                         icon: Icon(
                                                           Icons.delete_outline,
-                                                          color: iconGrayColor,
+                                                          color: AppColors.iconGrayColor,
                                                           size: 18,
                                                         ),
                                                         padding: EdgeInsets.zero,
@@ -868,7 +861,7 @@ class _CreateOrderFullScreenDialogState
                                 padding: const EdgeInsets.all(40),
                                 width: double.infinity,
                                 decoration: BoxDecoration(
-                                  border: Border.all(color: borderColor),
+                                  border: Border.all(color: AppColors.borderColor),
                                 ),
                                 child: Text(
                                   isConfirmed
@@ -877,7 +870,7 @@ class _CreateOrderFullScreenDialogState
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     fontSize: 16,
-                                    color: grayColor,
+                                    color: AppColors.grayColor,
                                   ),
                                 ),
                               ),

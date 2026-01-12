@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:draft_screens/constants/colors.dart';
+
 import 'package:draft_screens/screens/owner_only/manage_employee_account/manage_employee_account.dart';
 import 'package:draft_screens/screens/owner_only/owner_dashboard.dart';
 
@@ -10,12 +12,6 @@ class OwnerLandingPage extends StatefulWidget {
 }
 
 class _OwnerLandingPageState extends State<OwnerLandingPage> {
-  // Color constants as specified
-  static const Color circleColor = Color(0xFFFFD15E); // Circle color
-  static const Color tileColor = Color(0xFFFFEAB5); // Tile background color
-  static const Color smallTextColor = Color(0xFF5F5F5F); // Smaller text color
-  static const Color largeTextColor = Color(0xFF202020); // Larger text color
-  static const Color grayColor = Color(0xFF9E9E9E);
 
   @override
   Widget build(BuildContext context) {
@@ -99,7 +95,7 @@ class _OwnerLandingPageState extends State<OwnerLandingPage> {
           // Subtitle text
           Text(
             'Continue to:',
-            style: TextStyle(fontSize: 14, color: grayColor),
+            style: TextStyle(fontSize: 14, color: AppColors.grayColor),
           ),
           const SizedBox(height: 40),
 
@@ -118,7 +114,7 @@ class _OwnerLandingPageState extends State<OwnerLandingPage> {
               margin: const EdgeInsets.only(bottom: 50),
               padding: const EdgeInsets.all(40),
               decoration: BoxDecoration(
-                color: tileColor,
+                color: AppColors.tileColor,
                 borderRadius: BorderRadius.circular(20),
                 boxShadow: [
                   BoxShadow(
@@ -135,7 +131,7 @@ class _OwnerLandingPageState extends State<OwnerLandingPage> {
                     width: 100,
                     height: 100,
                     decoration: BoxDecoration(
-                      color: circleColor,
+                      color: AppColors.circleColor,
                       shape: BoxShape.circle,
                     ),
                     child: Center(
@@ -158,7 +154,7 @@ class _OwnerLandingPageState extends State<OwnerLandingPage> {
                           'Manage',
                           style: TextStyle(
                             fontSize: 14,
-                            color: smallTextColor,
+                            color: AppColors.smallTextColor,
                             fontWeight: FontWeight.w500,
                           ),
                         ),
@@ -168,7 +164,7 @@ class _OwnerLandingPageState extends State<OwnerLandingPage> {
                           'Employee Account',
                           style: TextStyle(
                             fontSize: 18,
-                            color: largeTextColor,
+                            color: AppColors.largeTextColor,
                             fontWeight: FontWeight.w700,
                           ),
                         ),
@@ -194,7 +190,7 @@ class _OwnerLandingPageState extends State<OwnerLandingPage> {
               width: 700,
               padding: const EdgeInsets.all(40),
               decoration: BoxDecoration(
-                color: tileColor,
+                color: AppColors.tileColor,
                 borderRadius: BorderRadius.circular(20),
                 boxShadow: [
                   BoxShadow(
@@ -211,7 +207,7 @@ class _OwnerLandingPageState extends State<OwnerLandingPage> {
                     width: 100,
                     height: 100,
                     decoration: BoxDecoration(
-                      color: circleColor,
+                      color: AppColors.circleColor,
                       shape: BoxShape.circle,
                     ),
                     child: Center(
@@ -234,7 +230,7 @@ class _OwnerLandingPageState extends State<OwnerLandingPage> {
                           'Owner',
                           style: TextStyle(
                             fontSize: 14,
-                            color: smallTextColor,
+                            color: AppColors.smallTextColor,
                             fontWeight: FontWeight.w500,
                           ),
                         ),
@@ -244,7 +240,7 @@ class _OwnerLandingPageState extends State<OwnerLandingPage> {
                           'Dashboard',
                           style: TextStyle(
                             fontSize: 18,
-                            color: largeTextColor,
+                            color: AppColors.largeTextColor,
                             fontWeight: FontWeight.w700,
                           ),
                         ),

@@ -1,8 +1,10 @@
+import 'package:flutter/material.dart';
+import 'package:draft_screens/constants/colors.dart';
+
 import 'package:draft_screens/screens/histories/order_act_history.dart';
 import 'package:draft_screens/screens/manage_order/gen_manage_order.dart';
 import 'package:draft_screens/screens/owner_only/approve_order.dart';
 import 'package:draft_screens/screens/track_order/track_order_searchpage.dart';
-import 'package:flutter/material.dart';
 import 'package:draft_screens/screens/all_logins/signin_screen.dart';
 
 class OwnerDashboardScreen extends StatefulWidget {
@@ -13,13 +15,6 @@ class OwnerDashboardScreen extends StatefulWidget {
 }
 
 class _OwnerDashboardScreenState extends State<OwnerDashboardScreen> {
-  // Color constants
-  static const Color circleColor = Color(0xFFFFD15E);
-  static const Color tileColor = Color(0xFFFFEAB5);
-  static const Color smallTextColor = Color(0xFF5F5F5F);
-  static const Color largeTextColor = Color(0xFF202020);
-  static const Color grayColor = Color(0xFF9E9E9E);
-  static const Color appBarColor = Color(0xFFE8B73A);
 
   // hardcoded username
   final String userName = "Juan Dela Cruz";
@@ -31,7 +26,7 @@ class _OwnerDashboardScreenState extends State<OwnerDashboardScreen> {
         preferredSize: const Size.fromHeight(80),
         child: Container(
           decoration: BoxDecoration(
-            color: appBarColor,
+            color: AppColors.appBarColor,
             boxShadow: [
               BoxShadow(
                 color: Colors.black.withOpacity(0.3),
@@ -123,7 +118,7 @@ class _OwnerDashboardScreenState extends State<OwnerDashboardScreen> {
                               'Welcome,',
                               style: TextStyle(
                                 fontSize: 16,
-                                color: grayColor,
+                                color: AppColors.grayColor,
                                 fontWeight: FontWeight.w500,
                               ),
                             ),
@@ -319,7 +314,7 @@ class _OwnerDashboardScreenState extends State<OwnerDashboardScreen> {
         width: double.infinity,
         padding: const EdgeInsets.all(20),
         decoration: BoxDecoration(
-          color: tileColor,
+          color: AppColors.tileColor,
           borderRadius: BorderRadius.circular(20),
           boxShadow: [
             BoxShadow(
@@ -335,7 +330,7 @@ class _OwnerDashboardScreenState extends State<OwnerDashboardScreen> {
               width: 70,
               height: 70,
               decoration: BoxDecoration(
-                color: circleColor,
+                color: AppColors.circleColor,
                 shape: BoxShape.circle,
               ),
               child: Center(
@@ -362,7 +357,7 @@ class _OwnerDashboardScreenState extends State<OwnerDashboardScreen> {
                     smallText,
                     style: TextStyle(
                       fontSize: 13,
-                      color: smallTextColor,
+                      color: AppColors.smallTextColor,
                       fontWeight: FontWeight.w500,
                     ),
                   ),
@@ -372,7 +367,7 @@ class _OwnerDashboardScreenState extends State<OwnerDashboardScreen> {
                     largeText,
                     style: TextStyle(
                       fontSize: 16,
-                      color: largeTextColor,
+                      color: AppColors.largeTextColor,
                       fontWeight: FontWeight.w700,
                     ),
                   ),
@@ -397,7 +392,7 @@ class _OwnerDashboardScreenState extends State<OwnerDashboardScreen> {
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text('Cancel', style: TextStyle(color: grayColor)),
+              child: Text('Cancel', style: TextStyle(color: AppColors.grayColor)),
             ),
             TextButton(
               onPressed: () {

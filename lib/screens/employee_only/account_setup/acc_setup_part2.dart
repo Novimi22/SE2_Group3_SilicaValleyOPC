@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:draft_screens/constants/colors.dart';
 import 'package:draft_screens/screens/employee_only/account_setup/defaultpass_change_success.dart';
 
 class CreatePasswordScreen2 extends StatefulWidget {
@@ -9,11 +10,6 @@ class CreatePasswordScreen2 extends StatefulWidget {
 }
 
 class _CreatePasswordScreen2State extends State<CreatePasswordScreen2> {
-  // Color constants
-  static const Color appBarColor = Color(0xFFE8B73A);
-  static const Color primaryColor = Color(0xFFCC9304);
-  static const Color grayColor = Color(0xFF9E9E9E);
-  static const Color borderColor = Color(0xFF19191B);
 
   // Track password values
   String _newPasswordValue = '';
@@ -66,7 +62,7 @@ class _CreatePasswordScreen2State extends State<CreatePasswordScreen2> {
         preferredSize: const Size.fromHeight(80),
         child: Container(
           decoration: BoxDecoration(
-            color: appBarColor,
+            color: AppColors.appBarColor,
             boxShadow: [
               BoxShadow(
                 color: Colors.black.withOpacity(0.3),
@@ -169,11 +165,11 @@ class _CreatePasswordScreen2State extends State<CreatePasswordScreen2> {
                                 hintText: 'Enter New Password',
                                 hintStyle: const TextStyle(color: Colors.black26),
                                 border: OutlineInputBorder(
-                                  borderSide: const BorderSide(color: borderColor),
+                                  borderSide: const BorderSide(color: AppColors.borderColor),
                                   borderRadius: BorderRadius.circular(10),
                                 ),
                                 enabledBorder: OutlineInputBorder(
-                                  borderSide: const BorderSide(color: borderColor),
+                                  borderSide: const BorderSide(color: AppColors.borderColor),
                                   borderRadius: BorderRadius.circular(10),
                                 ),
                                 contentPadding: const EdgeInsets.all(16),
@@ -182,7 +178,7 @@ class _CreatePasswordScreen2State extends State<CreatePasswordScreen2> {
                                     _obscureNewPassword
                                         ? Icons.visibility_off
                                         : Icons.visibility,
-                                    color: grayColor,
+                                    color: AppColors.grayColor,
                                   ),
                                   onPressed: () {
                                     setState(() {
@@ -206,7 +202,7 @@ class _CreatePasswordScreen2State extends State<CreatePasswordScreen2> {
                                 child: Text(
                                   'Must be at least 8 characters.',
                                   style: TextStyle(
-                                    color: grayColor,
+                                    color: AppColors.grayColor,
                                     fontSize: 12,
                                   ),
                                 ),
@@ -256,11 +252,11 @@ class _CreatePasswordScreen2State extends State<CreatePasswordScreen2> {
                                 hintText: 'Enter Confirm Password',
                                 hintStyle: const TextStyle(color: Colors.black26),
                                 border: OutlineInputBorder(
-                                  borderSide: const BorderSide(color: borderColor),
+                                  borderSide: const BorderSide(color: AppColors.borderColor),
                                   borderRadius: BorderRadius.circular(10),
                                 ),
                                 enabledBorder: OutlineInputBorder(
-                                  borderSide: const BorderSide(color: borderColor),
+                                  borderSide: const BorderSide(color: AppColors.borderColor),
                                   borderRadius: BorderRadius.circular(10),
                                 ),
                                 contentPadding: const EdgeInsets.all(16),
@@ -269,7 +265,7 @@ class _CreatePasswordScreen2State extends State<CreatePasswordScreen2> {
                                     _obscureConfirmPassword
                                         ? Icons.visibility_off
                                         : Icons.visibility,
-                                    color: grayColor,
+                                    color: AppColors.grayColor,
                                   ),
                                   onPressed: () {
                                     setState(() {
@@ -293,7 +289,7 @@ class _CreatePasswordScreen2State extends State<CreatePasswordScreen2> {
                                 child: Text(
                                   'Both passwords must match.',
                                   style: TextStyle(
-                                    color: grayColor,
+                                    color: AppColors.grayColor,
                                     fontSize: 12,
                                   ),
                                 ),
@@ -358,7 +354,7 @@ class _CreatePasswordScreen2State extends State<CreatePasswordScreen2> {
                               : null,
                           style: ElevatedButton.styleFrom(
                             backgroundColor: _isResetPassButtonEnabled
-                                ? primaryColor
+                                ? AppColors.primaryColor
                                 : Colors.grey[400],
                             foregroundColor: Colors.white,
                             elevation: 5.0,

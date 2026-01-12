@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:draft_screens/constants/colors.dart';
 import 'package:draft_screens/screens/manage_order/view_order.dart';
 
 class ApproveOrderScreen extends StatefulWidget {
@@ -9,19 +10,10 @@ class ApproveOrderScreen extends StatefulWidget {
 }
 
 class _ApproveOrderScreenState extends State<ApproveOrderScreen> {
-  // Color constants
-  static const Color appBarColor = Color(0xFFE8B73A);
-  static const Color primaryColor = Color(0xFFCC9304);
-  static const Color borderColor = Color(0xFFD0D0D0);
-  static const Color lightGrayColor = Color(0xFFF5F5F5);
-  static const Color darkGrayColor = Color(0xFFCDCCCC);
-  static const Color textGrayColor = Color(0xFF9E9E9E);
-  static const Color tileColor = Color(0xFFF4F4FA);
-  static const Color dialogBackgroundColor = Color(0xFFFFFBFB);
   
-  // NEW COLORS for Approve and Reject buttons
-  static const Color approveButtonColor = Color(0xFF2E7D42);
-  static const Color rejectButtonColor = Color(0xFFB71B1B);
+  // For Approve and Reject buttons
+  static const Color greenColor = Color(0xFF2E7D42);
+  static const Color redColor = Color(0xFFB71B1B);
   static const Color snackbarGreenColor = Color(0xFF4CAF50);
 
   // Filter state
@@ -195,7 +187,7 @@ class _ApproveOrderScreenState extends State<ApproveOrderScreen> {
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(12),
-                        border: Border.all(color: darkGrayColor, width: 1),
+                        border: Border.all(color: AppColors.darkGrayColor, width: 1),
                       ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -205,10 +197,10 @@ class _ApproveOrderScreenState extends State<ApproveOrderScreen> {
                             width: double.infinity,
                             padding: const EdgeInsets.all(12),
                             decoration: BoxDecoration(
-                              color: lightGrayColor,
+                              color: AppColors.lightGrayColor,
                               borderRadius: BorderRadius.circular(8),
                               border: Border.all(
-                                color: darkGrayColor,
+                                color: AppColors.darkGrayColor,
                                 width: 1,
                               ),
                             ),
@@ -247,7 +239,7 @@ class _ApproveOrderScreenState extends State<ApproveOrderScreen> {
                                       dialogSortBy = value!;
                                     });
                                   },
-                                  activeColor: primaryColor,
+                                  activeColor: AppColors.primaryColor,
                                 ),
                               ],
                             ),
@@ -279,7 +271,7 @@ class _ApproveOrderScreenState extends State<ApproveOrderScreen> {
                                       dialogSortBy = value!;
                                     });
                                   },
-                                  activeColor: primaryColor,
+                                  activeColor: AppColors.primaryColor,
                                 ),
                               ],
                             ),
@@ -310,7 +302,7 @@ class _ApproveOrderScreenState extends State<ApproveOrderScreen> {
                                       dialogSortBy = value!;
                                     });
                                   },
-                                  activeColor: primaryColor,
+                                  activeColor: AppColors.primaryColor,
                                 ),
                               ],
                             ),
@@ -341,7 +333,7 @@ class _ApproveOrderScreenState extends State<ApproveOrderScreen> {
                                       dialogSortBy = value!;
                                     });
                                   },
-                                  activeColor: primaryColor,
+                                  activeColor: AppColors.primaryColor,
                                 ),
                               ],
                             ),
@@ -354,10 +346,10 @@ class _ApproveOrderScreenState extends State<ApproveOrderScreen> {
                             width: double.infinity,
                             padding: const EdgeInsets.all(12),
                             decoration: BoxDecoration(
-                              color: lightGrayColor,
+                              color: AppColors.lightGrayColor,
                               borderRadius: BorderRadius.circular(8),
                               border: Border.all(
-                                color: darkGrayColor,
+                                color: AppColors.darkGrayColor,
                                 width: 1,
                               ),
                             ),
@@ -396,7 +388,7 @@ class _ApproveOrderScreenState extends State<ApproveOrderScreen> {
                                       dialogSortOrder = value!;
                                     });
                                   },
-                                  activeColor: primaryColor,
+                                  activeColor: AppColors.primaryColor,
                                 ),
                               ],
                             ),
@@ -427,7 +419,7 @@ class _ApproveOrderScreenState extends State<ApproveOrderScreen> {
                                       dialogSortOrder = value!;
                                     });
                                   },
-                                  activeColor: primaryColor,
+                                  activeColor: AppColors.primaryColor,
                                 ),
                               ],
                             ),
@@ -453,7 +445,7 @@ class _ApproveOrderScreenState extends State<ApproveOrderScreen> {
                                 Navigator.of(context).pop();
                               },
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: primaryColor,
+                                backgroundColor: AppColors.primaryColor,
                                 foregroundColor: Colors.white,
                                 padding: const EdgeInsets.symmetric(
                                   vertical: 12,
@@ -491,7 +483,7 @@ class _ApproveOrderScreenState extends State<ApproveOrderScreen> {
       title: 'CONFIRM APPROVE?',
       message: 'Are you sure you want to approve this purchase order?\n\nOnce approved, it will be marked as an active order.',
       confirmButtonText: 'Confirm',
-      confirmButtonColor: primaryColor,
+      confirmButtonColor: AppColors.primaryColor,
       onConfirm: () {
         _performApproveOrder(poNumber, clientName);
       },
@@ -505,7 +497,7 @@ class _ApproveOrderScreenState extends State<ApproveOrderScreen> {
       title: 'CONFIRM REJECT?',
       message: 'Are you sure you want to reject this order?',
       confirmButtonText: 'Confirm',
-      confirmButtonColor: primaryColor,
+      confirmButtonColor: AppColors.primaryColor,
       onConfirm: () {
         _performRejectOrder(poNumber, clientName);
       },
@@ -531,7 +523,7 @@ class _ApproveOrderScreenState extends State<ApproveOrderScreen> {
           ),
           child: Container(
             decoration: BoxDecoration(
-              color: dialogBackgroundColor,
+              color: AppColors.dialogBgColor,
               borderRadius: BorderRadius.circular(20),
               boxShadow: [
                 BoxShadow(
@@ -567,7 +559,7 @@ class _ApproveOrderScreenState extends State<ApproveOrderScreen> {
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 16,
-                        color: textGrayColor,
+                        color: AppColors.grayColor,
                       ),
                     ),
                   ),
@@ -703,7 +695,7 @@ class _ApproveOrderScreenState extends State<ApproveOrderScreen> {
         preferredSize: const Size.fromHeight(80),
         child: Container(
           decoration: BoxDecoration(
-            color: appBarColor,
+            color: AppColors.appBarColor,
             boxShadow: [
               BoxShadow(
                 color: Colors.black.withOpacity(0.3),
@@ -773,14 +765,14 @@ class _ApproveOrderScreenState extends State<ApproveOrderScreen> {
                           height: 50,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(25),
-                            border: Border.all(color: borderColor),
+                            border: Border.all(color: AppColors.borderColor),
                           ),
                           child: Row(
                             children: [
                               const SizedBox(width: 16),
                               const Icon(
                                 Icons.search,
-                                color: textGrayColor,
+                                color: AppColors.grayColor,
                                 size: 20,
                               ),
                               const SizedBox(width: 12),
@@ -789,7 +781,7 @@ class _ApproveOrderScreenState extends State<ApproveOrderScreen> {
                                   controller: _searchController,
                                   decoration: const InputDecoration(
                                     hintText: 'Search by PO number or client name...',
-                                    hintStyle: TextStyle(color: textGrayColor),
+                                    hintStyle: TextStyle(color: AppColors.grayColor),
                                     border: InputBorder.none,
                                     contentPadding: EdgeInsets.zero,
                                   ),
@@ -810,7 +802,7 @@ class _ApproveOrderScreenState extends State<ApproveOrderScreen> {
                                       margin: const EdgeInsets.only(right: 8),
                                       child: const Icon(
                                         Icons.close,
-                                        color: textGrayColor,
+                                        color: AppColors.grayColor,
                                         size: 18,
                                       ),
                                     ),
@@ -831,7 +823,7 @@ class _ApproveOrderScreenState extends State<ApproveOrderScreen> {
                         height: 50,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(25),
-                          border: Border.all(color: borderColor),
+                          border: Border.all(color: AppColors.borderColor),
                         ),
                         child: Material(
                           color: Colors.transparent,
@@ -863,7 +855,7 @@ class _ApproveOrderScreenState extends State<ApproveOrderScreen> {
                     width: 700,
                     margin: const EdgeInsets.symmetric(horizontal: 25),
                     decoration: BoxDecoration(
-                      border: Border.all(color: borderColor, width: 1),
+                      border: Border.all(color: AppColors.borderColor, width: 1),
                     ),
                     child: Column(
                       children: [
@@ -875,7 +867,7 @@ class _ApproveOrderScreenState extends State<ApproveOrderScreen> {
                               'No orders found${_searchController.text.isNotEmpty ? ' for "${_searchController.text}"' : ''}',
                               style: TextStyle(
                                 fontSize: 16,
-                                color: textGrayColor,
+                                color: AppColors.grayColor,
                               ),
                             ),
                           ),
@@ -889,11 +881,11 @@ class _ApproveOrderScreenState extends State<ApproveOrderScreen> {
                           return Container(
                             width: double.infinity,
                             decoration: BoxDecoration(
-                              color: tileColor,
+                              color: AppColors.tileColor,
                               border: index > 0
                                   ? const Border(
                                       top: BorderSide(
-                                        color: borderColor,
+                                        color: AppColors.borderColor,
                                         width: 1,
                                       ),
                                     )
@@ -932,7 +924,7 @@ class _ApproveOrderScreenState extends State<ApproveOrderScreen> {
                                             'Last Updated: ${order['lastUpdated']!}',
                                             style: TextStyle(
                                               fontSize: 14,
-                                              color: textGrayColor,
+                                              color: AppColors.grayColor,
                                             ),
                                           ),
                                         ],
@@ -946,7 +938,7 @@ class _ApproveOrderScreenState extends State<ApproveOrderScreen> {
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(20),
                                         border: Border.all(
-                                          color: darkGrayColor,
+                                          color: AppColors.darkGrayColor,
                                         ),
                                       ),
                                       child: Material(
@@ -966,7 +958,7 @@ class _ApproveOrderScreenState extends State<ApproveOrderScreen> {
                                             isExpanded
                                                 ? Icons.expand_less
                                                 : Icons.expand_more,
-                                            color: darkGrayColor,
+                                            color: AppColors.darkGrayColor,
                                             size: 24,
                                           ),
                                         ),
@@ -991,14 +983,14 @@ class _ApproveOrderScreenState extends State<ApproveOrderScreen> {
                                               style: TextStyle(
                                                 fontSize: 14,
                                                 fontWeight: FontWeight.w500,
-                                                color: textGrayColor,
+                                                color: AppColors.grayColor,
                                               ),
                                             ),
                                             Text(
                                               order['clientName']!,
                                               style: TextStyle(
                                                 fontSize: 14,
-                                                color: textGrayColor,
+                                                color: AppColors.grayColor,
                                               ),
                                             ),
                                           ],
@@ -1012,14 +1004,14 @@ class _ApproveOrderScreenState extends State<ApproveOrderScreen> {
                                               style: TextStyle(
                                                 fontSize: 14,
                                                 fontWeight: FontWeight.w500,
-                                                color: textGrayColor,
+                                                color: AppColors.grayColor,
                                               ),
                                             ),
                                             Text(
                                               order['creationDate']!,
                                               style: TextStyle(
                                                 fontSize: 14,
-                                                color: textGrayColor,
+                                                color: AppColors.grayColor,
                                               ),
                                             ),
                                           ],
@@ -1033,14 +1025,14 @@ class _ApproveOrderScreenState extends State<ApproveOrderScreen> {
                                               style: TextStyle(
                                                 fontSize: 14,
                                                 fontWeight: FontWeight.w500,
-                                                color: textGrayColor,
+                                                color: AppColors.grayColor,
                                               ),
                                             ),
                                             Text(
                                               order['netPrice']!,
                                               style: TextStyle(
                                                 fontSize: 14,
-                                                color: textGrayColor,
+                                                color: AppColors.grayColor,
                                               ),
                                             ),
                                           ],
@@ -1079,7 +1071,7 @@ class _ApproveOrderScreenState extends State<ApproveOrderScreen> {
                                                     style: TextStyle(
                                                       fontSize: 16,
                                                       fontWeight: FontWeight.bold,
-                                                      color: approveButtonColor, // NEW COLOR
+                                                      color: greenColor, // NEW COLOR
                                                     ),
                                                   ),
                                                 ),
@@ -1109,7 +1101,7 @@ class _ApproveOrderScreenState extends State<ApproveOrderScreen> {
                                                     style: TextStyle(
                                                       fontSize: 16,
                                                       fontWeight: FontWeight.bold,
-                                                      color: rejectButtonColor, // NEW COLOR
+                                                      color: redColor, // NEW COLOR
                                                     ),
                                                   ),
                                                 ),
@@ -1150,7 +1142,7 @@ class _ApproveOrderScreenState extends State<ApproveOrderScreen> {
                                                     style: TextStyle(
                                                       fontSize: 16,
                                                       fontWeight: FontWeight.bold,
-                                                      color: primaryColor, // SAME COLOR
+                                                      color: AppColors.primaryColor, // SAME COLOR
                                                     ),
                                                   ),
                                                 ),
@@ -1175,7 +1167,7 @@ class _ApproveOrderScreenState extends State<ApproveOrderScreen> {
                               style: TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.bold,
-                                color: textGrayColor,
+                                color: AppColors.grayColor,
                               ),
                               textAlign: TextAlign.center,
                             ),

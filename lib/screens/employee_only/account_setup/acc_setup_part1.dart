@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:draft_screens/constants/colors.dart';
 import 'package:draft_screens/screens/employee_only/account_setup/acc_setup_part2.dart';
 
 class VerifyEmailScreen2 extends StatefulWidget {
@@ -9,9 +10,6 @@ class VerifyEmailScreen2 extends StatefulWidget {
 }
 
 class _VerifyEmailScreen2State extends State<VerifyEmailScreen2> {
-  // Color constants
-  static const Color appBarColor = Color(0xFFE8B73A);
-  static const Color grayColor = Color(0xFF9E9E9E);
 
   // Track OTP values
   final List<String> _otpValues = ['', '', '', '', ''];
@@ -93,7 +91,7 @@ class _VerifyEmailScreen2State extends State<VerifyEmailScreen2> {
         preferredSize: const Size.fromHeight(80),
         child: Container(
           decoration: BoxDecoration(
-            color: appBarColor,
+            color: AppColors.appBarColor,
             boxShadow: [
               BoxShadow(
                 color: Colors.black.withOpacity(0.3),
@@ -366,7 +364,7 @@ class _VerifyEmailScreen2State extends State<VerifyEmailScreen2> {
                           style: const TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
-                            color: grayColor,
+                            color: AppColors.grayColor,
                           ),
                         ),
                       ],

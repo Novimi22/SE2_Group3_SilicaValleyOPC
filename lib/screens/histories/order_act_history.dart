@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:draft_screens/constants/colors.dart';
 
 class OrderActivityHistoryScreen extends StatefulWidget {
   const OrderActivityHistoryScreen({super.key});
@@ -8,13 +9,6 @@ class OrderActivityHistoryScreen extends StatefulWidget {
 }
 
 class _OrderActivityHistoryScreenState extends State<OrderActivityHistoryScreen> {
-  // Color constants
-  static const Color appBarColor = Color(0xFFE8B73A);
-  static const Color primaryColor = Color(0xFFCC9304);
-  static const Color borderColor = Color(0xFFD0D0D0);
-  static const Color lightGrayColor = Color(0xFFF5F5F5);
-  static const Color darkGrayColor = Color(0xFFCDCCCC);
-  static const Color textGrayColor = Color(0xFF9E9E9E);
   
   // Filter state
   String _selectedSortBy = 'Modification Date';
@@ -181,7 +175,7 @@ class _OrderActivityHistoryScreenState extends State<OrderActivityHistoryScreen>
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(12),
-                        border: Border.all(color: darkGrayColor, width: 1),
+                        border: Border.all(color: AppColors.darkGrayColor, width: 1),
                       ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -191,9 +185,9 @@ class _OrderActivityHistoryScreenState extends State<OrderActivityHistoryScreen>
                             width: double.infinity,
                             padding: const EdgeInsets.all(12),
                             decoration: BoxDecoration(
-                              color: lightGrayColor,
+                              color: AppColors.lightGrayColor,
                               borderRadius: BorderRadius.circular(8),
-                              border: Border.all(color: darkGrayColor, width: 1),
+                              border: Border.all(color: AppColors.darkGrayColor, width: 1),
                             ),
                             child: Text(
                               'Sort By',
@@ -231,7 +225,7 @@ class _OrderActivityHistoryScreenState extends State<OrderActivityHistoryScreen>
                                       dialogActivityType = null;
                                     });
                                   },
-                                  activeColor: primaryColor,
+                                  activeColor: AppColors.primaryColor,
                                 ),
                               ],
                             ),
@@ -265,7 +259,7 @@ class _OrderActivityHistoryScreenState extends State<OrderActivityHistoryScreen>
                                           dialogSortBy = value!;
                                         });
                                       },
-                                      activeColor: primaryColor,
+                                      activeColor: AppColors.primaryColor,
                                     ),
                                   ],
                                 ),
@@ -278,14 +272,14 @@ class _OrderActivityHistoryScreenState extends State<OrderActivityHistoryScreen>
                                       width: double.infinity,
                                       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                                       decoration: BoxDecoration(
-                                        border: Border.all(color: borderColor),
+                                        border: Border.all(color: AppColors.borderColor),
                                         borderRadius: BorderRadius.circular(4),
                                       ),
                                       child: DropdownButton<String>(
                                         value: dialogActivityType,
                                         hint: Text(
                                           'Select Activity Type',
-                                          style: TextStyle(color: textGrayColor),
+                                          style: TextStyle(color: AppColors.grayColor),
                                         ),
                                         isExpanded: true,
                                         underline: const SizedBox(),
@@ -335,7 +329,7 @@ class _OrderActivityHistoryScreenState extends State<OrderActivityHistoryScreen>
                                       dialogActivityType = null;
                                     });
                                   },
-                                  activeColor: primaryColor,
+                                  activeColor: AppColors.primaryColor,
                                 ),
                               ],
                             ),
@@ -348,9 +342,9 @@ class _OrderActivityHistoryScreenState extends State<OrderActivityHistoryScreen>
                             width: double.infinity,
                             padding: const EdgeInsets.all(12),
                             decoration: BoxDecoration(
-                              color: lightGrayColor,
+                              color: AppColors.lightGrayColor,
                               borderRadius: BorderRadius.circular(8),
-                              border: Border.all(color: darkGrayColor, width: 1),
+                              border: Border.all(color: AppColors.darkGrayColor, width: 1),
                             ),
                             child: Text(
                               'Sort Order',
@@ -387,7 +381,7 @@ class _OrderActivityHistoryScreenState extends State<OrderActivityHistoryScreen>
                                       dialogSortOrder = value!;
                                     });
                                   },
-                                  activeColor: primaryColor,
+                                  activeColor: AppColors.primaryColor,
                                 ),
                               ],
                             ),
@@ -418,7 +412,7 @@ class _OrderActivityHistoryScreenState extends State<OrderActivityHistoryScreen>
                                       dialogSortOrder = value!;
                                     });
                                   },
-                                  activeColor: primaryColor,
+                                  activeColor: AppColors.primaryColor,
                                 ),
                               ],
                             ),
@@ -442,7 +436,7 @@ class _OrderActivityHistoryScreenState extends State<OrderActivityHistoryScreen>
                                 Navigator.of(context).pop();
                               },
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: primaryColor,
+                                backgroundColor: AppColors.primaryColor,
                                 foregroundColor: Colors.white,
                                 padding: const EdgeInsets.symmetric(vertical: 12),
                                 shape: RoundedRectangleBorder(
@@ -484,7 +478,7 @@ class _OrderActivityHistoryScreenState extends State<OrderActivityHistoryScreen>
         preferredSize: const Size.fromHeight(80),
         child: Container(
           decoration: BoxDecoration(
-            color: appBarColor,
+            color: AppColors.appBarColor,
             boxShadow: [
               BoxShadow(
                 color: Colors.black.withOpacity(0.3),
@@ -554,14 +548,14 @@ class _OrderActivityHistoryScreenState extends State<OrderActivityHistoryScreen>
                           height: 50,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(25),
-                            border: Border.all(color: borderColor),
+                            border: Border.all(color: AppColors.borderColor),
                           ),
                           child: Row(
                             children: [
                               const SizedBox(width: 16),
                               const Icon(
                                 Icons.search,
-                                color: textGrayColor,
+                                color: AppColors.grayColor,
                                 size: 20,
                               ),
                               const SizedBox(width: 12),
@@ -570,7 +564,7 @@ class _OrderActivityHistoryScreenState extends State<OrderActivityHistoryScreen>
                                   controller: _searchController,
                                   decoration: InputDecoration(
                                     hintText: 'Search by name, activity type, or modification date...',
-                                    hintStyle: TextStyle(color: textGrayColor),
+                                    hintStyle: TextStyle(color: AppColors.grayColor),
                                     border: InputBorder.none,
                                     contentPadding: EdgeInsets.zero,
                                   ),
@@ -591,7 +585,7 @@ class _OrderActivityHistoryScreenState extends State<OrderActivityHistoryScreen>
                                       margin: const EdgeInsets.only(right: 8),
                                       child: const Icon(
                                         Icons.close,
-                                        color: textGrayColor,
+                                        color: AppColors.grayColor,
                                         size: 18,
                                       ),
                                     ),
@@ -612,7 +606,7 @@ class _OrderActivityHistoryScreenState extends State<OrderActivityHistoryScreen>
                         height: 50,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(25),
-                          border: Border.all(color: borderColor),
+                          border: Border.all(color: AppColors.borderColor),
                         ),
                         child: Material(
                           color: Colors.transparent,
@@ -644,7 +638,7 @@ class _OrderActivityHistoryScreenState extends State<OrderActivityHistoryScreen>
                     width: 762,
                     margin: const EdgeInsets.symmetric(horizontal: 25),
                     decoration: BoxDecoration(
-                      border: Border.all(color: borderColor, width: 1),
+                      border: Border.all(color: AppColors.borderColor, width: 1),
                     ),
                     child: Column(
                       children: [
@@ -656,7 +650,7 @@ class _OrderActivityHistoryScreenState extends State<OrderActivityHistoryScreen>
                               'No activity history found${_searchController.text.isNotEmpty ? ' for "${_searchController.text}"' : ''}',
                               style: TextStyle(
                                 fontSize: 16,
-                                color: textGrayColor,
+                                color: AppColors.grayColor,
                               ),
                             ),
                           ),
@@ -672,7 +666,7 @@ class _OrderActivityHistoryScreenState extends State<OrderActivityHistoryScreen>
                               border: index > 0
                                   ? const Border(
                                       top: BorderSide(
-                                        color: borderColor,
+                                        color: AppColors.borderColor,
                                         width: 1,
                                       ),
                                     )
@@ -690,7 +684,7 @@ class _OrderActivityHistoryScreenState extends State<OrderActivityHistoryScreen>
                                   activity['date']!,
                                   style: TextStyle(
                                     fontSize: 14,
-                                    color: textGrayColor,
+                                    color: AppColors.grayColor,
                                   ),
                                 ),
                                 const SizedBox(height: 8),
@@ -711,7 +705,7 @@ class _OrderActivityHistoryScreenState extends State<OrderActivityHistoryScreen>
                                   'Edited by: ${activity['editedBy']!}',
                                   style: TextStyle(
                                     fontSize: 14,
-                                    color: textGrayColor,
+                                    color: AppColors.grayColor,
                                   ),
                                 ),
                                 const SizedBox(height: 4),
@@ -721,7 +715,7 @@ class _OrderActivityHistoryScreenState extends State<OrderActivityHistoryScreen>
                                   'Activity Type: ${activity['activityType']!}',
                                   style: TextStyle(
                                     fontSize: 14,
-                                    color: textGrayColor,
+                                    color: AppColors.grayColor,
                                   ),
                                 ),
                               ],

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:draft_screens/constants/colors.dart';
+
 import 'package:image_picker/image_picker.dart';
 import 'package:draft_screens/screens/histories/doc_act_history.dart';
 
@@ -19,19 +21,6 @@ class TrackRecordScreen extends StatefulWidget {
 }
 
 class _TrackRecordScreenState extends State<TrackRecordScreen> {
-  // Color constants
-  static const Color appBarColor = Color(0xFFE8B73A);
-  static const Color borderColor = Color(0xFFD0D0D0);
-  static const Color textGrayColor = Color(0xFF9E9E9E);
-  static const Color tileColor = Color(0xFFF4F4FA);
-  static const Color expandedTileColor = Color(0xFFF4F4FA);
-  static const Color darkGrayColor = Color(0xFFCDCCCC);
-  static const Color iconColor = Color(0xFF374957);
-  static const Color dialogBackgroundColor = Color(0xFFFFFBFB);
-  static const Color primaryColor = Color(0xFFCC9304);
-  static const Color statusIndicatorRed = Color(0xFFB71B1B);
-  static const Color statusIndicatorGreen = Color(0xFF2E7D42);
-  static const Color statusIndicatorGray = Color(0xFF9E9E9E);
 
   // Payment status
   String _paymentStatus = 'Pending';
@@ -104,9 +93,9 @@ class _TrackRecordScreenState extends State<TrackRecordScreen> {
   // Get status indicator color for a document
   Color _getStatusIndicatorColor(int index) {
     if (_isMiscellaneous(index)) {
-      return _hasFileList[index] ? statusIndicatorGreen : statusIndicatorGray;
+      return _hasFileList[index] ? AppColors.greenColor : AppColors.grayColor;
     } else {
-      return _hasFileList[index] ? statusIndicatorGreen : statusIndicatorRed;
+      return _hasFileList[index] ? AppColors.greenColor : AppColors.redColor;
     }
   }
 
@@ -122,7 +111,7 @@ class _TrackRecordScreenState extends State<TrackRecordScreen> {
           ),
           child: Container(
             decoration: BoxDecoration(
-              color: dialogBackgroundColor,
+              color: AppColors.dialogBgColor,
               borderRadius: BorderRadius.circular(20),
               boxShadow: [
                 BoxShadow(
@@ -156,7 +145,7 @@ class _TrackRecordScreenState extends State<TrackRecordScreen> {
                     child: Text(
                       'Are you sure you want to delete the file for this document?',
                       textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 16, color: textGrayColor),
+                      style: TextStyle(fontSize: 16, color: AppColors.grayColor),
                     ),
                   ),
 
@@ -171,7 +160,7 @@ class _TrackRecordScreenState extends State<TrackRecordScreen> {
                         _deleteFile(index);
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: primaryColor,
+                        backgroundColor: AppColors.primaryColor,
                         foregroundColor: Colors.white,
                         elevation: 5.0,
                         padding: const EdgeInsets.symmetric(
@@ -235,7 +224,7 @@ class _TrackRecordScreenState extends State<TrackRecordScreen> {
           ),
           child: Container(
             decoration: BoxDecoration(
-              color: dialogBackgroundColor,
+              color: AppColors.dialogBgColor,
               borderRadius: BorderRadius.circular(20),
               boxShadow: [
                 BoxShadow(
@@ -269,7 +258,7 @@ class _TrackRecordScreenState extends State<TrackRecordScreen> {
                     child: Text(
                       'Are you sure you want to generate a report?',
                       textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 16, color: textGrayColor),
+                      style: TextStyle(fontSize: 16, color: AppColors.grayColor),
                     ),
                   ),
 
@@ -284,7 +273,7 @@ class _TrackRecordScreenState extends State<TrackRecordScreen> {
                         _generateReport();
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: primaryColor,
+                        backgroundColor: AppColors.primaryColor,
                         foregroundColor: Colors.white,
                         elevation: 5.0,
                         padding: const EdgeInsets.symmetric(
@@ -495,7 +484,7 @@ class _TrackRecordScreenState extends State<TrackRecordScreen> {
         preferredSize: const Size.fromHeight(80),
         child: Container(
           decoration: BoxDecoration(
-            color: appBarColor,
+            color: AppColors.appBarColor,
             boxShadow: [
               BoxShadow(
                 color: Colors.black.withOpacity(0.3),
@@ -574,7 +563,7 @@ class _TrackRecordScreenState extends State<TrackRecordScreen> {
                                 'Purchase Order Number:',
                                 style: TextStyle(
                                   fontSize: 14,
-                                  color: textGrayColor,
+                                  color: AppColors.grayColor,
                                 ),
                               ),
                               const SizedBox(height: 8),
@@ -596,7 +585,7 @@ class _TrackRecordScreenState extends State<TrackRecordScreen> {
                                     'Payment Status:',
                                     style: TextStyle(
                                       fontSize: 14,
-                                      color: textGrayColor,
+                                      color: AppColors.grayColor,
                                     ),
                                   ),
                                   const SizedBox(width: 12),
@@ -608,7 +597,7 @@ class _TrackRecordScreenState extends State<TrackRecordScreen> {
                                     decoration: BoxDecoration(
                                       color: Colors.grey[100],
                                       borderRadius: BorderRadius.circular(8),
-                                      border: Border.all(color: borderColor),
+                                      border: Border.all(color: AppColors.borderColor),
                                     ),
                                     child: DropdownButtonHideUnderline(
                                       child: DropdownButton<String>(
@@ -643,7 +632,7 @@ class _TrackRecordScreenState extends State<TrackRecordScreen> {
                                 'Document Count:',
                                 style: TextStyle(
                                   fontSize: 14,
-                                  color: textGrayColor,
+                                  color: AppColors.grayColor,
                                 ),
                               ),
                               const SizedBox(height: 8),
@@ -678,7 +667,7 @@ class _TrackRecordScreenState extends State<TrackRecordScreen> {
                                       width: 12,
                                       height: 12,
                                       decoration: BoxDecoration(
-                                        color: statusIndicatorRed,
+                                        color: AppColors.redColor,
                                         shape: BoxShape.circle,
                                       ),
                                     ),
@@ -687,7 +676,7 @@ class _TrackRecordScreenState extends State<TrackRecordScreen> {
                                       'File attached',
                                       style: TextStyle(
                                         fontSize: 12,
-                                        color: textGrayColor,
+                                        color: AppColors.grayColor,
                                       ),
                                     ),
                                   ],
@@ -702,7 +691,7 @@ class _TrackRecordScreenState extends State<TrackRecordScreen> {
                                       width: 12,
                                       height: 12,
                                       decoration: BoxDecoration(
-                                        color: statusIndicatorGreen,
+                                        color: AppColors.greenColor,
                                         shape: BoxShape.circle,
                                       ),
                                     ),
@@ -711,7 +700,7 @@ class _TrackRecordScreenState extends State<TrackRecordScreen> {
                                       'No file attached',
                                       style: TextStyle(
                                         fontSize: 12,
-                                        color: textGrayColor,
+                                        color: AppColors.grayColor,
                                       ),
                                     ),
                                   ],
@@ -726,7 +715,7 @@ class _TrackRecordScreenState extends State<TrackRecordScreen> {
                                       width: 12,
                                       height: 12,
                                       decoration: BoxDecoration(
-                                        color: statusIndicatorGray,
+                                        color: AppColors.grayColor,
                                         shape: BoxShape.circle,
                                       ),
                                     ),
@@ -735,7 +724,7 @@ class _TrackRecordScreenState extends State<TrackRecordScreen> {
                                       'Optional',
                                       style: TextStyle(
                                         fontSize: 12,
-                                        color: textGrayColor,
+                                        color: AppColors.grayColor,
                                       ),
                                     ),
                                   ],
@@ -745,7 +734,7 @@ class _TrackRecordScreenState extends State<TrackRecordScreen> {
 
                             // Download Report button
                             Material(
-                              color: primaryColor,
+                              color: AppColors.primaryColor,
                               borderRadius: BorderRadius.circular(8),
                               child: InkWell(
                                 onTap: () {
@@ -795,7 +784,7 @@ class _TrackRecordScreenState extends State<TrackRecordScreen> {
                     width: 700,
                     margin: const EdgeInsets.symmetric(horizontal: 25),
                     decoration: BoxDecoration(
-                      border: Border.all(color: borderColor, width: 1),
+                      border: Border.all(color: AppColors.borderColor, width: 1),
                     ),
                     child: Column(
                       children: _documentTitles.asMap().entries.map((entry) {
@@ -808,7 +797,7 @@ class _TrackRecordScreenState extends State<TrackRecordScreen> {
                           return Container(
                             width: double.infinity,
                             height: 1,
-                            color: borderColor,
+                            color: AppColors.borderColor,
                             margin: const EdgeInsets.symmetric(vertical: 20),
                           );
                         }
@@ -822,7 +811,7 @@ class _TrackRecordScreenState extends State<TrackRecordScreen> {
                               style: TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.bold,
-                                color: textGrayColor,
+                                color: AppColors.grayColor,
                               ),
                               textAlign: TextAlign.center,
                             ),
@@ -832,7 +821,7 @@ class _TrackRecordScreenState extends State<TrackRecordScreen> {
                         return Container(
                           width: double.infinity,
                           decoration: BoxDecoration(
-                            color: isExpanded ? expandedTileColor : tileColor,
+                            color: AppColors.tileColor,
                             border:
                                 index > 0 &&
                                     _documentTitles[index - 1] !=
@@ -840,7 +829,7 @@ class _TrackRecordScreenState extends State<TrackRecordScreen> {
                                     _documentTitles[index - 1] != '- END -'
                                 ? const Border(
                                     top: BorderSide(
-                                      color: borderColor,
+                                      color: AppColors.borderColor,
                                       width: 1,
                                     ),
                                   )
@@ -918,7 +907,7 @@ class _TrackRecordScreenState extends State<TrackRecordScreen> {
                                                         : '', // Blank initially
                                                     style: TextStyle(
                                                       fontSize: 14,
-                                                      color: textGrayColor,
+                                                      color: AppColors.grayColor,
                                                     ),
                                                   ),
                                                 ],
@@ -941,8 +930,8 @@ class _TrackRecordScreenState extends State<TrackRecordScreen> {
                                                       color:
                                                           _attachedFiles[index] !=
                                                               null
-                                                          ? iconColor
-                                                          : iconColor
+                                                          ? AppColors.iconColor
+                                                          : AppColors.iconColor
                                                                 .withOpacity(
                                                                   0.3,
                                                                 ),
@@ -973,8 +962,8 @@ class _TrackRecordScreenState extends State<TrackRecordScreen> {
                                                         color:
                                                             _attachedFiles[index] !=
                                                                 null
-                                                            ? iconColor
-                                                            : iconColor
+                                                            ? AppColors.iconColor
+                                                            : AppColors.iconColor
                                                                   .withOpacity(
                                                                     0.3,
                                                                   ),
@@ -996,7 +985,7 @@ class _TrackRecordScreenState extends State<TrackRecordScreen> {
                                                           20,
                                                         ),
                                                     border: Border.all(
-                                                      color: iconColor,
+                                                      color: AppColors.iconColor,
                                                     ),
                                                   ),
                                                   child: Material(
@@ -1018,7 +1007,7 @@ class _TrackRecordScreenState extends State<TrackRecordScreen> {
                                                           ),
                                                       child: Icon(
                                                         Icons.attach_file,
-                                                        color: iconColor,
+                                                        color: AppColors.iconColor,
                                                         size: 20,
                                                       ),
                                                     ),
@@ -1037,7 +1026,7 @@ class _TrackRecordScreenState extends State<TrackRecordScreen> {
                                                           20,
                                                         ),
                                                     border: Border.all(
-                                                      color: iconColor,
+                                                      color: AppColors.iconColor,
                                                     ),
                                                   ),
                                                   child: Material(
@@ -1062,7 +1051,7 @@ class _TrackRecordScreenState extends State<TrackRecordScreen> {
                                                         isExpanded
                                                             ? Icons.expand_less
                                                             : Icons.expand_more,
-                                                        color: iconColor,
+                                                        color: AppColors.iconColor,
                                                         size: 24,
                                                       ),
                                                     ),
@@ -1093,7 +1082,7 @@ class _TrackRecordScreenState extends State<TrackRecordScreen> {
                                                           style: TextStyle(
                                                             fontSize: 14,
                                                             color:
-                                                                textGrayColor,
+                                                                AppColors.grayColor,
                                                           ),
                                                         ),
                                                         const SizedBox(
@@ -1107,7 +1096,7 @@ class _TrackRecordScreenState extends State<TrackRecordScreen> {
                                                           decoration: BoxDecoration(
                                                             border: Border.all(
                                                               color:
-                                                                  borderColor,
+                                                                  AppColors.borderColor,
                                                             ),
                                                             borderRadius:
                                                                 BorderRadius.circular(
@@ -1128,7 +1117,7 @@ class _TrackRecordScreenState extends State<TrackRecordScreen> {
                                                                         .insert_drive_file,
                                                                     size: 48,
                                                                     color:
-                                                                        textGrayColor,
+                                                                        AppColors.grayColor,
                                                                   ),
                                                                 ),
                                                         ),
@@ -1144,7 +1133,7 @@ class _TrackRecordScreenState extends State<TrackRecordScreen> {
                                                           ),
                                                       decoration: BoxDecoration(
                                                         border: Border.all(
-                                                          color: borderColor,
+                                                          color: AppColors.borderColor,
                                                         ),
                                                         borderRadius:
                                                             BorderRadius.circular(
@@ -1158,7 +1147,7 @@ class _TrackRecordScreenState extends State<TrackRecordScreen> {
                                                                 .insert_drive_file,
                                                             size: 48,
                                                             color:
-                                                                textGrayColor,
+                                                                AppColors.grayColor,
                                                           ),
                                                           const SizedBox(
                                                             height: 16,
@@ -1168,7 +1157,7 @@ class _TrackRecordScreenState extends State<TrackRecordScreen> {
                                                             style: TextStyle(
                                                               fontSize: 16,
                                                               color:
-                                                                  textGrayColor,
+                                                                  AppColors.grayColor,
                                                             ),
                                                           ),
                                                         ],
@@ -1216,11 +1205,11 @@ class _TrackRecordScreenState extends State<TrackRecordScreen> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Icon(Icons.insert_drive_file, size: 48, color: iconColor),
+          const Icon(Icons.insert_drive_file, size: 48, color: AppColors.iconColor),
           const SizedBox(height: 16),
           Text(
             'File: ${_attachedFiles[index]!.path.split('/').last}',
-            style: TextStyle(fontSize: 14, color: textGrayColor),
+            style: TextStyle(fontSize: 14, color: AppColors.grayColor),
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 8),
@@ -1228,7 +1217,7 @@ class _TrackRecordScreenState extends State<TrackRecordScreen> {
             '(Image preview not available on web)',
             style: TextStyle(
               fontSize: 12,
-              color: textGrayColor,
+              color: AppColors.grayColor,
               fontStyle: FontStyle.italic,
             ),
             textAlign: TextAlign.center,

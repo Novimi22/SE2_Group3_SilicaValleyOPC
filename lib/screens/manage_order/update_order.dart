@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:draft_screens/constants/colors.dart';
+
 import 'package:flutter/services.dart';
 import 'package:draft_screens/screens/manage_order/gen_manage_order.dart';
 
@@ -21,17 +23,6 @@ class UpdateOrderScreen extends StatefulWidget {
 }
 
 class _UpdateOrderScreenState extends State<UpdateOrderScreen> {
-  // Color constants
-  static const Color primaryColor = Color(0xFFCC9304);
-  static const Color appBarColor = Color(0xFFE8B73A);
-  static const Color grayColor = Color(0xFF9E9E9E);
-  static const Color borderColor = Color(0xFFD0D0D0);
-  static const Color infoBoxColor = Color(0xFFF3F3F8);
-  static const Color tableHeaderColor = Color(0xFF258651);
-  static const Color iconGrayColor = Color(0xFF636363);
-  static const Color dialogBackgroundColor = Color(0xFFFFFBFB);
-  static const Color snackbarGreenColor = Color(0xFF4CAF50);
-  static const Color snackbarRedColor = Color(0xFFF44336);
 
   // Order details
   DateTime orderDate = DateTime.now();
@@ -156,7 +147,7 @@ class _UpdateOrderScreenState extends State<UpdateOrderScreen> {
       _newlyAddedRowIndex = items.length - 1;
     });
 
-    _showSnackbar('Item added', snackbarGreenColor);
+    _showSnackbar('Item added', AppColors.greenColor);
   }
 
   // Delete item row
@@ -313,7 +304,7 @@ class _UpdateOrderScreenState extends State<UpdateOrderScreen> {
                 ),
                 child: Container(
                   decoration: BoxDecoration(
-                    color: dialogBackgroundColor,
+                    color: AppColors.dialogBgColor,
                     borderRadius: BorderRadius.circular(20),
                     boxShadow: [
                       BoxShadow(
@@ -347,7 +338,7 @@ class _UpdateOrderScreenState extends State<UpdateOrderScreen> {
                           child: Text(
                             dialogMessage,
                             textAlign: TextAlign.center,
-                            style: TextStyle(fontSize: 16, color: grayColor),
+                            style: TextStyle(fontSize: 16, color: AppColors.grayColor),
                           ),
                         ),
 
@@ -362,7 +353,7 @@ class _UpdateOrderScreenState extends State<UpdateOrderScreen> {
                               _performPendingAction();
                             },
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: primaryColor,
+                              backgroundColor: AppColors.primaryColor,
                               foregroundColor: Colors.white,
                               elevation: 5.0,
                               padding: const EdgeInsets.symmetric(
@@ -433,7 +424,7 @@ class _UpdateOrderScreenState extends State<UpdateOrderScreen> {
         if (_pendingActionIndex != null) {
           final index = _pendingActionIndex!;
           _saveRow(index);
-          _showSnackbar('Item edited', snackbarGreenColor);
+          _showSnackbar('Item edited', AppColors.greenColor);
         }
         break;
 
@@ -454,7 +445,7 @@ class _UpdateOrderScreenState extends State<UpdateOrderScreen> {
           // Recalculate net price
           _calculateNetPrice();
         });
-        _showSnackbar('Item deleted', snackbarRedColor);
+        _showSnackbar('Item deleted', AppColors.redColor);
         break;
     }
 
@@ -524,7 +515,7 @@ class _UpdateOrderScreenState extends State<UpdateOrderScreen> {
         preferredSize: const Size.fromHeight(80),
         child: Container(
           decoration: BoxDecoration(
-            color: appBarColor,
+            color: AppColors.appBarColor,
             boxShadow: [
               BoxShadow(
                 color: Colors.black.withOpacity(0.3),
@@ -532,7 +523,7 @@ class _UpdateOrderScreenState extends State<UpdateOrderScreen> {
                 offset: const Offset(0, 4),
               ),
             ],
-            border: Border(bottom: BorderSide(color: borderColor, width: 1)),
+            border: Border(bottom: BorderSide(color: AppColors.borderColor, width: 1)),
           ),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -595,7 +586,7 @@ class _UpdateOrderScreenState extends State<UpdateOrderScreen> {
                   // Purchase Order Number section
                   Text(
                     'Purchase Order Number:',
-                    style: TextStyle(fontSize: 14, color: grayColor),
+                    style: TextStyle(fontSize: 14, color: AppColors.grayColor),
                   ),
                   const SizedBox(height: 8),
                   Text(
@@ -614,9 +605,9 @@ class _UpdateOrderScreenState extends State<UpdateOrderScreen> {
                     width: double.infinity,
                     padding: const EdgeInsets.all(20),
                     decoration: BoxDecoration(
-                      color: infoBoxColor,
+                      color: AppColors.infoBoxColor,
                       borderRadius: BorderRadius.circular(10),
-                      border: Border.all(color: borderColor, width: 1),
+                      border: Border.all(color: AppColors.borderColor, width: 1),
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -627,7 +618,7 @@ class _UpdateOrderScreenState extends State<UpdateOrderScreen> {
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
-                            color: primaryColor,
+                            color: AppColors.primaryColor,
                           ),
                         ),
 
@@ -694,14 +685,14 @@ class _UpdateOrderScreenState extends State<UpdateOrderScreen> {
                                 style: TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,
-                                  color: tableHeaderColor,
+                                  color: AppColors.tableHeaderColor,
                                 ),
                               ),
                               TextSpan(
                                 text: '₱${currentNetPrice.toStringAsFixed(2)}',
                                 style: TextStyle(
                                   fontSize: 16,
-                                  color: tableHeaderColor,
+                                  color: AppColors.tableHeaderColor,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
@@ -727,13 +718,13 @@ class _UpdateOrderScreenState extends State<UpdateOrderScreen> {
                             style: TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
-                              color: primaryColor,
+                              color: AppColors.primaryColor,
                             ),
                           ),
 
                           // Add Item button
                           Material(
-                            color: primaryColor,
+                            color: AppColors.primaryColor,
                             borderRadius: BorderRadius.circular(8),
                             child: InkWell(
                               onTap: _prepareAddItem,
@@ -778,7 +769,7 @@ class _UpdateOrderScreenState extends State<UpdateOrderScreen> {
                             if (items.isNotEmpty)
                               Container(
                                 decoration: BoxDecoration(
-                                  border: Border.all(color: borderColor),
+                                  border: Border.all(color: AppColors.borderColor),
                                 ),
                                 child: Table(
                                   columnWidths: {
@@ -827,9 +818,9 @@ class _UpdateOrderScreenState extends State<UpdateOrderScreen> {
                               Container(
                                 decoration: BoxDecoration(
                                   border: Border(
-                                    left: BorderSide(color: borderColor),
-                                    right: BorderSide(color: borderColor),
-                                    bottom: BorderSide(color: borderColor),
+                                    left: BorderSide(color: AppColors.borderColor),
+                                    right: BorderSide(color: AppColors.borderColor),
+                                    bottom: BorderSide(color: AppColors.borderColor),
                                   ),
                                 ),
                                 child: Column(
@@ -1076,11 +1067,11 @@ class _UpdateOrderScreenState extends State<UpdateOrderScreen> {
                                                       icon: Icon(
                                                         Icons.edit,
                                                         color: isEditing
-                                                            ? iconGrayColor
+                                                            ? AppColors.iconGrayColor
                                                                   .withOpacity(
                                                                     0.3,
                                                                   )
-                                                            : iconGrayColor,
+                                                            : AppColors.iconGrayColor,
                                                         size: 18,
                                                       ),
                                                       padding: EdgeInsets.zero,
@@ -1100,7 +1091,7 @@ class _UpdateOrderScreenState extends State<UpdateOrderScreen> {
                                                       },
                                                       icon: Icon(
                                                         Icons.delete_outline,
-                                                        color: iconGrayColor,
+                                                        color: AppColors.iconGrayColor,
                                                         size: 18,
                                                       ),
                                                       padding: EdgeInsets.zero,
@@ -1128,14 +1119,14 @@ class _UpdateOrderScreenState extends State<UpdateOrderScreen> {
                                 padding: const EdgeInsets.all(40),
                                 width: double.infinity,
                                 decoration: BoxDecoration(
-                                  border: Border.all(color: borderColor),
+                                  border: Border.all(color: AppColors.borderColor),
                                 ),
                                 child: Text(
                                   'No items added. Click "Add Item" to start.',
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     fontSize: 16,
-                                    color: grayColor,
+                                    color: AppColors.grayColor,
                                   ),
                                 ),
                               ),

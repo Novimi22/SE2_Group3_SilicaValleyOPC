@@ -1,7 +1,9 @@
+import 'package:flutter/material.dart';
+import 'package:draft_screens/constants/colors.dart';
+
 import 'package:draft_screens/screens/histories/order_act_history.dart';
 import 'package:draft_screens/screens/manage_order/gen_manage_order.dart';
 import 'package:draft_screens/screens/track_order/track_order_searchpage.dart';
-import 'package:flutter/material.dart';
 import 'package:draft_screens/screens/all_logins/signin_screen.dart';
 import 'package:draft_screens/screens/employee_only/create_order_dialog.dart';
 
@@ -14,15 +16,6 @@ class EmployeeDashboardScreen extends StatefulWidget {
 }
 
 class _EmployeeDashboardScreenState extends State<EmployeeDashboardScreen> {
-  // Color constants
-  static const Color circleColor = Color(0xFFFFD15E);
-  static const Color tileColor = Color(0xFFFFEAB5);
-  static const Color smallTextColor = Color(0xFF5F5F5F);
-  static const Color largeTextColor = Color(0xFF202020);
-  static const Color grayColor = Color(0xFF9E9E9E);
-  static const Color appBarColor = Color(0xFFE8B73A);
-  static const Color primaryColor = Color(0xFFCC9304);
-  static const Color dialogBackgroundColor = Color(0xFFFFFBFB);
 
   // hardcoded username
   final String userName = "Juan Dela Cruz";
@@ -34,7 +27,7 @@ class _EmployeeDashboardScreenState extends State<EmployeeDashboardScreen> {
         preferredSize: const Size.fromHeight(80),
         child: Container(
           decoration: BoxDecoration(
-            color: appBarColor,
+            color: AppColors.appBarColor,
             boxShadow: [
               BoxShadow(
                 color: Colors.black.withOpacity(0.3),
@@ -112,7 +105,7 @@ class _EmployeeDashboardScreenState extends State<EmployeeDashboardScreen> {
                               'Welcome,',
                               style: TextStyle(
                                 fontSize: 16,
-                                color: grayColor,
+                                color: AppColors.grayColor,
                                 fontWeight: FontWeight.w500,
                               ),
                             ),
@@ -306,7 +299,7 @@ class _EmployeeDashboardScreenState extends State<EmployeeDashboardScreen> {
         width: double.infinity,
         padding: const EdgeInsets.all(20),
         decoration: BoxDecoration(
-          color: tileColor,
+          color: AppColors.tileColor,
           borderRadius: BorderRadius.circular(20),
           boxShadow: [
             BoxShadow(
@@ -322,7 +315,7 @@ class _EmployeeDashboardScreenState extends State<EmployeeDashboardScreen> {
               width: 70,
               height: 70,
               decoration: BoxDecoration(
-                color: circleColor,
+                color: AppColors.circleColor,
                 shape: BoxShape.circle,
               ),
               child: Center(
@@ -349,7 +342,7 @@ class _EmployeeDashboardScreenState extends State<EmployeeDashboardScreen> {
                     smallText,
                     style: TextStyle(
                       fontSize: 13,
-                      color: smallTextColor,
+                      color: AppColors.smallTextColor,
                       fontWeight: FontWeight.w500,
                     ),
                   ),
@@ -359,7 +352,7 @@ class _EmployeeDashboardScreenState extends State<EmployeeDashboardScreen> {
                     largeText,
                     style: TextStyle(
                       fontSize: 16,
-                      color: largeTextColor,
+                      color: AppColors.largeTextColor,
                       fontWeight: FontWeight.w700,
                     ),
                   ),
@@ -390,7 +383,7 @@ class _EmployeeDashboardScreenState extends State<EmployeeDashboardScreen> {
               ),
               child: Container(
                 decoration: BoxDecoration(
-                  color: dialogBackgroundColor,
+                  color: AppColors.dialogBgColor,
                   borderRadius: BorderRadius.circular(20),
                   boxShadow: [
                     BoxShadow(
@@ -424,7 +417,7 @@ class _EmployeeDashboardScreenState extends State<EmployeeDashboardScreen> {
                         child: Text(
                           'Enter a non-existing Purchase Order Number',
                           textAlign: TextAlign.center,
-                          style: TextStyle(fontSize: 16, color: grayColor),
+                          style: TextStyle(fontSize: 16, color: AppColors.grayColor),
                         ),
                       ),
 
@@ -574,7 +567,7 @@ class _EmployeeDashboardScreenState extends State<EmployeeDashboardScreen> {
                             );
                           },
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: primaryColor,
+                            backgroundColor: AppColors.primaryColor,
                             foregroundColor: Colors.white,
                             elevation: 5.0,
                             padding: const EdgeInsets.symmetric(
@@ -649,7 +642,7 @@ class _EmployeeDashboardScreenState extends State<EmployeeDashboardScreen> {
               ),
               child: Container(
                 decoration: BoxDecoration(
-                  color: dialogBackgroundColor,
+                  color: AppColors.dialogBgColor,
                   borderRadius: BorderRadius.circular(20),
                   boxShadow: [
                     BoxShadow(
@@ -683,7 +676,7 @@ class _EmployeeDashboardScreenState extends State<EmployeeDashboardScreen> {
                         child: Text(
                           'Enter customer\'s name for $purchaseOrderNumber',
                           textAlign: TextAlign.center,
-                          style: TextStyle(fontSize: 16, color: grayColor),
+                          style: TextStyle(fontSize: 16, color: AppColors.grayColor),
                         ),
                       ),
 
@@ -815,7 +808,7 @@ class _EmployeeDashboardScreenState extends State<EmployeeDashboardScreen> {
                             );
                           },
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: primaryColor,
+                            backgroundColor: AppColors.primaryColor,
                             foregroundColor: Colors.white,
                             elevation: 5.0,
                             padding: const EdgeInsets.symmetric(
@@ -881,7 +874,7 @@ class _EmployeeDashboardScreenState extends State<EmployeeDashboardScreen> {
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text('Cancel', style: TextStyle(color: grayColor)),
+              child: Text('Cancel', style: TextStyle(color: AppColors.grayColor)),
             ),
             TextButton(
               onPressed: () {

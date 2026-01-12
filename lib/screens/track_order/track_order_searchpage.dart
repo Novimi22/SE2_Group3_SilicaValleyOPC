@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:draft_screens/constants/colors.dart';
+
 import 'package:draft_screens/screens/track_order/track_order.dart'; 
 
 class TORSearchPage extends StatefulWidget {
@@ -9,16 +11,6 @@ class TORSearchPage extends StatefulWidget {
 }
 
 class _TORSearchPageState extends State<TORSearchPage> {
-  // Color constants
-  static const Color appBarColor = Color(0xFFE8B73A);
-  static const Color primaryColor = Color(0xFFCC9304);
-  static const Color borderColor = Color(0xFFD0D0D0);
-  static const Color lightGrayColor = Color(0xFFF5F5F5);
-  static const Color darkGrayColor = Color(0xFFCDCCCC);
-  static const Color textGrayColor = Color(0xFF9E9E9E);
-  static const Color tileColor = Color(0xFFF4F4FA);
-  static const Color dialogBackgroundColor = Color(0xFFFFFBFB);
-  static const Color deleteButtonColor = Color(0xFFB71B1B);
 
   // Filter state
   String _selectedSortBy = 'Creation Date';
@@ -191,7 +183,7 @@ class _TORSearchPageState extends State<TORSearchPage> {
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(12),
-                        border: Border.all(color: darkGrayColor, width: 1),
+                        border: Border.all(color: AppColors.darkGrayColor , width: 1),
                       ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -201,10 +193,10 @@ class _TORSearchPageState extends State<TORSearchPage> {
                             width: double.infinity,
                             padding: const EdgeInsets.all(12),
                             decoration: BoxDecoration(
-                              color: lightGrayColor,
+                              color: AppColors.lightGrayColor,
                               borderRadius: BorderRadius.circular(8),
                               border: Border.all(
-                                color: darkGrayColor,
+                                color: AppColors.darkGrayColor ,
                                 width: 1,
                               ),
                             ),
@@ -243,7 +235,7 @@ class _TORSearchPageState extends State<TORSearchPage> {
                                       dialogSortBy = value!;
                                     });
                                   },
-                                  activeColor: primaryColor,
+                                  activeColor: AppColors.primaryColor,
                                 ),
                               ],
                             ),
@@ -275,7 +267,7 @@ class _TORSearchPageState extends State<TORSearchPage> {
                                       dialogSortBy = value!;
                                     });
                                   },
-                                  activeColor: primaryColor,
+                                  activeColor: AppColors.primaryColor,
                                 ),
                               ],
                             ),
@@ -306,7 +298,7 @@ class _TORSearchPageState extends State<TORSearchPage> {
                                       dialogSortBy = value!;
                                     });
                                   },
-                                  activeColor: primaryColor,
+                                  activeColor: AppColors.primaryColor,
                                 ),
                               ],
                             ),
@@ -337,7 +329,7 @@ class _TORSearchPageState extends State<TORSearchPage> {
                                       dialogSortBy = value!;
                                     });
                                   },
-                                  activeColor: primaryColor,
+                                  activeColor: AppColors.primaryColor,
                                 ),
                               ],
                             ),
@@ -350,10 +342,10 @@ class _TORSearchPageState extends State<TORSearchPage> {
                             width: double.infinity,
                             padding: const EdgeInsets.all(12),
                             decoration: BoxDecoration(
-                              color: lightGrayColor,
+                              color: AppColors.lightGrayColor,
                               borderRadius: BorderRadius.circular(8),
                               border: Border.all(
-                                color: darkGrayColor,
+                                color: AppColors.darkGrayColor ,
                                 width: 1,
                               ),
                             ),
@@ -392,7 +384,7 @@ class _TORSearchPageState extends State<TORSearchPage> {
                                       dialogSortOrder = value!;
                                     });
                                   },
-                                  activeColor: primaryColor,
+                                  activeColor: AppColors.primaryColor,
                                 ),
                               ],
                             ),
@@ -423,7 +415,7 @@ class _TORSearchPageState extends State<TORSearchPage> {
                                       dialogSortOrder = value!;
                                     });
                                   },
-                                  activeColor: primaryColor,
+                                  activeColor: AppColors.primaryColor,
                                 ),
                               ],
                             ),
@@ -449,7 +441,7 @@ class _TORSearchPageState extends State<TORSearchPage> {
                                 Navigator.of(context).pop();
                               },
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: primaryColor,
+                                backgroundColor: AppColors.primaryColor,
                                 foregroundColor: Colors.white,
                                 padding: const EdgeInsets.symmetric(
                                   vertical: 12,
@@ -502,7 +494,7 @@ class _TORSearchPageState extends State<TORSearchPage> {
               ),
               child: Container(
                 decoration: BoxDecoration(
-                  color: dialogBackgroundColor,
+                  color: AppColors.dialogBgColor,
                   borderRadius: BorderRadius.circular(20),
                   boxShadow: [
                     BoxShadow(
@@ -536,7 +528,7 @@ class _TORSearchPageState extends State<TORSearchPage> {
                         child: Text(
                           'Re-enter Purchase Order Number to confirm deletion',
                           textAlign: TextAlign.center,
-                          style: TextStyle(fontSize: 16, color: textGrayColor),
+                          style: TextStyle(fontSize: 16, color: AppColors.grayColor ),
                         ),
                       ),
 
@@ -658,7 +650,7 @@ class _TORSearchPageState extends State<TORSearchPage> {
                             _performDeleteOrder(poNumber, clientName);
                           },
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: primaryColor,
+                            backgroundColor: AppColors.primaryColor,
                             foregroundColor: Colors.white,
                             elevation: 5.0,
                             padding: const EdgeInsets.symmetric(
@@ -762,7 +754,7 @@ class _TORSearchPageState extends State<TORSearchPage> {
         preferredSize: const Size.fromHeight(80),
         child: Container(
           decoration: BoxDecoration(
-            color: appBarColor,
+            color: AppColors.appBarColor,
             boxShadow: [
               BoxShadow(
                 color: Colors.black.withOpacity(0.3),
@@ -832,14 +824,14 @@ class _TORSearchPageState extends State<TORSearchPage> {
                           height: 50,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(25),
-                            border: Border.all(color: borderColor),
+                            border: Border.all(color: AppColors.borderColor),
                           ),
                           child: Row(
                             children: [
                               const SizedBox(width: 16),
                               const Icon(
                                 Icons.search,
-                                color: textGrayColor,
+                                color: AppColors.grayColor ,
                                 size: 20,
                               ),
                               const SizedBox(width: 12),
@@ -849,7 +841,7 @@ class _TORSearchPageState extends State<TORSearchPage> {
                                   decoration: InputDecoration(
                                     hintText:
                                         'Search by PO number or client name...',
-                                    hintStyle: TextStyle(color: textGrayColor),
+                                    hintStyle: TextStyle(color: AppColors.grayColor ),
                                     border: InputBorder.none,
                                     contentPadding: EdgeInsets.zero,
                                   ),
@@ -870,7 +862,7 @@ class _TORSearchPageState extends State<TORSearchPage> {
                                       margin: const EdgeInsets.only(right: 8),
                                       child: const Icon(
                                         Icons.close,
-                                        color: textGrayColor,
+                                        color: AppColors.grayColor ,
                                         size: 18,
                                       ),
                                     ),
@@ -891,7 +883,7 @@ class _TORSearchPageState extends State<TORSearchPage> {
                         height: 50,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(25),
-                          border: Border.all(color: borderColor),
+                          border: Border.all(color: AppColors.borderColor),
                         ),
                         child: Material(
                           color: Colors.transparent,
@@ -923,7 +915,7 @@ class _TORSearchPageState extends State<TORSearchPage> {
                     width: 700,
                     margin: const EdgeInsets.symmetric(horizontal: 25),
                     decoration: BoxDecoration(
-                      border: Border.all(color: borderColor, width: 1),
+                      border: Border.all(color: AppColors.borderColor, width: 1),
                     ),
                     child: Column(
                       children: [
@@ -935,7 +927,7 @@ class _TORSearchPageState extends State<TORSearchPage> {
                               'No orders found${_searchController.text.isNotEmpty ? ' for "${_searchController.text}"' : ''}',
                               style: TextStyle(
                                 fontSize: 16,
-                                color: textGrayColor,
+                                color: AppColors.grayColor ,
                               ),
                             ),
                           ),
@@ -949,11 +941,11 @@ class _TORSearchPageState extends State<TORSearchPage> {
                           return Container(
                             width: double.infinity,
                             decoration: BoxDecoration(
-                              color: tileColor,
+                              color: AppColors.tileColor ,
                               border: index > 0
                                   ? const Border(
                                       top: BorderSide(
-                                        color: borderColor,
+                                        color: AppColors.borderColor,
                                         width: 1,
                                       ),
                                     )
@@ -992,7 +984,7 @@ class _TORSearchPageState extends State<TORSearchPage> {
                                             'Last Updated: ${order['lastUpdated']!}',
                                             style: TextStyle(
                                               fontSize: 14,
-                                              color: textGrayColor,
+                                              color: AppColors.grayColor ,
                                             ),
                                           ),
                                         ],
@@ -1006,7 +998,7 @@ class _TORSearchPageState extends State<TORSearchPage> {
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(20),
                                         border: Border.all(
-                                          color: darkGrayColor,
+                                          color: AppColors.darkGrayColor ,
                                         ),
                                       ),
                                       child: Material(
@@ -1026,7 +1018,7 @@ class _TORSearchPageState extends State<TORSearchPage> {
                                             isExpanded
                                                 ? Icons.expand_less
                                                 : Icons.expand_more,
-                                            color: darkGrayColor,
+                                            color: AppColors.darkGrayColor ,
                                             size: 24,
                                           ),
                                         ),
@@ -1051,14 +1043,14 @@ class _TORSearchPageState extends State<TORSearchPage> {
                                               style: TextStyle(
                                                 fontSize: 14,
                                                 fontWeight: FontWeight.w500,
-                                                color: textGrayColor,
+                                                color: AppColors.grayColor ,
                                               ),
                                             ),
                                             Text(
                                               order['clientName']!,
                                               style: TextStyle(
                                                 fontSize: 14,
-                                                color: textGrayColor,
+                                                color: AppColors.grayColor ,
                                               ),
                                             ),
                                           ],
@@ -1072,14 +1064,14 @@ class _TORSearchPageState extends State<TORSearchPage> {
                                               style: TextStyle(
                                                 fontSize: 14,
                                                 fontWeight: FontWeight.w500,
-                                                color: textGrayColor,
+                                                color: AppColors.grayColor ,
                                               ),
                                             ),
                                             Text(
                                               order['creationDate']!,
                                               style: TextStyle(
                                                 fontSize: 14,
-                                                color: textGrayColor,
+                                                color: AppColors.grayColor ,
                                               ),
                                             ),
                                           ],
@@ -1093,14 +1085,14 @@ class _TORSearchPageState extends State<TORSearchPage> {
                                               style: TextStyle(
                                                 fontSize: 14,
                                                 fontWeight: FontWeight.w500,
-                                                color: textGrayColor,
+                                                color: AppColors.grayColor ,
                                               ),
                                             ),
                                             Text(
                                               order['netPrice']!,
                                               style: TextStyle(
                                                 fontSize: 14,
-                                                color: textGrayColor,
+                                                color: AppColors.grayColor ,
                                               ),
                                             ),
                                           ],
@@ -1147,7 +1139,7 @@ class _TORSearchPageState extends State<TORSearchPage> {
                                                       fontSize: 16,
                                                       fontWeight:
                                                           FontWeight.bold,
-                                                      color: primaryColor,
+                                                      color: AppColors.primaryColor,
                                                     ),
                                                   ),
                                                 ),
@@ -1172,7 +1164,7 @@ class _TORSearchPageState extends State<TORSearchPage> {
                               style: TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.bold,
-                                color: textGrayColor,
+                                color: AppColors.grayColor ,
                               ),
                               textAlign: TextAlign.center,
                             ),

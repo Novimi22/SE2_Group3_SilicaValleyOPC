@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:draft_screens/constants/colors.dart';
+
 import 'package:draft_screens/screens/owner_only/owner_landingpage.dart'; 
 import 'package:draft_screens/screens/employee_only/employee_dashboard.dart';
 import 'package:draft_screens/screens/all_logins/forgotpass_step1.dart';
@@ -10,21 +12,13 @@ class SignInScreen extends StatefulWidget {
   State<SignInScreen> createState() => _SignInScreenState();
 }
 
-// This is the State class that holds data and manages UI updates for SignInScreen
-// It's private (starts with _) so it can only be used in this file
 class _SignInScreenState extends State<SignInScreen> {
-  // REMOVED: GlobalKey for the Form widget since we're removing form validation
+  // REMOVED: GlobalKey for the Form widget since form validation is removed (for now?)
   // final _formSignInKey = GlobalKey<FormState>();
   
   // Boolean variable to track whether password should be visible or hidden
   // true = password is hidden (shows dots), false = password is visible
   bool _obscurePassword = true;
-
-  // Color constants - we define colors here so we can reuse them
-  // Using 'const' makes them compile-time constants (faster)
-  static const Color primaryColor = Color(0xFFCC9304); 
-  static const Color grayColor = Color(0xFF9E9E9E);     
-  static const Color borderColor = Color(0xFF19191B);   
   
   // Variables to track what user types in email and password fields
   String _emailValue = '';
@@ -33,7 +27,7 @@ class _SignInScreenState extends State<SignInScreen> {
   // Variable to track if login credentials are incorrect
   bool _showLoginError = false;
   
-  // for checking - Hardcoded correct credentials for both owner and employee
+  // for checking - Hardcoded correct credentials for both owner and employee (for now)
   // Map structure to store multiple credentials
   static const Map<String, Map<String, String>> _userCredentials = {
     'owner@gmail.com': {
@@ -137,7 +131,7 @@ class _SignInScreenState extends State<SignInScreen> {
             'Sign into your account',
             style: TextStyle(
               fontSize: 14, 
-              color: grayColor, 
+              color: AppColors.grayColor, 
             ),
           ),
           const SizedBox(height: 40),
@@ -156,7 +150,7 @@ class _SignInScreenState extends State<SignInScreen> {
                 // Border style when field is focused/active
                 border: OutlineInputBorder(
                   borderSide: const BorderSide(
-                    color: borderColor, 
+                    color: AppColors.borderColor, 
                   ),
                   borderRadius: BorderRadius.circular(10),  
                 ),
@@ -164,7 +158,7 @@ class _SignInScreenState extends State<SignInScreen> {
                 // Border style when field is not focused
                 enabledBorder: OutlineInputBorder(
                   borderSide: const BorderSide(
-                    color: borderColor,
+                    color: AppColors.borderColor,
                   ),
                   borderRadius: BorderRadius.circular(10),
                 ),
@@ -199,13 +193,13 @@ class _SignInScreenState extends State<SignInScreen> {
                 ),
                 border: OutlineInputBorder(
                   borderSide: const BorderSide(
-                    color: borderColor,
+                    color: AppColors.borderColor,
                   ),
                   borderRadius: BorderRadius.circular(10),
                 ),
                 enabledBorder: OutlineInputBorder(
                   borderSide: const BorderSide(
-                    color: borderColor,
+                    color: AppColors.borderColor,
                   ),
                   borderRadius: BorderRadius.circular(10),
                 ),
@@ -214,7 +208,7 @@ class _SignInScreenState extends State<SignInScreen> {
                   // if _obscurePassword is true, show closed eye, else open eye
                   icon: Icon(
                     _obscurePassword ? Icons.visibility_off : Icons.visibility,
-                    color: grayColor,
+                    color: AppColors.grayColor,
                   ),
                   onPressed: () {
                     // setState tells Flutter to rebuild the widget with new state
@@ -306,7 +300,7 @@ class _SignInScreenState extends State<SignInScreen> {
               } : null, // null means button is disabled
               
               style: ElevatedButton.styleFrom(
-                backgroundColor: _isLoginEnabled ? primaryColor : Colors.grey[400], 
+                backgroundColor: _isLoginEnabled ? AppColors.primaryColor : Colors.grey[400], 
                 foregroundColor: Colors.white,  
                 elevation: 5.0,  // Shadow depth
                 // Internal padding (space inside button)
@@ -349,7 +343,7 @@ class _SignInScreenState extends State<SignInScreen> {
                   'Forgot password?',
                   style: TextStyle(
                     fontWeight: FontWeight.bold,  
-                    color: grayColor,
+                    color: AppColors.grayColor,
                     fontSize: 14,
                   ),
                 ),

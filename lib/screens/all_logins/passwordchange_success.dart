@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:draft_screens/constants/colors.dart';
 import 'package:draft_screens/screens/all_logins/signin_screen.dart';
 
 class PasswordSuccessScreen extends StatefulWidget {
@@ -9,10 +10,6 @@ class PasswordSuccessScreen extends StatefulWidget {
 }
 
 class _PasswordSuccessScreenState extends State<PasswordSuccessScreen> {
-  // Color constants
-  static const Color primaryColor = Color(0xFFCC9304);
-  static const Color grayColor = Color(0xFF9E9E9E);
-  static const Color appBarColor = Color(0xFFE8B73A);
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +18,7 @@ class _PasswordSuccessScreenState extends State<PasswordSuccessScreen> {
         preferredSize: const Size.fromHeight(80),
         child: Container(
           decoration: BoxDecoration(
-            color: appBarColor,
+            color: AppColors.appBarColor,
             boxShadow: [
               BoxShadow(
                 color: Colors.black.withOpacity(0.3),
@@ -166,7 +163,7 @@ class _PasswordSuccessScreenState extends State<PasswordSuccessScreen> {
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 16,
-                color: grayColor,
+                color: AppColors.grayColor,
               ),
             ),
           ),
@@ -186,7 +183,7 @@ class _PasswordSuccessScreenState extends State<PasswordSuccessScreen> {
                 );
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: primaryColor,
+                backgroundColor: AppColors.primaryColor,
                 foregroundColor: Colors.white,
                 elevation: 5.0,
                 padding: const EdgeInsets.symmetric(

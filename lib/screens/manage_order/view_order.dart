@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:draft_screens/screens/manage_order/gen_manage_order.dart';
+import 'package:draft_screens/constants/colors.dart';
 
 class ViewOrderScreen extends StatefulWidget {
   final String purchaseOrderNumber;
@@ -20,13 +20,6 @@ class ViewOrderScreen extends StatefulWidget {
 }
 
 class _ViewOrderScreenState extends State<ViewOrderScreen> {
-  // Color constants 
-  static const Color primaryColor = Color(0xFFCC9304);
-  static const Color appBarColor = Color(0xFFE8B73A);
-  static const Color grayColor = Color(0xFF9E9E9E);
-  static const Color borderColor = Color(0xFFD0D0D0);
-  static const Color infoBoxColor = Color(0xFFF3F3F8);
-  static const Color tableHeaderColor = Color(0xFF258651);
 
   // Order details
   double currentNetPrice = 0.0;
@@ -79,7 +72,7 @@ class _ViewOrderScreenState extends State<ViewOrderScreen> {
         preferredSize: const Size.fromHeight(80),
         child: Container(
           decoration: BoxDecoration(
-            color: appBarColor,
+            color: AppColors.appBarColor,
             boxShadow: [
               BoxShadow(
                 color: Colors.black.withOpacity(0.3),
@@ -87,7 +80,7 @@ class _ViewOrderScreenState extends State<ViewOrderScreen> {
                 offset: const Offset(0, 4),
               ),
             ],
-            border: Border(bottom: BorderSide(color: borderColor, width: 1)),
+            border: Border(bottom: BorderSide(color: AppColors.borderColor, width: 1)),
           ),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -140,7 +133,7 @@ class _ViewOrderScreenState extends State<ViewOrderScreen> {
                 // Purchase Order Number section 
                 Text(
                   'Purchase Order Number:',
-                  style: TextStyle(fontSize: 14, color: grayColor),
+                  style: TextStyle(fontSize: 14, color: AppColors.grayColor),
                 ),
                 const SizedBox(height: 8),
                 Text(
@@ -159,9 +152,9 @@ class _ViewOrderScreenState extends State<ViewOrderScreen> {
                   width: double.infinity,
                   padding: const EdgeInsets.all(20),
                   decoration: BoxDecoration(
-                    color: infoBoxColor,
+                    color: AppColors.infoBoxColor,
                     borderRadius: BorderRadius.circular(10),
-                    border: Border.all(color: borderColor, width: 1),
+                    border: Border.all(color: AppColors.borderColor, width: 1),
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -171,7 +164,7 @@ class _ViewOrderScreenState extends State<ViewOrderScreen> {
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
-                          color: primaryColor,
+                          color: AppColors.primaryColor,
                         ),
                       ),
 
@@ -238,14 +231,14 @@ class _ViewOrderScreenState extends State<ViewOrderScreen> {
                               style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,
-                                color: tableHeaderColor,
+                                color: AppColors.tableHeaderColor,
                               ),
                             ),
                             TextSpan(
                               text: '₱${currentNetPrice.toStringAsFixed(2)}',
                               style: TextStyle(
                                 fontSize: 16,
-                                color: tableHeaderColor,
+                                color: AppColors.tableHeaderColor,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -271,7 +264,7 @@ class _ViewOrderScreenState extends State<ViewOrderScreen> {
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
-                            color: primaryColor,
+                            color: AppColors.primaryColor,
                           ),
                         ),
                         // NO Add Item button here
@@ -289,7 +282,7 @@ class _ViewOrderScreenState extends State<ViewOrderScreen> {
                           if (items.isNotEmpty)
                             Container(
                               decoration: BoxDecoration(
-                                border: Border.all(color: borderColor),
+                                border: Border.all(color: AppColors.borderColor),
                               ),
                               child: Table(
                                 columnWidths: {
@@ -322,9 +315,9 @@ class _ViewOrderScreenState extends State<ViewOrderScreen> {
                             Container(
                               decoration: BoxDecoration(
                                 border: Border(
-                                  left: BorderSide(color: borderColor),
-                                  right: BorderSide(color: borderColor),
-                                  bottom: BorderSide(color: borderColor),
+                                  left: BorderSide(color: AppColors.borderColor),
+                                  right: BorderSide(color: AppColors.borderColor),
+                                  bottom: BorderSide(color: AppColors.borderColor),
                                 ),
                               ),
                               child: Column(
@@ -415,14 +408,14 @@ class _ViewOrderScreenState extends State<ViewOrderScreen> {
                               padding: const EdgeInsets.all(40),
                               width: double.infinity,
                               decoration: BoxDecoration(
-                                border: Border.all(color: borderColor),
+                                border: Border.all(color: AppColors.borderColor),
                               ),
                               child: Text(
                                 'No items added. Click "Add Item" to start.', // Keep same text
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                   fontSize: 16,
-                                  color: grayColor,
+                                  color: AppColors.grayColor,
                                 ),
                               ),
                             ),

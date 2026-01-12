@@ -1,5 +1,7 @@
-import 'package:draft_screens/screens/owner_only/owner_landingpage.dart';
 import 'package:flutter/material.dart';
+import 'package:draft_screens/constants/colors.dart';
+
+import 'package:draft_screens/screens/owner_only/owner_landingpage.dart';
 import 'package:draft_screens/screens/owner_only/manage_employee_account/delete_employee_account_otp.dart'; 
 
 class ManageEmployeeAccountScreen extends StatefulWidget {
@@ -10,17 +12,7 @@ class ManageEmployeeAccountScreen extends StatefulWidget {
 }
 
 class _ManageEmployeeAccountScreenState extends State<ManageEmployeeAccountScreen> {
-  // Color constants
-  static const Color appBarColor = Color(0xFFE8B73A);
-  static const Color primaryColor = Color(0xFFCC9304);
-  static const Color tileColor = Color(0xFFF4F4FA);
-  static const Color borderColor = Color(0xFFD0D0D0);
-  static const Color largeTextColor = Color(0xFF202020);
-  static const Color smallTextColor = Color(0xFF5F5F5F);
-  static const Color grayColor = Color(0xFF9E9E9E);
-  static const Color deleteButtonColor = Color(0xFFB71B1B);
-  static const Color dialogBackgroundColor = Color(0xFFFFFBFB);
-
+  
   // Sample employee data
   final List<Map<String, String>> employees = [
     {
@@ -104,7 +96,7 @@ class _ManageEmployeeAccountScreenState extends State<ManageEmployeeAccountScree
         preferredSize: const Size.fromHeight(80),
         child: Container(
           decoration: BoxDecoration(
-            color: appBarColor,
+            color: AppColors.appBarColor,
             boxShadow: [
               BoxShadow(
                 color: Colors.black.withOpacity(0.3),
@@ -172,7 +164,7 @@ class _ManageEmployeeAccountScreenState extends State<ManageEmployeeAccountScree
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                // Header with right-aligned button
+                // Header 
                 Container(
                   width: 700, 
                   margin: const EdgeInsets.only(bottom: 30),
@@ -191,7 +183,7 @@ class _ManageEmployeeAccountScreenState extends State<ManageEmployeeAccountScree
                       
                       // Create Employee Account button 
                       Material(
-                        color: primaryColor,
+                        color: AppColors.primaryColor,
                         borderRadius: BorderRadius.circular(8),
                         child: InkWell(
                           onTap: () {
@@ -234,7 +226,7 @@ class _ManageEmployeeAccountScreenState extends State<ManageEmployeeAccountScree
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(0), 
                     border: Border.all(
-                      color: borderColor,
+                      color: AppColors.borderColor,
                       width: 1,
                     ),
                   ),
@@ -245,11 +237,11 @@ class _ManageEmployeeAccountScreenState extends State<ManageEmployeeAccountScree
                       
                       return Container(
                         decoration: BoxDecoration(
-                          color: tileColor,
+                          color: AppColors.tileColor,
                           border: index < employees.length - 1
                               ? Border(
                                   bottom: BorderSide(
-                                    color: borderColor,
+                                    color: AppColors.borderColor,
                                     width: 1,
                                   ),
                                 )
@@ -294,13 +286,13 @@ class _ManageEmployeeAccountScreenState extends State<ManageEmployeeAccountScree
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Name (bigger and bold text)
+                // Name 
                 Text(
                   name,
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w700,
-                    color: largeTextColor,
+                    color: AppColors.largeTextColor,
                   ),
                 ),
                 const SizedBox(height: 8),
@@ -313,14 +305,14 @@ class _ManageEmployeeAccountScreenState extends State<ManageEmployeeAccountScree
                       style: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w500,
-                        color: smallTextColor,
+                        color: AppColors.smallTextColor,
                       ),
                     ),
                     Text(
                       email,
                       style: TextStyle(
                         fontSize: 14,
-                        color: smallTextColor,
+                        color: AppColors.smallTextColor,
                       ),
                     ),
                   ],
@@ -335,14 +327,14 @@ class _ManageEmployeeAccountScreenState extends State<ManageEmployeeAccountScree
                       style: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w500,
-                        color: smallTextColor,
+                        color: AppColors.smallTextColor,
                       ),
                     ),
                     Text(
                       role,
                       style: TextStyle(
                         fontSize: 14,
-                        color: smallTextColor,
+                        color: AppColors.smallTextColor,
                       ),
                     ),
                   ],
@@ -351,7 +343,7 @@ class _ManageEmployeeAccountScreenState extends State<ManageEmployeeAccountScree
             ),
           ),
           
-          // Delete button with custom color
+          // Delete button 
           GestureDetector(
             onTap: onDelete,
             child: Container(
@@ -364,7 +356,7 @@ class _ManageEmployeeAccountScreenState extends State<ManageEmployeeAccountScree
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w700,
-                  color: deleteButtonColor,
+                  color: AppColors.redColor,
                 ),
               ),
             ),
@@ -385,7 +377,7 @@ class _ManageEmployeeAccountScreenState extends State<ManageEmployeeAccountScree
           ),
           child: Container(
             decoration: BoxDecoration(
-              color: dialogBackgroundColor,
+              color: AppColors.dialogBgColor,
               borderRadius: BorderRadius.circular(20),
               boxShadow: [
                 BoxShadow(
@@ -420,7 +412,7 @@ class _ManageEmployeeAccountScreenState extends State<ManageEmployeeAccountScree
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 16,
-                        color: grayColor,
+                        color: AppColors.grayColor,
                       ),
                     ),
                   ),
@@ -443,7 +435,7 @@ class _ManageEmployeeAccountScreenState extends State<ManageEmployeeAccountScree
                         );
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: primaryColor,
+                        backgroundColor: AppColors.primaryColor,
                         foregroundColor: Colors.white,
                         elevation: 5.0,
                         padding: const EdgeInsets.symmetric(
