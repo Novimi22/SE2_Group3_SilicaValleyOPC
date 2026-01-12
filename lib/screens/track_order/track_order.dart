@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:draft_screens/screens/histories/doc_act_history.dart';
 
 import 'dart:io';
 
@@ -23,7 +24,7 @@ class _TrackRecordScreenState extends State<TrackRecordScreen> {
   static const Color borderColor = Color(0xFFD0D0D0);
   static const Color textGrayColor = Color(0xFF9E9E9E);
   static const Color tileColor = Color(0xFFF4F4FA);
-  static const Color expandedTileColor = Color(0xFFF4F4FA); 
+  static const Color expandedTileColor = Color(0xFFF4F4FA);
   static const Color darkGrayColor = Color(0xFFCDCCCC);
   static const Color iconColor = Color(0xFF374957);
   static const Color dialogBackgroundColor = Color(0xFFFFFBFB);
@@ -55,7 +56,8 @@ class _TrackRecordScreenState extends State<TrackRecordScreen> {
   List<File?> _attachedFiles = [];
   List<bool> _hasFileList = []; // true = green line, false = red/gray line
   List<String> _documentTitles = [];
-  List<String?> _lastUpdatedDates = []; // Track last updated dates for each document (nullable)
+  List<String?> _lastUpdatedDates =
+      []; // Track last updated dates for each document (nullable)
 
   // Track miscellaneous documents
   int _miscellaneousCount = 1;
@@ -338,7 +340,7 @@ class _TrackRecordScreenState extends State<TrackRecordScreen> {
   void _generateReport() {
     // TODO: Implement report generation logic
     print('Generating report for PO: ${widget.purchaseOrderNumber}');
-    
+
     // Show success snackbar
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
@@ -375,7 +377,7 @@ class _TrackRecordScreenState extends State<TrackRecordScreen> {
       // DO NOT clear the last updated date when file is deleted
       // Keep the date to show when it was last updated
     });
-    
+
     // Show red snackbar with check icon
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
@@ -521,7 +523,7 @@ class _TrackRecordScreenState extends State<TrackRecordScreen> {
               // Spacer
               const Expanded(child: SizedBox()),
 
-              // 
+              //
               Container(
                 height: 80,
                 alignment: Alignment.center,
@@ -558,19 +560,22 @@ class _TrackRecordScreenState extends State<TrackRecordScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // PO Number and Document Count row 
+                      // PO Number and Document Count row
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          // PO Number and Payment Status 
+                          // PO Number and Payment Status
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               // Purchase Order Number
                               Text(
                                 'Purchase Order Number:',
-                                style: TextStyle(fontSize: 14, color: textGrayColor),
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  color: textGrayColor,
+                                ),
                               ),
                               const SizedBox(height: 8),
                               Text(
@@ -597,7 +602,9 @@ class _TrackRecordScreenState extends State<TrackRecordScreen> {
                                   const SizedBox(width: 12),
                                   Container(
                                     width: 150,
-                                    padding: const EdgeInsets.symmetric(horizontal: 12),
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 12,
+                                    ),
                                     decoration: BoxDecoration(
                                       color: Colors.grey[100],
                                       borderRadius: BorderRadius.circular(8),
@@ -607,7 +614,9 @@ class _TrackRecordScreenState extends State<TrackRecordScreen> {
                                       child: DropdownButton<String>(
                                         value: _paymentStatus,
                                         isExpanded: true,
-                                        items: _paymentOptions.map((String value) {
+                                        items: _paymentOptions.map((
+                                          String value,
+                                        ) {
                                           return DropdownMenuItem<String>(
                                             value: value,
                                             child: Text(value),
@@ -626,13 +635,16 @@ class _TrackRecordScreenState extends State<TrackRecordScreen> {
                             ],
                           ),
 
-                          // Document Count 
+                          // Document Count
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
                               Text(
                                 'Document Count:',
-                                style: TextStyle(fontSize: 14, color: textGrayColor),
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  color: textGrayColor,
+                                ),
                               ),
                               const SizedBox(height: 8),
                               Text(
@@ -656,7 +668,7 @@ class _TrackRecordScreenState extends State<TrackRecordScreen> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            // Legends 
+                            // Legends
                             Row(
                               children: [
                                 // First legend: "File attached"
@@ -680,9 +692,9 @@ class _TrackRecordScreenState extends State<TrackRecordScreen> {
                                     ),
                                   ],
                                 ),
-                                
+
                                 const SizedBox(width: 20),
-                                
+
                                 // Second legend: "No file attached"
                                 Row(
                                   children: [
@@ -704,9 +716,9 @@ class _TrackRecordScreenState extends State<TrackRecordScreen> {
                                     ),
                                   ],
                                 ),
-                                
+
                                 const SizedBox(width: 20),
-                                
+
                                 // Third legend: "Optional"
                                 Row(
                                   children: [
@@ -730,7 +742,7 @@ class _TrackRecordScreenState extends State<TrackRecordScreen> {
                                 ),
                               ],
                             ),
-                            
+
                             // Download Report button
                             Material(
                               color: primaryColor,
@@ -820,14 +832,17 @@ class _TrackRecordScreenState extends State<TrackRecordScreen> {
                         return Container(
                           width: double.infinity,
                           decoration: BoxDecoration(
-                            color: isExpanded ? expandedTileColor : tileColor, 
+                            color: isExpanded ? expandedTileColor : tileColor,
                             border:
                                 index > 0 &&
                                     _documentTitles[index - 1] !=
                                         '[HORIZONTAL_LINE]' &&
                                     _documentTitles[index - 1] != '- END -'
                                 ? const Border(
-                                    top: BorderSide(color: borderColor, width: 1),
+                                    top: BorderSide(
+                                      color: borderColor,
+                                      width: 1,
+                                    ),
                                   )
                                 : null,
                           ),
@@ -835,267 +850,340 @@ class _TrackRecordScreenState extends State<TrackRecordScreen> {
                             horizontal: 25,
                             vertical: 20,
                           ),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              // Status Indicator Line 
-                              Container(
-                                width: 4,
-                                height: 60,
-                                margin: const EdgeInsets.only(right: 16),
-                                decoration: BoxDecoration(
-                                  color: _getStatusIndicatorColor(index),
-                                  borderRadius: BorderRadius.circular(2),
-                                ),
-                              ),
-
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    // Main row with title and expand button
-                                    Row(
-                                      crossAxisAlignment: CrossAxisAlignment.center,
-                                      children: [
-                                        // Document info
-                                        Expanded(
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              // Document Title
-                                              Text(
-                                                title,
-                                                style: const TextStyle(
-                                                  fontSize: 18,
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Colors.black,
-                                                ),
-                                              ),
-                                              const SizedBox(height: 8),
-
-                                              // Show "Last updated: MM/DD/YYYY" only if date is set
-                                              Text(
-                                                _lastUpdatedDates[index] != null
-                                                    ? 'Last updated: ${_lastUpdatedDates[index]}'
-                                                    : '', // Blank initially
-                                                style: TextStyle(
-                                                  fontSize: 14,
-                                                  color: textGrayColor,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
+                          child: Material(
+                            color: Colors.transparent,
+                            child: InkWell(
+                              onTap: () {
+                                // Navigate to DocumentActivityHistoryScreen when tile is clicked
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        DocumentActivityHistoryScreen(
+                                          documentTitle: title,
+                                          purchaseOrderNumber:
+                                              widget.purchaseOrderNumber,
+                                          clientName: widget.clientName,
                                         ),
+                                  ),
+                                );
+                              },
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  // Status Indicator Line
+                                  Container(
+                                    width: 4,
+                                    height: 60,
+                                    margin: const EdgeInsets.only(right: 16),
+                                    decoration: BoxDecoration(
+                                      color: _getStatusIndicatorColor(index),
+                                      borderRadius: BorderRadius.circular(2),
+                                    ),
+                                  ),
 
-                                        // Action buttons 
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        // Main row with title and expand button
                                         Row(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
                                           children: [
-                                            // Delete button 
-                                            Container(
-                                              width: 40,
-                                              height: 40,
-                                              decoration: BoxDecoration(
-                                                borderRadius: BorderRadius.circular(
-                                                  20,
-                                                ),
-                                                border: Border.all(
-                                                  color:
-                                                      _attachedFiles[index] != null
-                                                      ? iconColor
-                                                      : iconColor.withOpacity(0.3),
-                                                ),
+                                            // Document info
+                                            Expanded(
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  // Document Title
+                                                  Text(
+                                                    title,
+                                                    style: const TextStyle(
+                                                      fontSize: 18,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: Colors.black,
+                                                    ),
+                                                  ),
+                                                  const SizedBox(height: 8),
+
+                                                  // Show "Last updated: MM/DD/YYYY" only if date is set
+                                                  Text(
+                                                    _lastUpdatedDates[index] !=
+                                                            null
+                                                        ? 'Last updated: ${_lastUpdatedDates[index]}'
+                                                        : '', // Blank initially
+                                                    style: TextStyle(
+                                                      fontSize: 14,
+                                                      color: textGrayColor,
+                                                    ),
+                                                  ),
+                                                ],
                                               ),
-                                              child: Material(
-                                                color: Colors.transparent,
-                                                borderRadius: BorderRadius.circular(
-                                                  20,
-                                                ),
-                                                child: InkWell(
-                                                  onTap:
-                                                      _attachedFiles[index] != null
-                                                      ? () {
+                                            ),
+
+                                            // Action buttons
+                                            Row(
+                                              children: [
+                                                // Delete button
+                                                Container(
+                                                  width: 40,
+                                                  height: 40,
+                                                  decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                          20,
+                                                        ),
+                                                    border: Border.all(
+                                                      color:
+                                                          _attachedFiles[index] !=
+                                                              null
+                                                          ? iconColor
+                                                          : iconColor
+                                                                .withOpacity(
+                                                                  0.3,
+                                                                ),
+                                                    ),
+                                                  ),
+                                                  child: Material(
+                                                    color: Colors.transparent,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                          20,
+                                                        ),
+                                                    child: InkWell(
+                                                      onTap: () {
+                                                        // Prevent tile navigation by handling it here
+                                                        if (_attachedFiles[index] !=
+                                                            null) {
                                                           _showDeleteConfirmationDialog(
                                                             index,
                                                           );
                                                         }
-                                                      : null,
-                                                  borderRadius:
-                                                      BorderRadius.circular(20),
-                                                  child: Icon(
-                                                    Icons.delete_outline,
-                                                    color:
-                                                        _attachedFiles[index] !=
-                                                            null
-                                                        ? iconColor
-                                                        : iconColor.withOpacity(
-                                                            0.3,
+                                                      },
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                            20,
                                                           ),
-                                                    size: 20,
+                                                      child: Icon(
+                                                        Icons.delete_outline,
+                                                        color:
+                                                            _attachedFiles[index] !=
+                                                                null
+                                                            ? iconColor
+                                                            : iconColor
+                                                                  .withOpacity(
+                                                                    0.3,
+                                                                  ),
+                                                        size: 20,
+                                                      ),
+                                                    ),
                                                   ),
                                                 ),
-                                              ),
-                                            ),
 
-                                            const SizedBox(width: 12),
+                                                const SizedBox(width: 12),
 
-                                            // Attach File button 
-                                            Container(
-                                              width: 40,
-                                              height: 40,
-                                              decoration: BoxDecoration(
-                                                borderRadius: BorderRadius.circular(
-                                                  20,
-                                                ),
-                                                border: Border.all(
-                                                  color: iconColor,
-                                                ),
-                                              ),
-                                              child: Material(
-                                                color: Colors.transparent,
-                                                borderRadius: BorderRadius.circular(
-                                                  20,
-                                                ),
-                                                child: InkWell(
-                                                  onTap: () {
-                                                    _showImageSourceDialog(index);
-                                                  },
-                                                  borderRadius:
-                                                      BorderRadius.circular(20),
-                                                  child: Icon(
-                                                    Icons.attach_file,
-                                                    color: iconColor,
-                                                    size: 20,
+                                                // Attach File button
+                                                Container(
+                                                  width: 40,
+                                                  height: 40,
+                                                  decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                          20,
+                                                        ),
+                                                    border: Border.all(
+                                                      color: iconColor,
+                                                    ),
+                                                  ),
+                                                  child: Material(
+                                                    color: Colors.transparent,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                          20,
+                                                        ),
+                                                    child: InkWell(
+                                                      onTap: () {
+                                                        // Prevent tile navigation by handling it here
+                                                        _showImageSourceDialog(
+                                                          index,
+                                                        );
+                                                      },
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                            20,
+                                                          ),
+                                                      child: Icon(
+                                                        Icons.attach_file,
+                                                        color: iconColor,
+                                                        size: 20,
+                                                      ),
+                                                    ),
                                                   ),
                                                 ),
-                                              ),
-                                            ),
 
-                                            const SizedBox(width: 12),
+                                                const SizedBox(width: 12),
 
-                                            // Expand button 
-                                            Container(
-                                              width: 40,
-                                              height: 40,
-                                              decoration: BoxDecoration(
-                                                borderRadius: BorderRadius.circular(
-                                                  20,
-                                                ),
-                                                border: Border.all(
-                                                  color: iconColor, 
-                                                ),
-                                              ),
-                                              child: Material(
-                                                color: Colors.transparent,
-                                                borderRadius: BorderRadius.circular(
-                                                  20,
-                                                ),
-                                                child: InkWell(
-                                                  onTap: () {
-                                                    setState(() {
-                                                      _isExpandedList[index] =
-                                                          !isExpanded;
-                                                    });
-                                                  },
-                                                  borderRadius:
-                                                      BorderRadius.circular(20),
-                                                  child: Icon(
-                                                    isExpanded
-                                                        ? Icons.expand_less
-                                                        : Icons.expand_more,
-                                                    color: iconColor,
-                                                    size: 24,
+                                                // Expand button
+                                                Container(
+                                                  width: 40,
+                                                  height: 40,
+                                                  decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                          20,
+                                                        ),
+                                                    border: Border.all(
+                                                      color: iconColor,
+                                                    ),
+                                                  ),
+                                                  child: Material(
+                                                    color: Colors.transparent,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                          20,
+                                                        ),
+                                                    child: InkWell(
+                                                      onTap: () {
+                                                        // Prevent tile navigation by handling it here
+                                                        setState(() {
+                                                          _isExpandedList[index] =
+                                                              !isExpanded;
+                                                        });
+                                                      },
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                            20,
+                                                          ),
+                                                      child: Icon(
+                                                        isExpanded
+                                                            ? Icons.expand_less
+                                                            : Icons.expand_more,
+                                                        color: iconColor,
+                                                        size: 24,
+                                                      ),
+                                                    ),
                                                   ),
                                                 ),
-                                              ),
+                                              ],
                                             ),
                                           ],
                                         ),
-                                      ],
-                                    ),
 
-                                    // Expanded content (scrollable within expanded area)
-                                    if (isExpanded)
-                                      Padding(
-                                        padding: const EdgeInsets.only(top: 20),
-                                        child: SingleChildScrollView(
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              if (_attachedFiles[index] != null)
-                                                Column(
-                                                  children: [
-                                                    Text(
-                                                      'File attached: ${_attachedFiles[index]!.path.split('/').last}',
-                                                      style: TextStyle(
-                                                        fontSize: 14,
-                                                        color: textGrayColor,
-                                                      ),
-                                                    ),
-                                                    const SizedBox(height: 16),
-                                                    
+                                        // Expanded content (scrollable within expanded area)
+                                        if (isExpanded)
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                              top: 20,
+                                            ),
+                                            child: SingleChildScrollView(
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  if (_attachedFiles[index] !=
+                                                      null)
+                                                    Column(
+                                                      children: [
+                                                        Text(
+                                                          'File attached: ${_attachedFiles[index]!.path.split('/').last}',
+                                                          style: TextStyle(
+                                                            fontSize: 14,
+                                                            color:
+                                                                textGrayColor,
+                                                          ),
+                                                        ),
+                                                        const SizedBox(
+                                                          height: 16,
+                                                        ),
+
+                                                        Container(
+                                                          width:
+                                                              double.infinity,
+                                                          height: 200,
+                                                          decoration: BoxDecoration(
+                                                            border: Border.all(
+                                                              color:
+                                                                  borderColor,
+                                                            ),
+                                                            borderRadius:
+                                                                BorderRadius.circular(
+                                                                  8,
+                                                                ),
+                                                            color: Colors
+                                                                .grey[200],
+                                                          ),
+                                                          child:
+                                                              _attachedFiles[index] !=
+                                                                  null
+                                                              ? _buildImagePreview(
+                                                                  index,
+                                                                )
+                                                              : const Center(
+                                                                  child: Icon(
+                                                                    Icons
+                                                                        .insert_drive_file,
+                                                                    size: 48,
+                                                                    color:
+                                                                        textGrayColor,
+                                                                  ),
+                                                                ),
+                                                        ),
+                                                      ],
+                                                    )
+                                                  else
+                                                    // Message: no file is attached
                                                     Container(
                                                       width: double.infinity,
-                                                      height: 200,
+                                                      padding:
+                                                          const EdgeInsets.symmetric(
+                                                            vertical: 20,
+                                                          ),
                                                       decoration: BoxDecoration(
                                                         border: Border.all(
                                                           color: borderColor,
                                                         ),
                                                         borderRadius:
-                                                            BorderRadius.circular(8),
-                                                        color: Colors.grey[200], 
-                                                      ),
-                                                      child: _attachedFiles[index] != null
-                                                          ? _buildImagePreview(index)
-                                                          : const Center(
-                                                              child: Icon(
-                                                                Icons.insert_drive_file,
-                                                                size: 48,
-                                                                color: textGrayColor,
-                                                              ),
+                                                            BorderRadius.circular(
+                                                              8,
                                                             ),
-                                                    ),
-                                                  ],
-                                                )
-                                              else
-                                                // Message: no file is attached
-                                                Container(
-                                                  width: double.infinity,
-                                                  padding: const EdgeInsets.symmetric(vertical: 20),
-                                                  decoration: BoxDecoration(
-                                                    border: Border.all(
-                                                      color: borderColor,
-                                                    ),
-                                                    borderRadius:
-                                                        BorderRadius.circular(8),
-                                                  ),
-                                                  child: Column(
-                                                    children: [
-                                                      const Icon(
-                                                        Icons.insert_drive_file,
-                                                        size: 48,
-                                                        color: textGrayColor,
                                                       ),
-                                                      const SizedBox(height: 16),
-                                                      Text(
-                                                        'No file attached',
-                                                        style: TextStyle(
-                                                          fontSize: 16,
-                                                          color: textGrayColor,
-                                                        ),
+                                                      child: Column(
+                                                        children: [
+                                                          const Icon(
+                                                            Icons
+                                                                .insert_drive_file,
+                                                            size: 48,
+                                                            color:
+                                                                textGrayColor,
+                                                          ),
+                                                          const SizedBox(
+                                                            height: 16,
+                                                          ),
+                                                          Text(
+                                                            'No file attached',
+                                                            style: TextStyle(
+                                                              fontSize: 16,
+                                                              color:
+                                                                  textGrayColor,
+                                                            ),
+                                                          ),
+                                                        ],
                                                       ),
-                                                    ],
-                                                  ),
-                                                ),
-                                            ],
+                                                    ),
+                                                ],
+                                              ),
+                                            ),
                                           ),
-                                        ),
-                                      ),
-                                  ],
-                                ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ],
+                            ),
                           ),
                         );
                       }).toList(),
@@ -1119,7 +1207,7 @@ class _TrackRecordScreenState extends State<TrackRecordScreen> {
     return '$month/$day/$year';
   }
 
-  // Helper function to build image preview 
+  // Helper function to build image preview
   Widget _buildImagePreview(int index) {
     // For web compatibility, use a fallback
     // In a real app, you would upload the file to a server and use Image.network (according sa gpt hehe)
@@ -1128,18 +1216,11 @@ class _TrackRecordScreenState extends State<TrackRecordScreen> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Icon(
-            Icons.insert_drive_file,
-            size: 48,
-            color: iconColor,
-          ),
+          const Icon(Icons.insert_drive_file, size: 48, color: iconColor),
           const SizedBox(height: 16),
           Text(
             'File: ${_attachedFiles[index]!.path.split('/').last}',
-            style: TextStyle(
-              fontSize: 14,
-              color: textGrayColor,
-            ),
+            style: TextStyle(fontSize: 14, color: textGrayColor),
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 8),

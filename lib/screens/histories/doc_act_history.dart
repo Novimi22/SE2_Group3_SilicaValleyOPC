@@ -1,7 +1,16 @@
 import 'package:flutter/material.dart';
 
 class DocumentActivityHistoryScreen extends StatefulWidget {
-  const DocumentActivityHistoryScreen({super.key});
+  final String documentTitle;
+  final String purchaseOrderNumber;
+  final String clientName;
+
+  const DocumentActivityHistoryScreen({
+    super.key,
+    required this.documentTitle,
+    required this.purchaseOrderNumber,
+    required this.clientName,
+  });
 
   @override
   State<DocumentActivityHistoryScreen> createState() => _DocumentActivityHistoryScreenState();
@@ -30,14 +39,59 @@ class _DocumentActivityHistoryScreenState extends State<DocumentActivityHistoryS
   // Track search input for clear button visibility
   bool _showClearButton = false;
   
-  // Original sample data for document activity history
-  final List<Map<String, String>> _allDocumentHistory = List.generate(15, (index) {
-    return {
-      'date': '01/${(index + 10).toString().padLeft(2, '0')}/2024',
-      'editedBy': 'John Doe ${index + 1}',
-      'activityType': 'Option ${(index % 3) + 1}',
-    };
-  });
+  // Sample data 
+  final List<Map<String, String>> _allDocumentHistory = [
+    {
+      'date': '01/15/2024',
+      'editedBy': 'John Doe',
+      'activityType': 'File Uploaded',
+    },
+    {
+      'date': '01/14/2024',
+      'editedBy': 'Michael Jackson',
+      'activityType': 'File Edited',
+    },
+    {
+      'date': '01/13/2024',
+      'editedBy': 'Chris Hemsworth',
+      'activityType': 'File Uploaded',
+    },
+    {
+      'date': '01/12/2024',
+      'editedBy': 'Michael V',
+      'activityType': 'File Uploaded',
+    },
+    {
+      'date': '01/11/2024',
+      'editedBy': 'Jane Hopper',
+      'activityType': 'File Deleted',
+    },
+    {
+      'date': '01/10/2024',
+      'editedBy': 'Jim Hopper',
+      'activityType': 'File Uploaded',
+    },
+    {
+      'date': '01/09/2024',
+      'editedBy': 'Sarah Geronimo',
+      'activityType': 'File Deleted',
+    },
+    {
+      'date': '01/08/2024',
+      'editedBy': 'Jang Wonyoung',
+      'activityType': 'File Edited',
+    },
+    {
+      'date': '01/07/2024',
+      'editedBy': 'Lisa Manoban',
+      'activityType': 'File Edited',
+    },
+    {
+      'date': '01/06/2024',
+      'editedBy': 'Kim Jennie',
+      'activityType': 'File Uploaded',
+    },
+  ];
   
   // Filtered data based on search
   List<Map<String, String>> _filteredDocumentHistory = [];
@@ -252,7 +306,7 @@ class _DocumentActivityHistoryScreenState extends State<DocumentActivityHistoryS
                                         isExpanded: true,
                                         underline: const SizedBox(),
                                         icon: const Icon(Icons.arrow_drop_down, color: Colors.black),
-                                        items: ['Option 1', 'Option 2', 'Option 3']
+                                        items: ['File Uploaded', 'File Edited', 'File Deleted', 'File Viewed', 'File Downloaded']
                                             .map((String value) {
                                           return DropdownMenuItem<String>(
                                             value: value,
@@ -478,13 +532,25 @@ class _DocumentActivityHistoryScreenState extends State<DocumentActivityHistoryS
               Container(
                 height: 80,
                 alignment: Alignment.center,
-                child: Text(
-                  'Document Activity History',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                  ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    // Main title 
+                    Text(
+                      'Document Activity History',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    // Subtitle - Now shows PO number and client name
+                    Text(
+                      widget.documentTitle,
+                      style: TextStyle(fontSize: 12, color: Colors.white),
+                    ),
+                  ],
                 ),
               ),
 
