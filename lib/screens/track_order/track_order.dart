@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:draft_screens/constants/colors.dart';
 import 'package:draft_screens/constants/app_bars.dart';
 import 'package:draft_screens/constants/buttons/elevated_buttons.dart';
+import 'package:draft_screens/constants/buttons/text_buttons.dart';
 
 import 'package:image_picker/image_picker.dart';
 import 'package:draft_screens/screens/histories/doc_act_history.dart';
