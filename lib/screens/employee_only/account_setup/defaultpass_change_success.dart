@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:draft_screens/constants/colors.dart';
 import 'package:draft_screens/constants/app_bars.dart';
+import 'package:draft_screens/constants/buttons/elevated_buttons.dart';
 
 import 'package:draft_screens/screens/all_logins/signin_screen.dart';
 
@@ -12,7 +13,6 @@ class PasswordSuccessScreen2 extends StatefulWidget {
 }
 
 class _PasswordSuccessScreen2State extends State<PasswordSuccessScreen2> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,7 +25,7 @@ class _PasswordSuccessScreen2State extends State<PasswordSuccessScreen2> {
       body: SafeArea(
         child: Column(
           children: [
-            // Top section with background image 
+            // Top section with background image
             Container(
               height: 200, // fixed height
               width: double.infinity, // Takes full available width
@@ -54,7 +54,12 @@ class _PasswordSuccessScreen2State extends State<PasswordSuccessScreen2> {
                           minHeight: constraints.maxHeight,
                         ),
                         child: Padding(
-                          padding: const EdgeInsets.fromLTRB(25.0, 60.0, 25.0, 20.0),
+                          padding: const EdgeInsets.fromLTRB(
+                            25.0,
+                            60.0,
+                            25.0,
+                            20.0,
+                          ),
                           child: _buildSuccessContent(constraints.maxHeight),
                         ),
                       ),
@@ -99,10 +104,7 @@ class _PasswordSuccessScreen2State extends State<PasswordSuccessScreen2> {
             child: Text(
               'Password has been changed successfully.\nUse your new password to log in.',
               textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 16,
-                color: AppColors.grayColor,
-              ),
+              style: TextStyle(fontSize: 16, color: AppColors.grayColor),
             ),
           ),
           const SizedBox(height: 60),
@@ -110,39 +112,14 @@ class _PasswordSuccessScreen2State extends State<PasswordSuccessScreen2> {
           // Back to login button
           SizedBox(
             width: 350,
-            child: ElevatedButton(
-              onPressed: () {
-                // Navigate back to SignInScreen
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const SignInScreen(),
-                  ),
-                );
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.grayColor,
-                foregroundColor: Colors.white,
-                elevation: 5.0,
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 20,
-                  vertical: 18,
-                ),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
-                ),
-              ),
-              child: const Text(
-                'Back to login',
-                style: TextStyle(fontSize: 16),
-              ),
+            child: CustomButtons.backToLoginButton(
+              context: context,
+              backgroundColor: AppColors.grayColor,
             ),
           ),
 
           // Flexible spacer to push content up
-          Flexible(
-            child: Container(),
-          ),
+          Flexible(child: Container()),
         ],
       ),
     );

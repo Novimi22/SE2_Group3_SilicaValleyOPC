@@ -1,32 +1,36 @@
-import 'package:draft_screens/constants/app_bars.dart';
 import 'package:flutter/material.dart';
+import 'package:draft_screens/constants/app_bars.dart';
 import 'package:draft_screens/constants/colors.dart';
+import 'package:draft_screens/constants/buttons/elevated_buttons.dart';
 
 class OrderActivityHistoryScreen extends StatefulWidget {
   const OrderActivityHistoryScreen({super.key});
 
   @override
-  State<OrderActivityHistoryScreen> createState() => _OrderActivityHistoryScreenState();
+  State<OrderActivityHistoryScreen> createState() =>
+      _OrderActivityHistoryScreenState();
 }
 
-class _OrderActivityHistoryScreenState extends State<OrderActivityHistoryScreen> {
-  
+class _OrderActivityHistoryScreenState
+    extends State<OrderActivityHistoryScreen> {
   // Filter state
   String _selectedSortBy = 'Modification Date';
   String _selectedSortOrder = 'Ascending';
   String? _selectedActivityType;
-  
+
   // Search controller
   final TextEditingController _searchController = TextEditingController();
-  
+
   // Global key for filter icon position
   final GlobalKey _filterIconKey = GlobalKey();
-  
+
   // Track search input for clear button visibility
   bool _showClearButton = false;
-  
+
   // Original sample data for activity history
-  final List<Map<String, String>> _allActivityHistory = List.generate(15, (index) {
+  final List<Map<String, String>> _allActivityHistory = List.generate(15, (
+    index,
+  ) {
     final poNumber = (1000000 + index).toString().padLeft(8, '0');
     return {
       'date': '01/${(index + 10).toString().padLeft(2, '0')}/2024',
@@ -35,16 +39,16 @@ class _OrderActivityHistoryScreenState extends State<OrderActivityHistoryScreen>
       'activityType': 'Option ${(index % 3) + 1}',
     };
   });
-  
+
   // Filtered data based on search
   List<Map<String, String>> _filteredActivityHistory = [];
-  
+
   @override
   void initState() {
     super.initState();
     // Initialize filtered list with all data
     _filteredActivityHistory = List.from(_allActivityHistory);
-    
+
     // Add listener to search controller
     _searchController.addListener(() {
       setState(() {
@@ -53,11 +57,11 @@ class _OrderActivityHistoryScreenState extends State<OrderActivityHistoryScreen>
       });
     });
   }
-  
+
   // Filter data based on search text
   void _filterData() {
     final searchText = _searchController.text.toLowerCase();
-    
+
     if (searchText.isEmpty) {
       // Reset to all data, then apply filters
       _applyFiltersAndSorting();
@@ -65,16 +69,16 @@ class _OrderActivityHistoryScreenState extends State<OrderActivityHistoryScreen>
       setState(() {
         _filteredActivityHistory = _allActivityHistory.where((activity) {
           return activity['poNumber']!.toLowerCase().contains(searchText) ||
-                 activity['editedBy']!.toLowerCase().contains(searchText) ||
-                 activity['activityType']!.toLowerCase().contains(searchText);
+              activity['editedBy']!.toLowerCase().contains(searchText) ||
+              activity['activityType']!.toLowerCase().contains(searchText);
         }).toList();
-        
+
         // Apply sorting to filtered results
         _applySorting();
       });
     }
   }
-  
+
   // Clear search input
   void _clearSearch() {
     _searchController.clear();
@@ -84,31 +88,31 @@ class _OrderActivityHistoryScreenState extends State<OrderActivityHistoryScreen>
       _applyFiltersAndSorting();
     });
   }
-  
+
   // Apply both filtering and sorting
   void _applyFiltersAndSorting() {
     // Start with all data
     List<Map<String, String>> result = List.from(_allActivityHistory);
-    
+
     // Apply activity type filter if selected
     if (_selectedActivityType != null && _selectedSortBy == 'Activity Type') {
       result = result.where((activity) {
         return activity['activityType'] == _selectedActivityType;
       }).toList();
     }
-    
+
     setState(() {
       _filteredActivityHistory = result;
       _applySorting();
     });
   }
-  
+
   // Apply sorting based on selected criteria
   void _applySorting() {
     setState(() {
       _filteredActivityHistory.sort((a, b) {
         int comparison = 0;
-        
+
         switch (_selectedSortBy) {
           case 'Name':
             comparison = a['editedBy']!.compareTo(b['editedBy']!);
@@ -122,30 +126,31 @@ class _OrderActivityHistoryScreenState extends State<OrderActivityHistoryScreen>
             comparison = a['date']!.compareTo(b['date']!);
             break;
         }
-        
+
         // Apply sort order
         return _selectedSortOrder == 'Descending' ? -comparison : comparison;
       });
     });
   }
-  
+
   // Show filter dialog
   void _showFilterDialog(BuildContext context) {
     // Local variables for dialog state
     String dialogSortBy = _selectedSortBy;
     String dialogSortOrder = _selectedSortOrder;
     String? dialogActivityType = _selectedActivityType;
-    
+
     // Get the position of the filter icon
-    final renderBox = _filterIconKey.currentContext?.findRenderObject() as RenderBox?;
+    final renderBox =
+        _filterIconKey.currentContext?.findRenderObject() as RenderBox?;
     if (renderBox == null) return;
-    
+
     final position = renderBox.localToGlobal(Offset.zero);
-    
+
     // Calculate position for the dialog
     final double dialogTop = position.dy + renderBox.size.height + 10;
     final double dialogLeft = position.dx - 200;
-    
+
     showDialog(
       context: context,
       barrierColor: Colors.transparent,
@@ -156,9 +161,7 @@ class _OrderActivityHistoryScreenState extends State<OrderActivityHistoryScreen>
             Positioned.fill(
               child: GestureDetector(
                 onTap: () => Navigator.of(context).pop(),
-                child: Container(
-                  color: Colors.transparent,
-                ),
+                child: Container(color: Colors.transparent),
               ),
             ),
             // Filter dialog positioned below the icon
@@ -176,19 +179,25 @@ class _OrderActivityHistoryScreenState extends State<OrderActivityHistoryScreen>
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(12),
-                        border: Border.all(color: AppColors.darkGrayColor, width: 1),
+                        border: Border.all(
+                          color: AppColors.darkGrayColor,
+                          width: 1,
+                        ),
                       ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          // Sort By section 
+                          // Sort By section
                           Container(
                             width: double.infinity,
                             padding: const EdgeInsets.all(12),
                             decoration: BoxDecoration(
                               color: AppColors.lightGrayColor,
                               borderRadius: BorderRadius.circular(8),
-                              border: Border.all(color: AppColors.darkGrayColor, width: 1),
+                              border: Border.all(
+                                color: AppColors.darkGrayColor,
+                                width: 1,
+                              ),
                             ),
                             child: Text(
                               'Sort By',
@@ -199,7 +208,7 @@ class _OrderActivityHistoryScreenState extends State<OrderActivityHistoryScreen>
                               ),
                             ),
                           ),
-                          
+
                           // Name selection row
                           Container(
                             width: double.infinity,
@@ -211,9 +220,9 @@ class _OrderActivityHistoryScreenState extends State<OrderActivityHistoryScreen>
                                   'Name',
                                   style: TextStyle(
                                     fontSize: 14,
-                                    fontWeight: dialogSortBy == 'Name' 
-                                      ? FontWeight.bold 
-                                      : FontWeight.normal,
+                                    fontWeight: dialogSortBy == 'Name'
+                                        ? FontWeight.bold
+                                        : FontWeight.normal,
                                     color: Colors.black,
                                   ),
                                 ),
@@ -231,7 +240,7 @@ class _OrderActivityHistoryScreenState extends State<OrderActivityHistoryScreen>
                               ],
                             ),
                           ),
-                          
+
                           // Activity Type selection row
                           Container(
                             width: double.infinity,
@@ -240,15 +249,17 @@ class _OrderActivityHistoryScreenState extends State<OrderActivityHistoryScreen>
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
                                       'Activity Type',
                                       style: TextStyle(
                                         fontSize: 14,
-                                        fontWeight: dialogSortBy == 'Activity Type' 
-                                          ? FontWeight.bold 
-                                          : FontWeight.normal,
+                                        fontWeight:
+                                            dialogSortBy == 'Activity Type'
+                                            ? FontWeight.bold
+                                            : FontWeight.normal,
                                         color: Colors.black,
                                       ),
                                     ),
@@ -264,34 +275,51 @@ class _OrderActivityHistoryScreenState extends State<OrderActivityHistoryScreen>
                                     ),
                                   ],
                                 ),
-                                
+
                                 // Activity Type dropdown (shown when Activity Type is selected)
                                 if (dialogSortBy == 'Activity Type')
                                   Padding(
-                                    padding: const EdgeInsets.only(top: 8, left: 8),
+                                    padding: const EdgeInsets.only(
+                                      top: 8,
+                                      left: 8,
+                                    ),
                                     child: Container(
                                       width: double.infinity,
-                                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 12,
+                                        vertical: 8,
+                                      ),
                                       decoration: BoxDecoration(
-                                        border: Border.all(color: AppColors.borderColor),
+                                        border: Border.all(
+                                          color: AppColors.borderColor,
+                                        ),
                                         borderRadius: BorderRadius.circular(4),
                                       ),
                                       child: DropdownButton<String>(
                                         value: dialogActivityType,
                                         hint: Text(
                                           'Select Activity Type',
-                                          style: TextStyle(color: AppColors.grayColor),
+                                          style: TextStyle(
+                                            color: AppColors.grayColor,
+                                          ),
                                         ),
                                         isExpanded: true,
                                         underline: const SizedBox(),
-                                        icon: const Icon(Icons.arrow_drop_down, color: Colors.black),
-                                        items: ['Option 1', 'Option 2', 'Option 3']
-                                            .map((String value) {
-                                          return DropdownMenuItem<String>(
-                                            value: value,
-                                            child: Text(value),
-                                          );
-                                        }).toList(),
+                                        icon: const Icon(
+                                          Icons.arrow_drop_down,
+                                          color: Colors.black,
+                                        ),
+                                        items:
+                                            [
+                                              'Option 1',
+                                              'Option 2',
+                                              'Option 3',
+                                            ].map((String value) {
+                                              return DropdownMenuItem<String>(
+                                                value: value,
+                                                child: Text(value),
+                                              );
+                                            }).toList(),
                                         onChanged: (String? newValue) {
                                           setDialogState(() {
                                             dialogActivityType = newValue;
@@ -303,7 +331,7 @@ class _OrderActivityHistoryScreenState extends State<OrderActivityHistoryScreen>
                               ],
                             ),
                           ),
-                          
+
                           // Modification Date selection row
                           Container(
                             width: double.infinity,
@@ -315,9 +343,10 @@ class _OrderActivityHistoryScreenState extends State<OrderActivityHistoryScreen>
                                   'Modification Date',
                                   style: TextStyle(
                                     fontSize: 14,
-                                    fontWeight: dialogSortBy == 'Modification Date' 
-                                      ? FontWeight.bold 
-                                      : FontWeight.normal,
+                                    fontWeight:
+                                        dialogSortBy == 'Modification Date'
+                                        ? FontWeight.bold
+                                        : FontWeight.normal,
                                     color: Colors.black,
                                   ),
                                 ),
@@ -335,9 +364,9 @@ class _OrderActivityHistoryScreenState extends State<OrderActivityHistoryScreen>
                               ],
                             ),
                           ),
-                          
+
                           const SizedBox(height: 20),
-                          
+
                           // Sort Order section - Only title in gray box
                           Container(
                             width: double.infinity,
@@ -345,7 +374,10 @@ class _OrderActivityHistoryScreenState extends State<OrderActivityHistoryScreen>
                             decoration: BoxDecoration(
                               color: AppColors.lightGrayColor,
                               borderRadius: BorderRadius.circular(8),
-                              border: Border.all(color: AppColors.darkGrayColor, width: 1),
+                              border: Border.all(
+                                color: AppColors.darkGrayColor,
+                                width: 1,
+                              ),
                             ),
                             child: Text(
                               'Sort Order',
@@ -356,7 +388,7 @@ class _OrderActivityHistoryScreenState extends State<OrderActivityHistoryScreen>
                               ),
                             ),
                           ),
-                          
+
                           // Ascending selection row
                           Container(
                             width: double.infinity,
@@ -368,9 +400,9 @@ class _OrderActivityHistoryScreenState extends State<OrderActivityHistoryScreen>
                                   'Ascending',
                                   style: TextStyle(
                                     fontSize: 14,
-                                    fontWeight: dialogSortOrder == 'Ascending' 
-                                      ? FontWeight.bold 
-                                      : FontWeight.normal,
+                                    fontWeight: dialogSortOrder == 'Ascending'
+                                        ? FontWeight.bold
+                                        : FontWeight.normal,
                                     color: Colors.black,
                                   ),
                                 ),
@@ -387,7 +419,7 @@ class _OrderActivityHistoryScreenState extends State<OrderActivityHistoryScreen>
                               ],
                             ),
                           ),
-                          
+
                           // Descending selection row
                           Container(
                             width: double.infinity,
@@ -399,9 +431,9 @@ class _OrderActivityHistoryScreenState extends State<OrderActivityHistoryScreen>
                                   'Descending',
                                   style: TextStyle(
                                     fontSize: 14,
-                                    fontWeight: dialogSortOrder == 'Descending' 
-                                      ? FontWeight.bold 
-                                      : FontWeight.normal,
+                                    fontWeight: dialogSortOrder == 'Descending'
+                                        ? FontWeight.bold
+                                        : FontWeight.normal,
                                     color: Colors.black,
                                   ),
                                 ),
@@ -418,39 +450,23 @@ class _OrderActivityHistoryScreenState extends State<OrderActivityHistoryScreen>
                               ],
                             ),
                           ),
-                          
+
                           const SizedBox(height: 20),
-                          
+
                           // Apply button
                           SizedBox(
                             width: double.infinity,
-                            child: ElevatedButton(
-                              onPressed: () {
+                            child: CustomButtons.applyButton(
+                              context: context,
+                              onApply: () {
                                 setState(() {
                                   _selectedSortBy = dialogSortBy;
                                   _selectedSortOrder = dialogSortOrder;
                                   _selectedActivityType = dialogActivityType;
-                                  
-                                  // Apply filters and sorting
                                   _applyFiltersAndSorting();
                                 });
                                 Navigator.of(context).pop();
                               },
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: AppColors.primaryColor,
-                                foregroundColor: Colors.white,
-                                padding: const EdgeInsets.symmetric(vertical: 12),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                              ),
-                              child: const Text(
-                                'Apply',
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
                             ),
                           ),
                         ],
@@ -465,13 +481,13 @@ class _OrderActivityHistoryScreenState extends State<OrderActivityHistoryScreen>
       },
     );
   }
-  
+
   @override
   void dispose() {
     _searchController.dispose();
     super.dispose();
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -514,8 +530,11 @@ class _OrderActivityHistoryScreenState extends State<OrderActivityHistoryScreen>
                                 child: TextField(
                                   controller: _searchController,
                                   decoration: InputDecoration(
-                                    hintText: 'Search by name, activity type, or modification date...',
-                                    hintStyle: TextStyle(color: AppColors.grayColor),
+                                    hintText:
+                                        'Search by name, activity type, or modification date...',
+                                    hintStyle: TextStyle(
+                                      color: AppColors.grayColor,
+                                    ),
                                     border: InputBorder.none,
                                     contentPadding: EdgeInsets.zero,
                                   ),
@@ -547,9 +566,9 @@ class _OrderActivityHistoryScreenState extends State<OrderActivityHistoryScreen>
                           ),
                         ),
                       ),
-                      
+
                       const SizedBox(width: 12),
-                      
+
                       // Filter search icon button
                       Container(
                         key: _filterIconKey,
@@ -580,7 +599,7 @@ class _OrderActivityHistoryScreenState extends State<OrderActivityHistoryScreen>
                 ),
               ),
             ),
-            
+
             // Activity history list (scrollable)
             Expanded(
               child: Center(
@@ -589,7 +608,10 @@ class _OrderActivityHistoryScreenState extends State<OrderActivityHistoryScreen>
                     width: 762,
                     margin: const EdgeInsets.symmetric(horizontal: 25),
                     decoration: BoxDecoration(
-                      border: Border.all(color: AppColors.borderColor, width: 1),
+                      border: Border.all(
+                        color: AppColors.borderColor,
+                        width: 1,
+                      ),
                     ),
                     child: Column(
                       children: [
@@ -605,12 +627,14 @@ class _OrderActivityHistoryScreenState extends State<OrderActivityHistoryScreen>
                               ),
                             ),
                           ),
-                        
+
                         // Generate activity history entries
-                        ..._filteredActivityHistory.asMap().entries.map((entry) {
+                        ..._filteredActivityHistory.asMap().entries.map((
+                          entry,
+                        ) {
                           final index = entry.key;
                           final activity = entry.value;
-                          
+
                           return Container(
                             width: double.infinity,
                             decoration: BoxDecoration(
@@ -630,7 +654,7 @@ class _OrderActivityHistoryScreenState extends State<OrderActivityHistoryScreen>
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                // Date 
+                                // Date
                                 Text(
                                   activity['date']!,
                                   style: TextStyle(
@@ -639,8 +663,8 @@ class _OrderActivityHistoryScreenState extends State<OrderActivityHistoryScreen>
                                   ),
                                 ),
                                 const SizedBox(height: 8),
-                                
-                                // PO Number 
+
+                                // PO Number
                                 Text(
                                   activity['poNumber']!,
                                   style: const TextStyle(
@@ -650,8 +674,8 @@ class _OrderActivityHistoryScreenState extends State<OrderActivityHistoryScreen>
                                   ),
                                 ),
                                 const SizedBox(height: 12),
-                                
-                                // Edited by 
+
+                                // Edited by
                                 Text(
                                   'Edited by: ${activity['editedBy']!}',
                                   style: TextStyle(
@@ -660,8 +684,8 @@ class _OrderActivityHistoryScreenState extends State<OrderActivityHistoryScreen>
                                   ),
                                 ),
                                 const SizedBox(height: 4),
-                                
-                                // Activity Type 
+
+                                // Activity Type
                                 Text(
                                   'Activity Type: ${activity['activityType']!}',
                                   style: TextStyle(

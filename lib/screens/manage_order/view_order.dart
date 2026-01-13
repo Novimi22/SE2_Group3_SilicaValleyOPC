@@ -216,7 +216,7 @@ class _ViewOrderScreenState extends State<ViewOrderScreen> {
                             color: AppColors.primaryColor,
                           ),
                         ),
-                        // NO Add Item button here
+                      
                       ],
                     ),
 

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:draft_screens/constants/colors.dart';
 import 'package:draft_screens/constants/app_bars.dart';
+import 'package:draft_screens/constants/buttons/elevated_buttons.dart';
 
 import '../account_setup/acc_setup_part2.dart';
 
@@ -12,7 +13,6 @@ class VerifyEmailScreen2 extends StatefulWidget {
 }
 
 class _VerifyEmailScreen2State extends State<VerifyEmailScreen2> {
-
   // Track OTP values
   final List<String> _otpValues = ['', '', '', '', ''];
   final List<TextEditingController> _controllers = List.generate(
@@ -219,43 +219,18 @@ class _VerifyEmailScreen2State extends State<VerifyEmailScreen2> {
                         // Verify button
                         SizedBox(
                           width: 350,
-                          child: ElevatedButton(
-                            onPressed: _isVerifyEnabled
-                                ? () {
-                                    String enteredOtp = _otpValues.join('');
-                                    if (enteredOtp == _correctOtp) {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              const CreatePasswordScreen2(),
-                                        ),
-                                      );
-                                    } else {
-                                      setState(() {
-                                        _showOtpError = true;
-                                      });
-                                    }
-                                  }
-                                : null,
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: _isVerifyEnabled
-                                  ? const Color(0xFFCC9304)
-                                  : Colors.grey[400],
-                              foregroundColor: Colors.white,
-                              elevation: 5.0,
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 20,
-                                vertical: 18,
-                              ),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                            ),
-                            child: const Text(
-                              'Verify email',
-                              style: TextStyle(fontSize: 16),
-                            ),
+                          child: CustomButtons.verifyButton(
+                            context: context,
+                            isEnabled: _isVerifyEnabled,
+                            enteredValue: _otpValues.join(''),
+                            correctValue: _correctOtp,
+                            successDestination: const CreatePasswordScreen2(),
+                            onError: (showError) {
+                              setState(() {
+                                _showOtpError = showError;
+                              });
+                            },
+                            buttonText: 'Verify email',
                           ),
                         ),
 

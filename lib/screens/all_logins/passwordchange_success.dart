@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:draft_screens/constants/colors.dart';
 import 'package:draft_screens/constants/app_bars.dart';
+import 'package:draft_screens/constants/buttons/elevated_buttons.dart';
 
 import 'package:draft_screens/screens/all_logins/signin_screen.dart';
 
@@ -111,30 +112,9 @@ class _PasswordSuccessScreenState extends State<PasswordSuccessScreen> {
           // Back to login button
           SizedBox(
             width: 350,
-            child: ElevatedButton(
-              onPressed: () {
-                // Navigate back to SignInScreen
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (context) => const SignInScreen()),
-                );
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.primaryColor,
-                foregroundColor: Colors.white,
-                elevation: 5.0,
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 20,
-                  vertical: 18,
-                ),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
-                ),
-              ),
-              child: const Text(
-                'Back to login',
-                style: TextStyle(fontSize: 16),
-              ),
+            child: CustomButtons.backToLoginButton(
+              context: context,
+              backgroundColor: AppColors.primaryColor,
             ),
           ),
 

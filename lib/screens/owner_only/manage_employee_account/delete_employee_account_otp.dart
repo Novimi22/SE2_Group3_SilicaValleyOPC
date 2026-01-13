@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:draft_screens/constants/colors.dart';
 import 'package:draft_screens/constants/app_bars.dart';
+import 'package:draft_screens/constants/buttons/elevated_buttons.dart';
 
-import 'package:draft_screens/screens/owner_only/manage_employee_account/manage_employee_account.dart';
+import '../manage_employee_account/manage_employee_account.dart';
 
 class VerifyEmailScreen3 extends StatefulWidget {
   final String employeeName;
-  
+
   const VerifyEmailScreen3({super.key, required this.employeeName});
 
   @override
@@ -14,7 +15,6 @@ class VerifyEmailScreen3 extends StatefulWidget {
 }
 
 class _VerifyEmailScreen3State extends State<VerifyEmailScreen3> {
-
   // Track OTP values
   final List<String> _otpValues = ['', '', '', '', ''];
   final List<TextEditingController> _controllers = List.generate(
@@ -113,7 +113,7 @@ class _VerifyEmailScreen3State extends State<VerifyEmailScreen3> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        // Instruction text 
+                        // Instruction text
                         SizedBox(
                           width: 450,
                           child: Text(
@@ -221,74 +221,18 @@ class _VerifyEmailScreen3State extends State<VerifyEmailScreen3> {
                         // Verify button
                         SizedBox(
                           width: 350,
-                          child: ElevatedButton(
-                            onPressed: _isVerifyEnabled
-                                ? () {
-                                    String enteredOtp = _otpValues.join('');
-                                    if (enteredOtp == _correctOtp) {
-                                      Navigator.pushReplacement(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) => const ManageEmployeeAccountScreen(),
-                                        ),
-                                      );
-                                      ScaffoldMessenger.of(context).showSnackBar(
-                                        SnackBar(
-                                          content: Row(
-                                            children: [
-                                              Container(
-                                                width: 30,
-                                                height: 30,
-                                                decoration: BoxDecoration(
-                                                  color: Colors.white,
-                                                  shape: BoxShape.circle,
-                                                ),
-                                                child: const Icon(
-                                                  Icons.close,
-                                                  color: Colors.red,
-                                                  size: 20,
-                                                ),
-                                              ),
-                                              const SizedBox(width: 12),
-                                              Expanded(
-                                                child: Text(
-                                                  'Deleted employee account: ${widget.employeeName}',
-                                                  style: const TextStyle(
-                                                    fontSize: 14,
-                                                    color: Colors.white,
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                          backgroundColor: Colors.red,
-                                        ),
-                                      );
-                                    } else {
-                                      setState(() {
-                                        _showOtpError = true;
-                                      });
-                                    }
-                                  }
-                                : null,
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: _isVerifyEnabled
-                                  ? const Color(0xFFCC9304)
-                                  : Colors.grey[400],
-                              foregroundColor: Colors.white,
-                              elevation: 5.0,
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 20,
-                                vertical: 18,
-                              ),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                            ),
-                            child: const Text(
-                              'Verify email',
-                              style: TextStyle(fontSize: 16),
-                            ),
+                          child: CustomButtons.deleteAccountVerifyButton(
+                            context: context,
+                            isEnabled: _isVerifyEnabled,
+                            enteredOtp: _otpValues.join(''),
+                            correctOtp: _correctOtp,
+                            employeeName: widget.employeeName,
+                            destination: const ManageEmployeeAccountScreen(),
+                            onError: (showError) {
+                              setState(() {
+                                _showOtpError = showError;
+                              });
+                            },
                           ),
                         ),
 

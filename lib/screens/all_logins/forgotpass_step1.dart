@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:draft_screens/constants/colors.dart';
 import 'package:draft_screens/constants/app_bars.dart';
+import 'package:draft_screens/constants/buttons/elevated_buttons.dart';
 
 import '../all_logins/forgotpass_step2.dart';
 
@@ -12,14 +13,13 @@ class ForgotPasswordScreen extends StatefulWidget {
 }
 
 class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
-
   // Track email value
   String _emailValue = '';
-  
+
   // Track if email doesn't exist
   bool _showEmailError = false;
 
-  // Hardcoded correct email 
+  // Hardcoded correct email
   static const String _correctEmail = 'employee@gmail.com';
 
   // Check if email field has text
@@ -31,7 +31,8 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
       appBar: CustomAppBars.appBarWithSubtitle(
         context: context,
         title: 'Reset Password',
-        subtitle: 'Add your email 1/3'),
+        subtitle: 'Add your email 1/3',
+      ),
       body: Container(
         width: double.infinity,
         color: Colors.white,
@@ -64,11 +65,15 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                             hintText: 'Enter Email',
                             hintStyle: const TextStyle(color: Colors.black26),
                             border: OutlineInputBorder(
-                              borderSide: const BorderSide(color: AppColors.borderColor),
+                              borderSide: const BorderSide(
+                                color: AppColors.borderColor,
+                              ),
                               borderRadius: BorderRadius.circular(10),
                             ),
                             enabledBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(color: AppColors.borderColor),
+                              borderSide: const BorderSide(
+                                color: AppColors.borderColor,
+                              ),
                               borderRadius: BorderRadius.circular(10),
                             ),
                             contentPadding: const EdgeInsets.all(16),
@@ -115,42 +120,23 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                       // Send button
                       SizedBox(
                         width: 350,
-                        child: ElevatedButton(
-                          onPressed: _isSendEnabled
-                              ? () {
-                                  if (_emailValue == _correctEmail) {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            const VerifyEmailScreen(),
-                                      ),
-                                    );
-                                  } else {
-                                    setState(() {
-                                      _showEmailError = true;
-                                    });
-                                  }
-                                }
-                              : null,
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: _isSendEnabled
-                                ? AppColors.primaryColor
-                                : Colors.grey[400],
-                            foregroundColor: Colors.white,
-                            elevation: 5.0,
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 20,
-                              vertical: 18,
-                            ),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                          ),
-                          child: const Text(
-                            'Send',
-                            style: TextStyle(fontSize: 16),
-                          ),
+                        child: CustomButtons.conditionalValidationButton(
+                          context: context,
+                          text: 'Send',
+                          condition: _emailValue == _correctEmail,
+                          onSuccess: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const VerifyEmailScreen(),
+                              ),
+                            );
+                          },
+                          onFailure: () {
+                            setState(() {
+                              _showEmailError = true;
+                            });
+                          },
                         ),
                       ),
                     ],

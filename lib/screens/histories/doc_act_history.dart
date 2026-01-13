@@ -1,6 +1,7 @@
-import 'package:draft_screens/constants/app_bars.dart';
 import 'package:flutter/material.dart';
+import 'package:draft_screens/constants/app_bars.dart';
 import 'package:draft_screens/constants/colors.dart';
+import 'package:draft_screens/constants/buttons/elevated_buttons.dart';
 
 class DocumentActivityHistoryScreen extends StatefulWidget {
   final String documentTitle;
@@ -15,27 +16,27 @@ class DocumentActivityHistoryScreen extends StatefulWidget {
   });
 
   @override
-  State<DocumentActivityHistoryScreen> createState() => _DocumentActivityHistoryScreenState();
+  State<DocumentActivityHistoryScreen> createState() =>
+      _DocumentActivityHistoryScreenState();
 }
 
-class _DocumentActivityHistoryScreenState extends State<DocumentActivityHistoryScreen> {
-
-  
+class _DocumentActivityHistoryScreenState
+    extends State<DocumentActivityHistoryScreen> {
   // Filter state
   String _selectedSortBy = 'Modification Date';
   String _selectedSortOrder = 'Ascending';
   String? _selectedActivityType;
-  
+
   // Search controller
   final TextEditingController _searchController = TextEditingController();
-  
+
   // Global key for filter icon position
   final GlobalKey _filterIconKey = GlobalKey();
-  
+
   // Track search input for clear button visibility
   bool _showClearButton = false;
-  
-  // Sample data 
+
+  // Sample data
   final List<Map<String, String>> _allDocumentHistory = [
     {
       'date': '01/15/2024',
@@ -88,16 +89,16 @@ class _DocumentActivityHistoryScreenState extends State<DocumentActivityHistoryS
       'activityType': 'File Uploaded',
     },
   ];
-  
+
   // Filtered data based on search
   List<Map<String, String>> _filteredDocumentHistory = [];
-  
+
   @override
   void initState() {
     super.initState();
     // Initialize filtered list with all data
     _filteredDocumentHistory = List.from(_allDocumentHistory);
-    
+
     // Add listener to search controller
     _searchController.addListener(() {
       setState(() {
@@ -106,11 +107,11 @@ class _DocumentActivityHistoryScreenState extends State<DocumentActivityHistoryS
       });
     });
   }
-  
+
   // Filter data based on search text
   void _filterData() {
     final searchText = _searchController.text.toLowerCase();
-    
+
     if (searchText.isEmpty) {
       // Reset to all data, then apply filters
       _applyFiltersAndSorting();
@@ -118,15 +119,15 @@ class _DocumentActivityHistoryScreenState extends State<DocumentActivityHistoryS
       setState(() {
         _filteredDocumentHistory = _allDocumentHistory.where((document) {
           return document['editedBy']!.toLowerCase().contains(searchText) ||
-                 document['activityType']!.toLowerCase().contains(searchText);
+              document['activityType']!.toLowerCase().contains(searchText);
         }).toList();
-        
+
         // Apply sorting to filtered results
         _applySorting();
       });
     }
   }
-  
+
   // Clear search input
   void _clearSearch() {
     _searchController.clear();
@@ -136,31 +137,31 @@ class _DocumentActivityHistoryScreenState extends State<DocumentActivityHistoryS
       _applyFiltersAndSorting();
     });
   }
-  
+
   // Apply both filtering and sorting
   void _applyFiltersAndSorting() {
     // Start with all data
     List<Map<String, String>> result = List.from(_allDocumentHistory);
-    
+
     // Apply activity type filter if selected
     if (_selectedActivityType != null && _selectedSortBy == 'Activity Type') {
       result = result.where((document) {
         return document['activityType'] == _selectedActivityType;
       }).toList();
     }
-    
+
     setState(() {
       _filteredDocumentHistory = result;
       _applySorting();
     });
   }
-  
+
   // Apply sorting based on selected criteria
   void _applySorting() {
     setState(() {
       _filteredDocumentHistory.sort((a, b) {
         int comparison = 0;
-        
+
         switch (_selectedSortBy) {
           case 'Activity Type':
             comparison = a['activityType']!.compareTo(b['activityType']!);
@@ -171,30 +172,31 @@ class _DocumentActivityHistoryScreenState extends State<DocumentActivityHistoryS
             comparison = a['date']!.compareTo(b['date']!);
             break;
         }
-        
+
         // Apply sort order
         return _selectedSortOrder == 'Descending' ? -comparison : comparison;
       });
     });
   }
-  
+
   // Show filter dialog
   void _showFilterDialog(BuildContext context) {
     // Local variables for dialog state
     String dialogSortBy = _selectedSortBy;
     String dialogSortOrder = _selectedSortOrder;
     String? dialogActivityType = _selectedActivityType;
-    
+
     // Get the position of the filter icon
-    final renderBox = _filterIconKey.currentContext?.findRenderObject() as RenderBox?;
+    final renderBox =
+        _filterIconKey.currentContext?.findRenderObject() as RenderBox?;
     if (renderBox == null) return;
-    
+
     final position = renderBox.localToGlobal(Offset.zero);
-    
+
     // Calculate position for the dialog
     final double dialogTop = position.dy + renderBox.size.height + 10;
     final double dialogLeft = position.dx - 200;
-    
+
     showDialog(
       context: context,
       barrierColor: Colors.transparent,
@@ -205,9 +207,7 @@ class _DocumentActivityHistoryScreenState extends State<DocumentActivityHistoryS
             Positioned.fill(
               child: GestureDetector(
                 onTap: () => Navigator.of(context).pop(),
-                child: Container(
-                  color: Colors.transparent,
-                ),
+                child: Container(color: Colors.transparent),
               ),
             ),
             // Filter dialog positioned below the icon
@@ -225,19 +225,25 @@ class _DocumentActivityHistoryScreenState extends State<DocumentActivityHistoryS
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(12),
-                        border: Border.all(color: AppColors.darkGrayColor, width: 1),
+                        border: Border.all(
+                          color: AppColors.darkGrayColor,
+                          width: 1,
+                        ),
                       ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          // Sort By section 
+                          // Sort By section
                           Container(
                             width: double.infinity,
                             padding: const EdgeInsets.all(12),
                             decoration: BoxDecoration(
                               color: AppColors.lightGrayColor,
                               borderRadius: BorderRadius.circular(8),
-                              border: Border.all(color: AppColors.darkGrayColor, width: 1),
+                              border: Border.all(
+                                color: AppColors.darkGrayColor,
+                                width: 1,
+                              ),
                             ),
                             child: Text(
                               'Sort By',
@@ -248,7 +254,7 @@ class _DocumentActivityHistoryScreenState extends State<DocumentActivityHistoryS
                               ),
                             ),
                           ),
-                          
+
                           // Activity Type selection row
                           Container(
                             width: double.infinity,
@@ -257,15 +263,17 @@ class _DocumentActivityHistoryScreenState extends State<DocumentActivityHistoryS
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
                                       'Activity Type',
                                       style: TextStyle(
                                         fontSize: 14,
-                                        fontWeight: dialogSortBy == 'Activity Type' 
-                                          ? FontWeight.bold 
-                                          : FontWeight.normal,
+                                        fontWeight:
+                                            dialogSortBy == 'Activity Type'
+                                            ? FontWeight.bold
+                                            : FontWeight.normal,
                                         color: Colors.black,
                                       ),
                                     ),
@@ -281,34 +289,52 @@ class _DocumentActivityHistoryScreenState extends State<DocumentActivityHistoryS
                                     ),
                                   ],
                                 ),
-                                
+
                                 // Activity Type dropdown (shown when Activity Type is selected)
                                 if (dialogSortBy == 'Activity Type')
                                   Padding(
-                                    padding: const EdgeInsets.only(top: 8, left: 8),
+                                    padding: const EdgeInsets.only(
+                                      top: 8,
+                                      left: 8,
+                                    ),
                                     child: Container(
                                       width: double.infinity,
-                                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 12,
+                                        vertical: 8,
+                                      ),
                                       decoration: BoxDecoration(
-                                        border: Border.all(color: AppColors.borderColor),
+                                        border: Border.all(
+                                          color: AppColors.borderColor,
+                                        ),
                                         borderRadius: BorderRadius.circular(4),
                                       ),
                                       child: DropdownButton<String>(
                                         value: dialogActivityType,
                                         hint: Text(
                                           'Select Activity Type',
-                                          style: TextStyle(color: AppColors.grayColor),
+                                          style: TextStyle(
+                                            color: AppColors.grayColor,
+                                          ),
                                         ),
                                         isExpanded: true,
                                         underline: const SizedBox(),
-                                        icon: const Icon(Icons.arrow_drop_down, color: Colors.black),
-                                        items: ['File Uploaded', 'File Edited', 'File Deleted', 'File Downloaded']
-                                            .map((String value) {
-                                          return DropdownMenuItem<String>(
-                                            value: value,
-                                            child: Text(value),
-                                          );
-                                        }).toList(),
+                                        icon: const Icon(
+                                          Icons.arrow_drop_down,
+                                          color: Colors.black,
+                                        ),
+                                        items:
+                                            [
+                                              'File Uploaded',
+                                              'File Edited',
+                                              'File Deleted',
+                                              'File Downloaded',
+                                            ].map((String value) {
+                                              return DropdownMenuItem<String>(
+                                                value: value,
+                                                child: Text(value),
+                                              );
+                                            }).toList(),
                                         onChanged: (String? newValue) {
                                           setDialogState(() {
                                             dialogActivityType = newValue;
@@ -320,7 +346,7 @@ class _DocumentActivityHistoryScreenState extends State<DocumentActivityHistoryS
                               ],
                             ),
                           ),
-                          
+
                           // Modification Date selection row
                           Container(
                             width: double.infinity,
@@ -332,9 +358,10 @@ class _DocumentActivityHistoryScreenState extends State<DocumentActivityHistoryS
                                   'Modification Date',
                                   style: TextStyle(
                                     fontSize: 14,
-                                    fontWeight: dialogSortBy == 'Modification Date' 
-                                      ? FontWeight.bold 
-                                      : FontWeight.normal,
+                                    fontWeight:
+                                        dialogSortBy == 'Modification Date'
+                                        ? FontWeight.bold
+                                        : FontWeight.normal,
                                     color: Colors.black,
                                   ),
                                 ),
@@ -352,17 +379,20 @@ class _DocumentActivityHistoryScreenState extends State<DocumentActivityHistoryS
                               ],
                             ),
                           ),
-                          
+
                           const SizedBox(height: 20),
-                          
-                          // Sort Order section 
+
+                          // Sort Order section
                           Container(
                             width: double.infinity,
                             padding: const EdgeInsets.all(12),
                             decoration: BoxDecoration(
                               color: AppColors.lightGrayColor,
                               borderRadius: BorderRadius.circular(8),
-                              border: Border.all(color: AppColors.darkGrayColor, width: 1),
+                              border: Border.all(
+                                color: AppColors.darkGrayColor,
+                                width: 1,
+                              ),
                             ),
                             child: Text(
                               'Sort Order',
@@ -373,7 +403,7 @@ class _DocumentActivityHistoryScreenState extends State<DocumentActivityHistoryS
                               ),
                             ),
                           ),
-                          
+
                           // Ascending selection row
                           Container(
                             width: double.infinity,
@@ -385,9 +415,9 @@ class _DocumentActivityHistoryScreenState extends State<DocumentActivityHistoryS
                                   'Ascending',
                                   style: TextStyle(
                                     fontSize: 14,
-                                    fontWeight: dialogSortOrder == 'Ascending' 
-                                      ? FontWeight.bold 
-                                      : FontWeight.normal,
+                                    fontWeight: dialogSortOrder == 'Ascending'
+                                        ? FontWeight.bold
+                                        : FontWeight.normal,
                                     color: Colors.black,
                                   ),
                                 ),
@@ -404,7 +434,7 @@ class _DocumentActivityHistoryScreenState extends State<DocumentActivityHistoryS
                               ],
                             ),
                           ),
-                          
+
                           // Descending selection row
                           Container(
                             width: double.infinity,
@@ -416,9 +446,9 @@ class _DocumentActivityHistoryScreenState extends State<DocumentActivityHistoryS
                                   'Descending',
                                   style: TextStyle(
                                     fontSize: 14,
-                                    fontWeight: dialogSortOrder == 'Descending' 
-                                      ? FontWeight.bold 
-                                      : FontWeight.normal,
+                                    fontWeight: dialogSortOrder == 'Descending'
+                                        ? FontWeight.bold
+                                        : FontWeight.normal,
                                     color: Colors.black,
                                   ),
                                 ),
@@ -435,39 +465,23 @@ class _DocumentActivityHistoryScreenState extends State<DocumentActivityHistoryS
                               ],
                             ),
                           ),
-                          
+
                           const SizedBox(height: 20),
-                          
+
                           // Apply button
                           SizedBox(
                             width: double.infinity,
-                            child: ElevatedButton(
-                              onPressed: () {
+                            child: CustomButtons.applyButton(
+                              context: context,
+                              onApply: () {
                                 setState(() {
                                   _selectedSortBy = dialogSortBy;
                                   _selectedSortOrder = dialogSortOrder;
                                   _selectedActivityType = dialogActivityType;
-                                  
-                                  // Apply filters and sorting
                                   _applyFiltersAndSorting();
                                 });
                                 Navigator.of(context).pop();
                               },
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: AppColors.primaryColor,
-                                foregroundColor: Colors.white,
-                                padding: const EdgeInsets.symmetric(vertical: 12),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                              ),
-                              child: const Text(
-                                'Apply',
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
                             ),
                           ),
                         ],
@@ -482,13 +496,13 @@ class _DocumentActivityHistoryScreenState extends State<DocumentActivityHistoryS
       },
     );
   }
-  
+
   @override
   void dispose() {
     _searchController.dispose();
     super.dispose();
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -531,8 +545,11 @@ class _DocumentActivityHistoryScreenState extends State<DocumentActivityHistoryS
                                 child: TextField(
                                   controller: _searchController,
                                   decoration: InputDecoration(
-                                    hintText: 'Search by name or activity type...',
-                                    hintStyle: TextStyle(color: AppColors.grayColor),
+                                    hintText:
+                                        'Search by name or activity type...',
+                                    hintStyle: TextStyle(
+                                      color: AppColors.grayColor,
+                                    ),
                                     border: InputBorder.none,
                                     contentPadding: EdgeInsets.zero,
                                   ),
@@ -564,9 +581,9 @@ class _DocumentActivityHistoryScreenState extends State<DocumentActivityHistoryS
                           ),
                         ),
                       ),
-                      
+
                       const SizedBox(width: 12),
-                      
+
                       // Filter search icon button
                       Container(
                         key: _filterIconKey,
@@ -597,7 +614,7 @@ class _DocumentActivityHistoryScreenState extends State<DocumentActivityHistoryS
                 ),
               ),
             ),
-            
+
             // Document history list (scrollable)
             Expanded(
               child: Center(
@@ -606,7 +623,10 @@ class _DocumentActivityHistoryScreenState extends State<DocumentActivityHistoryS
                     width: 762,
                     margin: const EdgeInsets.symmetric(horizontal: 25),
                     decoration: BoxDecoration(
-                      border: Border.all(color: AppColors.borderColor, width: 1),
+                      border: Border.all(
+                        color: AppColors.borderColor,
+                        width: 1,
+                      ),
                     ),
                     child: Column(
                       children: [
@@ -622,12 +642,14 @@ class _DocumentActivityHistoryScreenState extends State<DocumentActivityHistoryS
                               ),
                             ),
                           ),
-                        
+
                         // Generate document history entries
-                        ..._filteredDocumentHistory.asMap().entries.map((entry) {
+                        ..._filteredDocumentHistory.asMap().entries.map((
+                          entry,
+                        ) {
                           final index = entry.key;
                           final document = entry.value;
-                          
+
                           return Container(
                             width: double.infinity,
                             decoration: BoxDecoration(
@@ -647,7 +669,7 @@ class _DocumentActivityHistoryScreenState extends State<DocumentActivityHistoryS
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                // Date 
+                                // Date
                                 Text(
                                   document['date']!,
                                   style: TextStyle(
@@ -656,8 +678,8 @@ class _DocumentActivityHistoryScreenState extends State<DocumentActivityHistoryS
                                   ),
                                 ),
                                 const SizedBox(height: 12),
-                                
-                                // Edited by 
+
+                                // Edited by
                                 Text(
                                   'Edited by: ${document['editedBy']!}',
                                   style: TextStyle(
@@ -666,7 +688,7 @@ class _DocumentActivityHistoryScreenState extends State<DocumentActivityHistoryS
                                   ),
                                 ),
                                 const SizedBox(height: 4),
-                                
+
                                 // Activity Type
                                 Text(
                                   'Activity Type: ${document['activityType']!}',

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:draft_screens/constants/colors.dart';
 import 'package:draft_screens/constants/app_bars.dart';
+import 'package:draft_screens/constants/buttons/elevated_buttons.dart';
 
 import 'package:image_picker/image_picker.dart';
 import 'package:draft_screens/screens/histories/doc_act_history.dart';
@@ -155,30 +156,13 @@ class _TrackRecordScreenState extends State<TrackRecordScreen> {
                   // Confirm button
                   SizedBox(
                     width: 200,
-                    child: ElevatedButton(
-                      onPressed: () {
+                    child: CustomButtons.confirmButton(
+                      context: context,
+                      onConfirm: () {
                         Navigator.of(context).pop();
                         _deleteFile(index);
                       },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColors.primaryColor,
-                        foregroundColor: Colors.white,
-                        elevation: 5.0,
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 20,
-                          vertical: 16,
-                        ),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                      ),
-                      child: const Text(
-                        'Confirm',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
+                      text: 'Confirm',
                     ),
                   ),
 
@@ -268,30 +252,13 @@ class _TrackRecordScreenState extends State<TrackRecordScreen> {
                   // Confirm button
                   SizedBox(
                     width: 200,
-                    child: ElevatedButton(
-                      onPressed: () {
+                    child: CustomButtons.confirmButton(
+                      context: context,
+                      onConfirm: () {
                         Navigator.of(context).pop();
                         _generateReport();
                       },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColors.primaryColor,
-                        foregroundColor: Colors.white,
-                        elevation: 5.0,
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 20,
-                          vertical: 16,
-                        ),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                      ),
-                      child: const Text(
-                        'Confirm',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
+                      text: 'Confirm',
                     ),
                   ),
 

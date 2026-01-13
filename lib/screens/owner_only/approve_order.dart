@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:draft_screens/constants/colors.dart';
 import 'package:draft_screens/constants/app_bars.dart';
+import 'package:draft_screens/constants/buttons/elevated_buttons.dart';
 
 import 'package:draft_screens/screens/manage_order/view_order.dart';
 
@@ -12,7 +13,6 @@ class ApproveOrderScreen extends StatefulWidget {
 }
 
 class _ApproveOrderScreenState extends State<ApproveOrderScreen> {
-  
   // For Approve and Reject buttons
   static const Color greenColor = Color(0xFF2E7D42);
   static const Color redColor = Color(0xFFB71B1B);
@@ -125,12 +125,16 @@ class _ApproveOrderScreenState extends State<ApproveOrderScreen> {
             comparison = a['creationDate']!.compareTo(b['creationDate']!);
             break;
           case 'Net Price':
-            double priceA = double.tryParse(
-              a['netPrice']!.replaceAll('\₱', '').replaceAll(',', ''),
-            ) ?? 0.0;
-            double priceB = double.tryParse(
-              b['netPrice']!.replaceAll('\₱', '').replaceAll(',', ''),
-            ) ?? 0.0;
+            double priceA =
+                double.tryParse(
+                  a['netPrice']!.replaceAll('\₱', '').replaceAll(',', ''),
+                ) ??
+                0.0;
+            double priceB =
+                double.tryParse(
+                  b['netPrice']!.replaceAll('\₱', '').replaceAll(',', ''),
+                ) ??
+                0.0;
             comparison = priceA.compareTo(priceB);
             break;
           default:
@@ -189,7 +193,10 @@ class _ApproveOrderScreenState extends State<ApproveOrderScreen> {
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(12),
-                        border: Border.all(color: AppColors.darkGrayColor, width: 1),
+                        border: Border.all(
+                          color: AppColors.darkGrayColor,
+                          width: 1,
+                        ),
                       ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -432,37 +439,16 @@ class _ApproveOrderScreenState extends State<ApproveOrderScreen> {
                           // Apply button
                           SizedBox(
                             width: double.infinity,
-                            child: ElevatedButton(
-                              onPressed: () {
-                                // Update main state with dialog selections
+                            child: CustomButtons.applyButton(
+                              context: context,
+                              onApply: () {
                                 setState(() {
                                   _selectedSortBy = dialogSortBy;
                                   _selectedSortOrder = dialogSortOrder;
                                 });
-
-                                // Apply sorting to current filtered data
                                 _applySorting();
-
-                                // Close dialog
                                 Navigator.of(context).pop();
                               },
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: AppColors.primaryColor,
-                                foregroundColor: Colors.white,
-                                padding: const EdgeInsets.symmetric(
-                                  vertical: 12,
-                                ),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                              ),
-                              child: const Text(
-                                'Apply',
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ), 
                             ),
                           ),
                         ],
@@ -483,7 +469,8 @@ class _ApproveOrderScreenState extends State<ApproveOrderScreen> {
     _showConfirmationDialog(
       context: context,
       title: 'CONFIRM APPROVE?',
-      message: 'Are you sure you want to approve this purchase order?\n\nOnce approved, it will be marked as an active order.',
+      message:
+          'Are you sure you want to approve this purchase order?\n\nOnce approved, it will be marked as an active order.',
       confirmButtonText: 'Confirm',
       confirmButtonColor: AppColors.primaryColor,
       onConfirm: () {
@@ -550,9 +537,9 @@ class _ApproveOrderScreenState extends State<ApproveOrderScreen> {
                       color: Colors.black,
                     ),
                   ),
-                  
+
                   const SizedBox(height: 20),
-                  
+
                   // Message text
                   SizedBox(
                     width: 300,
@@ -565,41 +552,27 @@ class _ApproveOrderScreenState extends State<ApproveOrderScreen> {
                       ),
                     ),
                   ),
-                  
+
                   const SizedBox(height: 30),
-                  
+
                   // Confirm button with dynamic color
                   SizedBox(
                     width: 200,
-                    child: ElevatedButton(
+                    child: CustomButtons.dialogActionButton(
+                      context: context,
+                      text: confirmButtonText,
                       onPressed: () {
                         Navigator.of(context).pop();
                         onConfirm();
                       },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: confirmButtonColor,
-                        foregroundColor: Colors.white,
-                        elevation: 5.0,
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 20,
-                          vertical: 16,
-                        ),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                      ),
-                      child: Text(
-                        confirmButtonText,
-                        style: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
+                      backgroundColor: confirmButtonColor,
+                      verticalPadding: 16,
+                      borderRadius: 10,
                     ),
                   ),
-                  
+
                   const SizedBox(height: 15),
-                  
+
                   // Cancel button
                   TextButton(
                     onPressed: () {
@@ -668,7 +641,11 @@ class _ApproveOrderScreenState extends State<ApproveOrderScreen> {
                 color: Colors.white,
                 shape: BoxShape.circle,
               ),
-              child: const Icon(Icons.check, color: snackbarGreenColor, size: 20),
+              child: const Icon(
+                Icons.check,
+                color: snackbarGreenColor,
+                size: 20,
+              ),
             ),
             const SizedBox(width: 12),
             Expanded(
@@ -732,8 +709,11 @@ class _ApproveOrderScreenState extends State<ApproveOrderScreen> {
                                 child: TextField(
                                   controller: _searchController,
                                   decoration: const InputDecoration(
-                                    hintText: 'Search by PO number or client name...',
-                                    hintStyle: TextStyle(color: AppColors.grayColor),
+                                    hintText:
+                                        'Search by PO number or client name...',
+                                    hintStyle: TextStyle(
+                                      color: AppColors.grayColor,
+                                    ),
                                     border: InputBorder.none,
                                     contentPadding: EdgeInsets.zero,
                                   ),
@@ -807,7 +787,10 @@ class _ApproveOrderScreenState extends State<ApproveOrderScreen> {
                     width: 700,
                     margin: const EdgeInsets.symmetric(horizontal: 25),
                     decoration: BoxDecoration(
-                      border: Border.all(color: AppColors.borderColor, width: 1),
+                      border: Border.all(
+                        color: AppColors.borderColor,
+                        width: 1,
+                      ),
                     ),
                     child: Column(
                       children: [
@@ -860,7 +843,7 @@ class _ApproveOrderScreenState extends State<ApproveOrderScreen> {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
-                                          // PO Number 
+                                          // PO Number
                                           Text(
                                             order['poNumber']!,
                                             style: const TextStyle(
@@ -871,7 +854,7 @@ class _ApproveOrderScreenState extends State<ApproveOrderScreen> {
                                           ),
                                           const SizedBox(height: 8),
 
-                                          // Last Updated 
+                                          // Last Updated
                                           Text(
                                             'Last Updated: ${order['lastUpdated']!}',
                                             style: TextStyle(
@@ -990,7 +973,7 @@ class _ApproveOrderScreenState extends State<ApproveOrderScreen> {
                                           ],
                                         ),
 
-                                        // NEW Action buttons (Approve, Reject, View)
+                                        // Action buttons (Approve, Reject, View)
                                         Padding(
                                           padding: const EdgeInsets.only(
                                             top: 10,
@@ -999,7 +982,7 @@ class _ApproveOrderScreenState extends State<ApproveOrderScreen> {
                                             mainAxisAlignment:
                                                 MainAxisAlignment.end,
                                             children: [
-                                              // Approve button (GREEN: Color(0xFF2E7D42))
+                                              // Approve button
                                               Container(
                                                 margin: const EdgeInsets.only(
                                                   left: 12,
@@ -1022,14 +1005,15 @@ class _ApproveOrderScreenState extends State<ApproveOrderScreen> {
                                                     'Approve',
                                                     style: TextStyle(
                                                       fontSize: 16,
-                                                      fontWeight: FontWeight.bold,
-                                                      color: greenColor, // NEW COLOR
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: greenColor,
                                                     ),
                                                   ),
                                                 ),
                                               ),
 
-                                              // Reject button (RED: Color(0xFFB71B1B))
+                                              // Reject button
                                               Container(
                                                 margin: const EdgeInsets.only(
                                                   left: 12,
@@ -1052,14 +1036,15 @@ class _ApproveOrderScreenState extends State<ApproveOrderScreen> {
                                                     'Reject',
                                                     style: TextStyle(
                                                       fontSize: 16,
-                                                      fontWeight: FontWeight.bold,
-                                                      color: redColor, // NEW COLOR
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: redColor,
                                                     ),
                                                   ),
                                                 ),
                                               ),
 
-                                              // View button (same as ManageOrderScreen)
+                                              // View button
                                               Container(
                                                 margin: const EdgeInsets.only(
                                                   left: 12,
@@ -1093,8 +1078,10 @@ class _ApproveOrderScreenState extends State<ApproveOrderScreen> {
                                                     'View',
                                                     style: TextStyle(
                                                       fontSize: 16,
-                                                      fontWeight: FontWeight.bold,
-                                                      color: AppColors.primaryColor, // SAME COLOR
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: AppColors
+                                                          .primaryColor, // SAME COLOR
                                                     ),
                                                   ),
                                                 ),

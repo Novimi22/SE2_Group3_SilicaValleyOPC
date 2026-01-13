@@ -1,20 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:draft_screens/constants/colors.dart';
 import 'package:draft_screens/constants/app_bars.dart';
-
+import 'package:draft_screens/constants/buttons/elevated_buttons.dart';
 
 import 'package:draft_screens/screens/owner_only/owner_landingpage.dart';
-import 'package:draft_screens/screens/owner_only/manage_employee_account/delete_employee_account_otp.dart'; 
+import '../manage_employee_account/delete_employee_account_otp.dart';
 
 class ManageEmployeeAccountScreen extends StatefulWidget {
   const ManageEmployeeAccountScreen({super.key});
 
   @override
-  State<ManageEmployeeAccountScreen> createState() => _ManageEmployeeAccountScreenState();
+  State<ManageEmployeeAccountScreen> createState() =>
+      _ManageEmployeeAccountScreenState();
 }
 
-class _ManageEmployeeAccountScreenState extends State<ManageEmployeeAccountScreen> {
-  
+class _ManageEmployeeAccountScreenState
+    extends State<ManageEmployeeAccountScreen> {
   // Sample employee data
   final List<Map<String, String>> employees = [
     {
@@ -22,11 +23,7 @@ class _ManageEmployeeAccountScreenState extends State<ManageEmployeeAccountScree
       'email': 'juandelacruz@email.com',
       'role': 'Owner',
     },
-    {
-      'name': 'Will Byers',
-      'email': 'willbyers@email.com',
-      'role': 'Employee',
-    },
+    {'name': 'Will Byers', 'email': 'willbyers@email.com', 'role': 'Employee'},
     {
       'name': 'Mike Wheelers',
       'email': 'mikewheelers@email.com',
@@ -37,11 +34,7 @@ class _ManageEmployeeAccountScreenState extends State<ManageEmployeeAccountScree
       'email': 'steve_har@email.com',
       'role': 'Employee',
     },
-    {
-      'name': 'Jim Hopper',
-      'email': 'jim_hopper@email.com',
-      'role': 'Employee',
-    },
+    {'name': 'Jim Hopper', 'email': 'jim_hopper@email.com', 'role': 'Employee'},
   ];
 
   void _showCreateEmployeeDialog(BuildContext context) {
@@ -109,9 +102,9 @@ class _ManageEmployeeAccountScreenState extends State<ManageEmployeeAccountScree
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                // Header 
+                // Header
                 Container(
-                  width: 700, 
+                  width: 700,
                   margin: const EdgeInsets.only(bottom: 30),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -125,8 +118,8 @@ class _ManageEmployeeAccountScreenState extends State<ManageEmployeeAccountScree
                           color: Colors.black,
                         ),
                       ),
-                      
-                      // Create Employee Account button 
+
+                      // Create Employee Account button
                       Material(
                         color: AppColors.primaryColor,
                         borderRadius: BorderRadius.circular(8),
@@ -165,21 +158,18 @@ class _ManageEmployeeAccountScreenState extends State<ManageEmployeeAccountScree
                   ),
                 ),
 
-                // Employee tiles container 
+                // Employee tiles container
                 Container(
-                  width: 700, 
+                  width: 700,
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(0), 
-                    border: Border.all(
-                      color: AppColors.borderColor,
-                      width: 1,
-                    ),
+                    borderRadius: BorderRadius.circular(0),
+                    border: Border.all(color: AppColors.borderColor, width: 1),
                   ),
                   child: Column(
                     children: employees.asMap().entries.map((entry) {
                       int index = entry.key;
                       Map<String, String> employee = entry.value;
-                      
+
                       return Container(
                         decoration: BoxDecoration(
                           color: AppColors.tile2Color,
@@ -219,10 +209,7 @@ class _ManageEmployeeAccountScreenState extends State<ManageEmployeeAccountScree
     required VoidCallback onDelete,
   }) {
     return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 25,
-        vertical: 20,
-      ),
+      padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 20),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -231,7 +218,7 @@ class _ManageEmployeeAccountScreenState extends State<ManageEmployeeAccountScree
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Name 
+                // Name
                 Text(
                   name,
                   style: TextStyle(
@@ -241,7 +228,7 @@ class _ManageEmployeeAccountScreenState extends State<ManageEmployeeAccountScree
                   ),
                 ),
                 const SizedBox(height: 8),
-                
+
                 // Email row
                 Row(
                   children: [
@@ -263,7 +250,7 @@ class _ManageEmployeeAccountScreenState extends State<ManageEmployeeAccountScree
                   ],
                 ),
                 const SizedBox(height: 4),
-                
+
                 // Role row
                 Row(
                   children: [
@@ -287,15 +274,12 @@ class _ManageEmployeeAccountScreenState extends State<ManageEmployeeAccountScree
               ],
             ),
           ),
-          
-          // Delete button 
+
+          // Delete button
           GestureDetector(
             onTap: onDelete,
             child: Container(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 20,
-                vertical: 8,
-              ),
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
               child: Text(
                 'Delete',
                 style: TextStyle(
@@ -346,9 +330,9 @@ class _ManageEmployeeAccountScreenState extends State<ManageEmployeeAccountScree
                       color: Colors.black,
                     ),
                   ),
-                  
+
                   const SizedBox(height: 20),
-                  
+
                   // Gray paragraph text
                   SizedBox(
                     width: 300,
@@ -361,48 +345,30 @@ class _ManageEmployeeAccountScreenState extends State<ManageEmployeeAccountScree
                       ),
                     ),
                   ),
-                  
+
                   const SizedBox(height: 30),
-                  
+
                   // Confirm button
                   SizedBox(
                     width: 200,
-                    child: ElevatedButton(
-                      onPressed: () {
+                    child: CustomButtons.confirmButton(
+                      context: context,
+                      onConfirm: () {
                         Navigator.of(context).pop();
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => VerifyEmailScreen3(
-                              employeeName: employeeName,
-                            ),
+                            builder: (context) =>
+                                VerifyEmailScreen3(employeeName: employeeName),
                           ),
                         );
                       },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColors.primaryColor,
-                        foregroundColor: Colors.white,
-                        elevation: 5.0,
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 20,
-                          vertical: 16,
-                        ),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                      ),
-                      child: const Text(
-                        'Confirm',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
+                      text: 'Confirm',
                     ),
                   ),
-                  
+
                   const SizedBox(height: 15),
-                  
+
                   // Cancel button
                   TextButton(
                     onPressed: () {
@@ -445,20 +411,13 @@ class _ManageEmployeeAccountScreenState extends State<ManageEmployeeAccountScree
                 color: Colors.white,
                 shape: BoxShape.circle,
               ),
-              child: const Icon(
-                Icons.close,
-                color: Colors.red,
-                size: 20,
-              ),
+              child: const Icon(Icons.close, color: Colors.red, size: 20),
             ),
             const SizedBox(width: 12),
             Expanded(
               child: Text(
                 'Deleted employee account: $employeeName',
-                style: const TextStyle(
-                  fontSize: 14,
-                  color: Colors.white,
-                ),
+                style: const TextStyle(fontSize: 14, color: Colors.white),
               ),
             ),
           ],
@@ -466,7 +425,7 @@ class _ManageEmployeeAccountScreenState extends State<ManageEmployeeAccountScree
         backgroundColor: Colors.red,
       ),
     );
-    
+
     // Remove from list
     setState(() {
       employees.removeWhere((employee) => employee['name'] == employeeName);
@@ -507,9 +466,7 @@ class _CreateEmployeeDialogState extends State<CreateEmployeeDialog> {
   Widget build(BuildContext context) {
     return Dialog(
       elevation: 20,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(20),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       child: Container(
         decoration: BoxDecoration(
           color: const Color(0xFFFFFBFB),
@@ -539,24 +496,21 @@ class _CreateEmployeeDialogState extends State<CreateEmployeeDialog> {
                     color: Colors.black,
                   ),
                 ),
-                
+
                 const SizedBox(height: 15),
-                
+
                 // Gray paragraph text
                 SizedBox(
                   width: 400,
                   child: Text(
                     'Enter employee details',
                     textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Color(0xFF9E9E9E),
-                    ),
+                    style: TextStyle(fontSize: 16, color: Color(0xFF9E9E9E)),
                   ),
                 ),
-                
+
                 const SizedBox(height: 30),
-                
+
                 // First Name field
                 SizedBox(
                   width: 400,
@@ -583,9 +537,9 @@ class _CreateEmployeeDialogState extends State<CreateEmployeeDialog> {
                     },
                   ),
                 ),
-                
+
                 const SizedBox(height: 20),
-                
+
                 // Middle Initial field
                 SizedBox(
                   width: 400,
@@ -609,26 +563,34 @@ class _CreateEmployeeDialogState extends State<CreateEmployeeDialog> {
                     ),
                     onChanged: (value) {
                       if (value.length > 1) {
-                        middleInitialController.text = value.substring(0, 1).toUpperCase();
-                        middleInitialController.selection = TextSelection.fromPosition(
-                          TextPosition(offset: middleInitialController.text.length),
-                        );
+                        middleInitialController.text = value
+                            .substring(0, 1)
+                            .toUpperCase();
+                        middleInitialController.selection =
+                            TextSelection.fromPosition(
+                              TextPosition(
+                                offset: middleInitialController.text.length,
+                              ),
+                            );
                       } else if (value.isNotEmpty) {
                         middleInitialController.text = value.toUpperCase();
-                        middleInitialController.selection = TextSelection.fromPosition(
-                          TextPosition(offset: middleInitialController.text.length),
-                        );
+                        middleInitialController.selection =
+                            TextSelection.fromPosition(
+                              TextPosition(
+                                offset: middleInitialController.text.length,
+                              ),
+                            );
                       }
-                      
+
                       setState(() {
                         showFormError = false;
                       });
                     },
                   ),
                 ),
-                
+
                 const SizedBox(height: 20),
-                
+
                 // Last Name field
                 SizedBox(
                   width: 400,
@@ -655,9 +617,9 @@ class _CreateEmployeeDialogState extends State<CreateEmployeeDialog> {
                     },
                   ),
                 ),
-                
+
                 const SizedBox(height: 20),
-                
+
                 // Email field
                 SizedBox(
                   width: 400,
@@ -684,7 +646,7 @@ class _CreateEmployeeDialogState extends State<CreateEmployeeDialog> {
                     },
                   ),
                 ),
-                
+
                 // Error message if fields are empty
                 if (showFormError)
                   SizedBox(
@@ -702,71 +664,37 @@ class _CreateEmployeeDialogState extends State<CreateEmployeeDialog> {
                           Expanded(
                             child: Text(
                               'Fill out all fields. Middle Initial is optional.',
-                              style: TextStyle(
-                                color: Colors.red,
-                                fontSize: 14,
-                              ),
+                              style: TextStyle(color: Colors.red, fontSize: 14),
                             ),
                           ),
                         ],
                       ),
                     ),
                   ),
-                
+
                 const SizedBox(height: 30),
-                
+
                 // Create button
                 SizedBox(
                   width: 200,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      if (firstNameController.text.isEmpty ||
-                          lastNameController.text.isEmpty ||
-                          emailController.text.isEmpty) {
-                        setState(() {
-                          showFormError = true;
-                        });
-                        return;
-                      }
-
-                      String middleInitial = middleInitialController.text.isNotEmpty 
-                          ? ' ${middleInitialController.text}.'
-                          : '';
-                      String fullName = '${firstNameController.text}$middleInitial ${lastNameController.text}';
-
-                      Map<String, String> newEmployee = {
-                        'name': fullName.trim(),
-                        'email': emailController.text,
-                        'role': 'Employee',
-                      };
-
-                      widget.onEmployeeCreated(newEmployee);
-                      Navigator.of(context).pop();
+                  child: CustomButtons.createEmployeeButton(
+                    context: context,
+                    firstName: firstNameController.text,
+                    lastName: lastNameController.text,
+                    email: emailController.text,
+                    middleInitial: middleInitialController.text,
+                    onEmployeeCreated: widget.onEmployeeCreated,
+                    onFormError: (hasError) {
+                      setState(() {
+                        showFormError = hasError;
+                      });
                     },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFFCC9304),
-                      foregroundColor: Colors.white,
-                      elevation: 5.0,
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 20,
-                        vertical: 16,
-                      ),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                    ),
-                    child: const Text(
-                      'Create',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
+                    backgroundColor: const Color(0xFFCC9304),
                   ),
                 ),
-                
+
                 const SizedBox(height: 15),
-                
+
                 // Cancel button
                 TextButton(
                   onPressed: () {

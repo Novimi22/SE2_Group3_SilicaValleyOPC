@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:draft_screens/constants/colors.dart';
 import 'package:draft_screens/constants/app_bars.dart';
+import 'package:draft_screens/constants/buttons/elevated_buttons.dart';
 
 import '../owner_only/owner_dashboard.dart';
 import '../employee_only/employee_dashboard.dart';
@@ -17,7 +18,6 @@ class ManageOrderScreen extends StatefulWidget {
 }
 
 class _ManageOrderScreenState extends State<ManageOrderScreen> {
-
   // Filter state
   String _selectedSortBy = 'Creation Date';
   String _selectedSortOrder = 'Ascending';
@@ -125,12 +125,16 @@ class _ManageOrderScreenState extends State<ManageOrderScreen> {
             comparison = a['creationDate']!.compareTo(b['creationDate']!);
             break;
           case 'Net Price':
-            double priceA = double.tryParse(
-              a['netPrice']!.replaceAll('\₱', '').replaceAll(',', ''),
-            ) ?? 0.0;
-            double priceB = double.tryParse(
-              b['netPrice']!.replaceAll('\₱', '').replaceAll(',', ''),
-            ) ?? 0.0;
+            double priceA =
+                double.tryParse(
+                  a['netPrice']!.replaceAll('\₱', '').replaceAll(',', ''),
+                ) ??
+                0.0;
+            double priceB =
+                double.tryParse(
+                  b['netPrice']!.replaceAll('\₱', '').replaceAll(',', ''),
+                ) ??
+                0.0;
             comparison = priceA.compareTo(priceB);
             break;
           default:
@@ -189,7 +193,10 @@ class _ManageOrderScreenState extends State<ManageOrderScreen> {
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(12),
-                        border: Border.all(color: AppColors.darkGrayColor, width: 1),
+                        border: Border.all(
+                          color: AppColors.darkGrayColor,
+                          width: 1,
+                        ),
                       ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -429,40 +436,19 @@ class _ManageOrderScreenState extends State<ManageOrderScreen> {
 
                           const SizedBox(height: 20),
 
-                          // Apply button - FIXED: Proper logic implementation
+                          // Apply button
                           SizedBox(
                             width: double.infinity,
-                            child: ElevatedButton(
-                              onPressed: () {
-                                // Update main state with dialog selections
+                            child: CustomButtons.applyButton(
+                              context: context,
+                              onApply: () {
                                 setState(() {
                                   _selectedSortBy = dialogSortBy;
                                   _selectedSortOrder = dialogSortOrder;
                                 });
-
-                                // Apply sorting to current filtered data
                                 _applySorting();
-
-                                // Close dialog
                                 Navigator.of(context).pop();
                               },
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: AppColors.primaryColor,
-                                foregroundColor: Colors.white,
-                                padding: const EdgeInsets.symmetric(
-                                  vertical: 12,
-                                ),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                              ),
-                              child: const Text(
-                                'Apply',
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
                             ),
                           ),
                         ],
@@ -534,7 +520,10 @@ class _ManageOrderScreenState extends State<ManageOrderScreen> {
                         child: Text(
                           'Re-enter Purchase Order Number to confirm deletion',
                           textAlign: TextAlign.center,
-                          style: TextStyle(fontSize: 16, color: AppColors.grayColor),
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: AppColors.grayColor,
+                          ),
                         ),
                       ),
 
@@ -630,7 +619,9 @@ class _ManageOrderScreenState extends State<ManageOrderScreen> {
                       // Confirm button
                       SizedBox(
                         width: 200,
-                        child: ElevatedButton(
+                        child: CustomButtons.dialogActionButton(
+                          context: context,
+                          text: 'Confirm',
                           onPressed: () {
                             if (purchaseOrderNumber.isEmpty) {
                               setState(() {
@@ -641,7 +632,6 @@ class _ManageOrderScreenState extends State<ManageOrderScreen> {
                               return;
                             }
 
-                            // Check if entered PO number matches
                             if (purchaseOrderNumber != poNumber) {
                               setState(() {
                                 showError = true;
@@ -651,29 +641,11 @@ class _ManageOrderScreenState extends State<ManageOrderScreen> {
                               return;
                             }
 
-                            // Proceed with deletion
                             Navigator.of(context).pop();
                             _performDeleteOrder(poNumber, clientName);
                           },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: AppColors.primaryColor,
-                            foregroundColor: Colors.white,
-                            elevation: 5.0,
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 20,
-                              vertical: 16,
-                            ),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                          ),
-                          child: const Text(
-                            'Confirm',
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
+                          verticalPadding: 16,
+                          borderRadius: 10,
                         ),
                       ),
 
@@ -747,13 +719,11 @@ class _ManageOrderScreenState extends State<ManageOrderScreen> {
     );
   }
 
-    void _handleBackNavigation() {
+  void _handleBackNavigation() {
     if (widget.userType == 'owner') {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(
-          builder: (context) => const OwnerDashboardScreen(),
-        ),
+        MaterialPageRoute(builder: (context) => const OwnerDashboardScreen()),
       );
     } else if (widget.userType == 'employee') {
       Navigator.pushReplacement(
@@ -817,7 +787,9 @@ class _ManageOrderScreenState extends State<ManageOrderScreen> {
                                   decoration: InputDecoration(
                                     hintText:
                                         'Search by PO number or client name...',
-                                    hintStyle: TextStyle(color: AppColors.grayColor),
+                                    hintStyle: TextStyle(
+                                      color: AppColors.grayColor,
+                                    ),
                                     border: InputBorder.none,
                                     contentPadding: EdgeInsets.zero,
                                   ),
@@ -891,7 +863,10 @@ class _ManageOrderScreenState extends State<ManageOrderScreen> {
                     width: 700,
                     margin: const EdgeInsets.symmetric(horizontal: 25),
                     decoration: BoxDecoration(
-                      border: Border.all(color: AppColors.borderColor, width: 1),
+                      border: Border.all(
+                        color: AppColors.borderColor,
+                        width: 1,
+                      ),
                     ),
                     child: Column(
                       children: [
@@ -944,7 +919,7 @@ class _ManageOrderScreenState extends State<ManageOrderScreen> {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
-                                          // PO Number 
+                                          // PO Number
                                           Text(
                                             order['poNumber']!,
                                             style: const TextStyle(
@@ -955,7 +930,7 @@ class _ManageOrderScreenState extends State<ManageOrderScreen> {
                                           ),
                                           const SizedBox(height: 8),
 
-                                          // Last Updated 
+                                          // Last Updated
                                           Text(
                                             'Last Updated: ${order['lastUpdated']!}',
                                             style: TextStyle(
@@ -967,7 +942,7 @@ class _ManageOrderScreenState extends State<ManageOrderScreen> {
                                       ),
                                     ),
 
-                                    // Expand button 
+                                    // Expand button
                                     Container(
                                       height: 40,
                                       width: 40,
@@ -1109,7 +1084,8 @@ class _ManageOrderScreenState extends State<ManageOrderScreen> {
                                                       fontSize: 16,
                                                       fontWeight:
                                                           FontWeight.bold,
-                                                      color: AppColors.primaryColor,
+                                                      color: AppColors
+                                                          .primaryColor,
                                                     ),
                                                   ),
                                                 ),
@@ -1152,7 +1128,8 @@ class _ManageOrderScreenState extends State<ManageOrderScreen> {
                                                       fontSize: 16,
                                                       fontWeight:
                                                           FontWeight.bold,
-                                                      color: AppColors.primaryColor,
+                                                      color: AppColors
+                                                          .primaryColor,
                                                     ),
                                                   ),
                                                 ),
@@ -1195,7 +1172,8 @@ class _ManageOrderScreenState extends State<ManageOrderScreen> {
                                                       fontSize: 16,
                                                       fontWeight:
                                                           FontWeight.bold,
-                                                      color: AppColors.primaryColor,
+                                                      color: AppColors
+                                                          .primaryColor,
                                                     ),
                                                   ),
                                                 ),

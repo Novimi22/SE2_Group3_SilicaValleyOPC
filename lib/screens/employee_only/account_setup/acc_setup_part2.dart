@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:draft_screens/constants/colors.dart';
 import 'package:draft_screens/constants/app_bars.dart';
+import 'package:draft_screens/constants/buttons/elevated_buttons.dart';
 
 import '../account_setup/defaultpass_change_success.dart';
 
@@ -12,7 +13,6 @@ class CreatePasswordScreen2 extends StatefulWidget {
 }
 
 class _CreatePasswordScreen2State extends State<CreatePasswordScreen2> {
-
   // Track password values
   String _newPasswordValue = '';
   String _confirmPasswordValue = '';
@@ -32,22 +32,23 @@ class _CreatePasswordScreen2State extends State<CreatePasswordScreen2> {
   // Validate new password meets requirements
   bool get _isNewPasswordValid {
     if (_newPasswordValue.isEmpty) return true;
-    
+
     // Check length
     if (_newPasswordValue.length < 8) return false;
-    
+
     // Check for at least one number
     if (!RegExp(r'[0-9]').hasMatch(_newPasswordValue)) return false;
-    
+
     // Check for at least one uppercase letter
     if (!RegExp(r'[A-Z]').hasMatch(_newPasswordValue)) return false;
-    
+
     // Check for at least one lowercase letter
     if (!RegExp(r'[a-z]').hasMatch(_newPasswordValue)) return false;
-    
+
     // Check for at least one symbol
-    if (!RegExp(r'[!@#$%^&*(),.?":{}|<>]').hasMatch(_newPasswordValue)) return false;
-    
+    if (!RegExp(r'[!@#$%^&*(),.?":{}|<>]').hasMatch(_newPasswordValue))
+      return false;
+
     return true;
   }
 
@@ -100,13 +101,19 @@ class _CreatePasswordScreen2State extends State<CreatePasswordScreen2> {
                               decoration: InputDecoration(
                                 label: const Text('New Password'),
                                 hintText: 'Enter New Password',
-                                hintStyle: const TextStyle(color: Colors.black26),
+                                hintStyle: const TextStyle(
+                                  color: Colors.black26,
+                                ),
                                 border: OutlineInputBorder(
-                                  borderSide: const BorderSide(color: AppColors.borderColor),
+                                  borderSide: const BorderSide(
+                                    color: AppColors.borderColor,
+                                  ),
                                   borderRadius: BorderRadius.circular(10),
                                 ),
                                 enabledBorder: OutlineInputBorder(
-                                  borderSide: const BorderSide(color: AppColors.borderColor),
+                                  borderSide: const BorderSide(
+                                    color: AppColors.borderColor,
+                                  ),
                                   borderRadius: BorderRadius.circular(10),
                                 ),
                                 contentPadding: const EdgeInsets.all(16),
@@ -119,7 +126,8 @@ class _CreatePasswordScreen2State extends State<CreatePasswordScreen2> {
                                   ),
                                   onPressed: () {
                                     setState(() {
-                                      _obscureNewPassword = !_obscureNewPassword;
+                                      _obscureNewPassword =
+                                          !_obscureNewPassword;
                                     });
                                   },
                                 ),
@@ -131,7 +139,7 @@ class _CreatePasswordScreen2State extends State<CreatePasswordScreen2> {
                                 });
                               },
                             ),
-                            
+
                             // Gray helper text
                             if (_newPasswordValue.isEmpty)
                               Padding(
@@ -144,7 +152,7 @@ class _CreatePasswordScreen2State extends State<CreatePasswordScreen2> {
                                   ),
                                 ),
                               ),
-                            
+
                             // Error message if password doesn't meet requirements
                             if (_showNewPasswordError && !_isNewPasswordValid)
                               Padding(
@@ -187,13 +195,19 @@ class _CreatePasswordScreen2State extends State<CreatePasswordScreen2> {
                               decoration: InputDecoration(
                                 label: const Text('Confirm Password'),
                                 hintText: 'Enter Confirm Password',
-                                hintStyle: const TextStyle(color: Colors.black26),
+                                hintStyle: const TextStyle(
+                                  color: Colors.black26,
+                                ),
                                 border: OutlineInputBorder(
-                                  borderSide: const BorderSide(color: AppColors.borderColor),
+                                  borderSide: const BorderSide(
+                                    color: AppColors.borderColor,
+                                  ),
                                   borderRadius: BorderRadius.circular(10),
                                 ),
                                 enabledBorder: OutlineInputBorder(
-                                  borderSide: const BorderSide(color: AppColors.borderColor),
+                                  borderSide: const BorderSide(
+                                    color: AppColors.borderColor,
+                                  ),
                                   borderRadius: BorderRadius.circular(10),
                                 ),
                                 contentPadding: const EdgeInsets.all(16),
@@ -206,7 +220,8 @@ class _CreatePasswordScreen2State extends State<CreatePasswordScreen2> {
                                   ),
                                   onPressed: () {
                                     setState(() {
-                                      _obscureConfirmPassword = !_obscureConfirmPassword;
+                                      _obscureConfirmPassword =
+                                          !_obscureConfirmPassword;
                                     });
                                   },
                                 ),
@@ -218,7 +233,7 @@ class _CreatePasswordScreen2State extends State<CreatePasswordScreen2> {
                                 });
                               },
                             ),
-                            
+
                             // Gray helper text
                             if (_confirmPasswordValue.isEmpty)
                               Padding(
@@ -231,7 +246,7 @@ class _CreatePasswordScreen2State extends State<CreatePasswordScreen2> {
                                   ),
                                 ),
                               ),
-                            
+
                             // Error message if passwords don't match
                             if (_showConfirmPasswordError && !_doPasswordsMatch)
                               Padding(
@@ -265,48 +280,22 @@ class _CreatePasswordScreen2State extends State<CreatePasswordScreen2> {
                       // Reset Password button
                       SizedBox(
                         width: 350,
-                        child: ElevatedButton(
-                          onPressed: _isResetPassButtonEnabled
-                              ? () {
-                                  // Check new password requirements
-                                  bool isNewPasswordValid = _isNewPasswordValid;
-                                  bool passwordsMatch = _doPasswordsMatch;
-                                  
-                                  setState(() {
-                                    _showNewPasswordError = !isNewPasswordValid;
-                                    _showConfirmPasswordError = !passwordsMatch;
-                                  });
-                                  
-                                  // Only proceed if both validations pass
-                                  if (isNewPasswordValid && passwordsMatch) {
-                                        Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            const PasswordSuccessScreen2(),
-                                      ),
-                                    );
-                                  }
-                                }
-                              : null,
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: _isResetPassButtonEnabled
-                                ? AppColors.primaryColor
-                                : Colors.grey[400],
-                            foregroundColor: Colors.white,
-                            elevation: 5.0,
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 20,
-                              vertical: 18,
-                            ),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                          ),
-                          child: const Text(
-                            'Reset Password',
-                            style: TextStyle(fontSize: 16),
-                          ),
+                        child: CustomButtons.passwordResetButton(
+                          context: context,
+                          isEnabled: _isResetPassButtonEnabled,
+                          isNewPasswordValid: _isNewPasswordValid,
+                          passwordsMatch: _doPasswordsMatch,
+                          onNewPasswordError: (showError) {
+                            setState(() {
+                              _showNewPasswordError = showError;
+                            });
+                          },
+                          onConfirmPasswordError: (showError) {
+                            setState(() {
+                              _showConfirmPasswordError = showError;
+                            });
+                          },
+                          successDestination: const PasswordSuccessScreen2(),
                         ),
                       ),
                     ],

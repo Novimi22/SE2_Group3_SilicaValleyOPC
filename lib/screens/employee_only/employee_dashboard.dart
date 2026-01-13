@@ -1,6 +1,7 @@
 import 'package:draft_screens/constants/app_bars.dart';
 import 'package:flutter/material.dart';
 import 'package:draft_screens/constants/colors.dart';
+import 'package:draft_screens/constants/buttons/elevated_buttons.dart';
 
 import '../histories/order_act_history.dart';
 import '../manage_order/gen_manage_order.dart';
@@ -17,7 +18,6 @@ class EmployeeDashboardScreen extends StatefulWidget {
 }
 
 class _EmployeeDashboardScreenState extends State<EmployeeDashboardScreen> {
-
   // hardcoded username
   final String userName = "Juan Dela Cruz";
 
@@ -35,16 +35,14 @@ class _EmployeeDashboardScreenState extends State<EmployeeDashboardScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  // Welcome section 
+                  // Welcome section
                   Container(
                     width: double.infinity,
                     padding: const EdgeInsets.all(30),
                     margin: const EdgeInsets.only(bottom: 30),
                     decoration: BoxDecoration(
                       color: Colors.white,
-                      borderRadius: BorderRadius.circular(
-                        0,
-                      ), 
+                      borderRadius: BorderRadius.circular(0),
                       boxShadow: [
                         BoxShadow(
                           color: Colors.black.withOpacity(0.3),
@@ -118,12 +116,12 @@ class _EmployeeDashboardScreenState extends State<EmployeeDashboardScreen> {
                   // Tiles section
                   Column(
                     children: [
-                      // First tile - Create Order 
+                      // First tile - Create Order
                       SizedBox(
                         height: 120,
                         child: Center(
                           child: SizedBox(
-                            width: 700, 
+                            width: 700,
                             child: _buildDashboardTile(
                               imagePath: 'assets/images/create_order.png',
                               smallText: 'Create',
@@ -152,7 +150,9 @@ class _EmployeeDashboardScreenState extends State<EmployeeDashboardScreen> {
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) =>
-                                        const ManageOrderScreen(userType: 'employee',),
+                                        const ManageOrderScreen(
+                                          userType: 'employee',
+                                        ),
                                   ),
                                 );
                               },
@@ -176,8 +176,7 @@ class _EmployeeDashboardScreenState extends State<EmployeeDashboardScreen> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) =>
-                                        const TORSearchPage(),
+                                    builder: (context) => const TORSearchPage(),
                                   ),
                                 );
                               },
@@ -377,7 +376,10 @@ class _EmployeeDashboardScreenState extends State<EmployeeDashboardScreen> {
                         child: Text(
                           'Enter a non-existing Purchase Order Number',
                           textAlign: TextAlign.center,
-                          style: TextStyle(fontSize: 16, color: AppColors.grayColor),
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: AppColors.grayColor,
+                          ),
                         ),
                       ),
 
@@ -496,7 +498,9 @@ class _EmployeeDashboardScreenState extends State<EmployeeDashboardScreen> {
                       // Next button
                       SizedBox(
                         width: 200,
-                        child: ElevatedButton(
+                        child: CustomButtons.dialogActionButton(
+                          context: context,
+                          text: 'Next',
                           onPressed: () {
                             if (purchaseOrderNumber.isEmpty) {
                               setState(() {
@@ -507,7 +511,6 @@ class _EmployeeDashboardScreenState extends State<EmployeeDashboardScreen> {
                               return;
                             }
 
-                            // Validate PO format: PO followed by exactly 8 digits
                             final RegExp poPattern = RegExp(r'^PO\d{8}$');
                             if (!poPattern.hasMatch(purchaseOrderNumber)) {
                               setState(() {
@@ -518,33 +521,14 @@ class _EmployeeDashboardScreenState extends State<EmployeeDashboardScreen> {
                               return;
                             }
 
-                            // TODO: Check if PO already exists in the data
-                            // For now, we'll assume it's valid and proceed to next dialog
                             Navigator.of(context).pop();
                             _showCustomerNameDialog(
                               context,
                               purchaseOrderNumber,
                             );
                           },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: AppColors.primaryColor,
-                            foregroundColor: Colors.white,
-                            elevation: 5.0,
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 20,
-                              vertical: 16,
-                            ),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                          ),
-                          child: const Text(
-                            'Next',
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
+                          verticalPadding: 16,
+                          borderRadius: 10,
                         ),
                       ),
 
@@ -636,7 +620,10 @@ class _EmployeeDashboardScreenState extends State<EmployeeDashboardScreen> {
                         child: Text(
                           'Enter customer\'s name for $purchaseOrderNumber',
                           textAlign: TextAlign.center,
-                          style: TextStyle(fontSize: 16, color: AppColors.grayColor),
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: AppColors.grayColor,
+                          ),
                         ),
                       ),
 
@@ -740,7 +727,9 @@ class _EmployeeDashboardScreenState extends State<EmployeeDashboardScreen> {
                       // Create button
                       SizedBox(
                         width: 200,
-                        child: ElevatedButton(
+                        child: CustomButtons.dialogActionButton(
+                          context: context,
+                          text: 'Create',
                           onPressed: () {
                             if (customerName.isEmpty) {
                               setState(() {
@@ -750,10 +739,7 @@ class _EmployeeDashboardScreenState extends State<EmployeeDashboardScreen> {
                               return;
                             }
 
-                            // Close the dialog
                             Navigator.of(context).pop();
-
-                            // Close the dialog and navigate to full-screen order details dialog
                             Navigator.of(context).pop();
                             Navigator.push(
                               context,
@@ -767,25 +753,8 @@ class _EmployeeDashboardScreenState extends State<EmployeeDashboardScreen> {
                               ),
                             );
                           },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: AppColors.primaryColor,
-                            foregroundColor: Colors.white,
-                            elevation: 5.0,
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 20,
-                              vertical: 16,
-                            ),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                          ),
-                          child: const Text(
-                            'Create',
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
+                          verticalPadding: 16,
+                          borderRadius: 10,
                         ),
                       ),
 
@@ -834,7 +803,10 @@ class _EmployeeDashboardScreenState extends State<EmployeeDashboardScreen> {
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text('Cancel', style: TextStyle(color: AppColors.grayColor)),
+              child: Text(
+                'Cancel',
+                style: TextStyle(color: AppColors.grayColor),
+              ),
             ),
             TextButton(
               onPressed: () {

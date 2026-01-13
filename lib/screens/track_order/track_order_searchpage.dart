@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:draft_screens/constants/colors.dart';
 import 'package:draft_screens/constants/app_bars.dart';
+import 'package:draft_screens/constants/buttons/elevated_buttons.dart';
 
 import 'package:draft_screens/screens/track_order/track_order.dart'; 
 
@@ -424,40 +425,19 @@ class _TORSearchPageState extends State<TORSearchPage> {
 
                           const SizedBox(height: 20),
 
-                          // Apply button - FIXED: Proper logic implementation
+                          // Apply button
                           SizedBox(
                             width: double.infinity,
-                            child: ElevatedButton(
-                              onPressed: () {
-                                // Update main state with dialog selections
+                            child: CustomButtons.applyButton(
+                              context: context,
+                              onApply: () {
                                 setState(() {
                                   _selectedSortBy = dialogSortBy;
                                   _selectedSortOrder = dialogSortOrder;
                                 });
-
-                                // Apply sorting to current filtered data
                                 _applySorting();
-
-                                // Close dialog
                                 Navigator.of(context).pop();
                               },
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: AppColors.primaryColor,
-                                foregroundColor: Colors.white,
-                                padding: const EdgeInsets.symmetric(
-                                  vertical: 12,
-                                ),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                              ),
-                              child: const Text(
-                                'Apply',
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
                             ),
                           ),
                         ],
@@ -625,7 +605,9 @@ class _TORSearchPageState extends State<TORSearchPage> {
                       // Confirm button
                       SizedBox(
                         width: 200,
-                        child: ElevatedButton(
+                        child: CustomButtons.dialogActionButton(
+                          context: context,
+                          text: 'Confirm',
                           onPressed: () {
                             if (purchaseOrderNumber.isEmpty) {
                               setState(() {
@@ -636,7 +618,6 @@ class _TORSearchPageState extends State<TORSearchPage> {
                               return;
                             }
 
-                            // Check if entered PO number matches
                             if (purchaseOrderNumber != poNumber) {
                               setState(() {
                                 showError = true;
@@ -646,29 +627,11 @@ class _TORSearchPageState extends State<TORSearchPage> {
                               return;
                             }
 
-                            // Proceed with deletion
                             Navigator.of(context).pop();
                             _performDeleteOrder(poNumber, clientName);
                           },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: AppColors.primaryColor,
-                            foregroundColor: Colors.white,
-                            elevation: 5.0,
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 20,
-                              vertical: 16,
-                            ),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                          ),
-                          child: const Text(
-                            'Confirm',
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
+                          verticalPadding: 16,
+                          borderRadius: 10,
                         ),
                       ),
 
@@ -755,7 +718,7 @@ class _TORSearchPageState extends State<TORSearchPage> {
         context: context,
         title: 'Track Order Record',
         navigationType: NavigationType.pop,
-      ),,
+      ),
       body: Container(
         width: double.infinity,
         color: Colors.white,
