@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:draft_screens/constants/colors.dart';
 
-import 'package:draft_screens/screens/owner_only/owner_landingpage.dart'; 
-import 'package:draft_screens/screens/employee_only/employee_dashboard.dart';
-import 'package:draft_screens/screens/all_logins/forgotpass_step1.dart';
+import '../owner_only/owner_landingpage.dart'; 
+import '../employee_only/employee_dashboard.dart';
+import '../all_logins/forgotpass_step1.dart';
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({super.key}); 

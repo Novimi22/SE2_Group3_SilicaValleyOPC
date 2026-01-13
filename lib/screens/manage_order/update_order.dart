@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:draft_screens/constants/colors.dart';
 
 import 'package:flutter/services.dart';
-import 'package:draft_screens/screens/manage_order/gen_manage_order.dart';
 
 class UpdateOrderScreen extends StatefulWidget {
   final String purchaseOrderNumber;

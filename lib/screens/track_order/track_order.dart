@@ -930,8 +930,8 @@ class _TrackRecordScreenState extends State<TrackRecordScreen> {
                                                       color:
                                                           _attachedFiles[index] !=
                                                               null
-                                                          ? AppColors.iconColor
-                                                          : AppColors.iconColor
+                                                          ? AppColors.iconDarkGrayColor
+                                                          : AppColors.iconDarkGrayColor
                                                                 .withOpacity(
                                                                   0.3,
                                                                 ),
@@ -962,8 +962,8 @@ class _TrackRecordScreenState extends State<TrackRecordScreen> {
                                                         color:
                                                             _attachedFiles[index] !=
                                                                 null
-                                                            ? AppColors.iconColor
-                                                            : AppColors.iconColor
+                                                            ? AppColors.iconDarkGrayColor
+                                                            : AppColors.iconDarkGrayColor
                                                                   .withOpacity(
                                                                     0.3,
                                                                   ),
@@ -985,7 +985,7 @@ class _TrackRecordScreenState extends State<TrackRecordScreen> {
                                                           20,
                                                         ),
                                                     border: Border.all(
-                                                      color: AppColors.iconColor,
+                                                      color: AppColors.iconDarkGrayColor,
                                                     ),
                                                   ),
                                                   child: Material(
@@ -1007,7 +1007,7 @@ class _TrackRecordScreenState extends State<TrackRecordScreen> {
                                                           ),
                                                       child: Icon(
                                                         Icons.attach_file,
-                                                        color: AppColors.iconColor,
+                                                        color: AppColors.iconDarkGrayColor,
                                                         size: 20,
                                                       ),
                                                     ),
@@ -1026,7 +1026,7 @@ class _TrackRecordScreenState extends State<TrackRecordScreen> {
                                                           20,
                                                         ),
                                                     border: Border.all(
-                                                      color: AppColors.iconColor,
+                                                      color: AppColors.iconDarkGrayColor,
                                                     ),
                                                   ),
                                                   child: Material(
@@ -1051,7 +1051,7 @@ class _TrackRecordScreenState extends State<TrackRecordScreen> {
                                                         isExpanded
                                                             ? Icons.expand_less
                                                             : Icons.expand_more,
-                                                        color: AppColors.iconColor,
+                                                        color: AppColors.iconDarkGrayColor,
                                                         size: 24,
                                                       ),
                                                     ),
@@ -1205,7 +1205,7 @@ class _TrackRecordScreenState extends State<TrackRecordScreen> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Icon(Icons.insert_drive_file, size: 48, color: AppColors.iconColor),
+          const Icon(Icons.insert_drive_file, size: 48, color: AppColors.iconDarkGrayColor),
           const SizedBox(height: 16),
           Text(
             'File: ${_attachedFiles[index]!.path.split('/').last}',

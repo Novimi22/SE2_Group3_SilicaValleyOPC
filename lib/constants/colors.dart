@@ -23,7 +23,7 @@ class AppColors {
   static const Color tile2Color = Color(0xFFF4F4FA);
 
   static const Color iconGrayColor = Color(0xFF636363);
-  static const Color iconColor = Color(0xFF374957); // rename to iconDarkGrayColor
+  static const Color iconDarkGrayColor = Color(0xFF374957); 
 
   // Text Colors
   static const Color smallTextColor = Color(0xFF5F5F5F);

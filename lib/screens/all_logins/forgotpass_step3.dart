@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:draft_screens/constants/colors.dart';
-import 'package:draft_screens/screens/all_logins/passwordchange_success.dart';
+import '../all_logins/passwordchange_success.dart';
 
 class CreatePasswordScreen extends StatefulWidget {
   const CreatePasswordScreen({super.key});
@@ -121,7 +121,7 @@ class _CreatePasswordScreenState extends State<CreatePasswordScreen> {
 
               // Empty container to balance layout
               SizedBox(
-                width: 48, // Same as back button width
+                width: 48, 
                 height: 80,
               ),
             ],

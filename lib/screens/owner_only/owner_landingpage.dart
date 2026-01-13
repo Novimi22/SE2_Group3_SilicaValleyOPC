@@ -21,7 +21,7 @@ class _OwnerLandingPageState extends State<OwnerLandingPage> {
           children: [
             // Top section with background image
             Container(
-              height: 200, // fixed height
+              height: 200, 
               width: double.infinity, // Takes full available width
               decoration: const BoxDecoration(
                 image: DecorationImage(

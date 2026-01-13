@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:draft_screens/constants/colors.dart';
 
-import 'package:draft_screens/screens/owner_only/owner_dashboard.dart';
-import 'package:draft_screens/screens/employee_only/employee_dashboard.dart';
-import 'package:draft_screens/screens/manage_order/update_order.dart';
-import 'package:draft_screens/screens/manage_order/view_order.dart';
+import '../owner_only/owner_dashboard.dart';
+import '../employee_only/employee_dashboard.dart';
+import '../manage_order/update_order.dart';
+import '../manage_order/view_order.dart';
 
 class ManageOrderScreen extends StatefulWidget {
   final String userType;

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:draft_screens/constants/colors.dart';
 
-import 'package:draft_screens/screens/histories/order_act_history.dart';
-import 'package:draft_screens/screens/manage_order/gen_manage_order.dart';
-import 'package:draft_screens/screens/track_order/track_order_searchpage.dart';
-import 'package:draft_screens/screens/all_logins/signin_screen.dart';
-import 'package:draft_screens/screens/employee_only/create_order_dialog.dart';
+import '../histories/order_act_history.dart';
+import '../manage_order/gen_manage_order.dart';
+import '../track_order/track_order_searchpage.dart';
+import '../all_logins/signin_screen.dart';
+import '../employee_only/create_order_dialog.dart';
 
 class EmployeeDashboardScreen extends StatefulWidget {
   const EmployeeDashboardScreen({super.key});

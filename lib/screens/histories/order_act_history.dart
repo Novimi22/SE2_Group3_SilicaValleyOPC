@@ -490,7 +490,7 @@ class _OrderActivityHistoryScreenState extends State<OrderActivityHistoryScreen>
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              // Back button - centered
+              // Back button 
               Container(
                 height: 80,
                 alignment: Alignment.center,

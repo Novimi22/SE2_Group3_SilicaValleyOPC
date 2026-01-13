@@ -105,7 +105,7 @@ class _VerifyEmailScreen3State extends State<VerifyEmailScreen3> {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              // Back button - centered
+              // Back button 
               Container(
                 height: 80,
                 alignment: Alignment.center,
@@ -121,7 +121,7 @@ class _VerifyEmailScreen3State extends State<VerifyEmailScreen3> {
               // Spacer
               const Expanded(child: SizedBox()),
 
-              // Title - removed subtitle
+              // Title 
               Container(
                 height: 80,
                 alignment: Alignment.center,
@@ -161,7 +161,7 @@ class _VerifyEmailScreen3State extends State<VerifyEmailScreen3> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        // Instruction text - updated
+                        // Instruction text 
                         SizedBox(
                           width: 450,
                           child: Text(

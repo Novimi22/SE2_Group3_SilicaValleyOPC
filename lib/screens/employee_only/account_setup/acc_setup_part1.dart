@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:draft_screens/constants/colors.dart';
-import 'package:draft_screens/screens/employee_only/account_setup/acc_setup_part2.dart';
+import '../account_setup/acc_setup_part2.dart';
 
 class VerifyEmailScreen2 extends StatefulWidget {
   const VerifyEmailScreen2({super.key});
@@ -103,7 +103,7 @@ class _VerifyEmailScreen2State extends State<VerifyEmailScreen2> {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              // Back button - centered
+              // Back button 
               Container(
                 height: 80,
                 alignment: Alignment.center,

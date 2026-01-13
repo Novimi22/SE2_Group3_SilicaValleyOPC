@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:draft_screens/constants/colors.dart';
-import 'package:draft_screens/screens/all_logins/forgotpass_step3.dart';
+import '../all_logins/forgotpass_step3.dart';
 
 class VerifyEmailScreen extends StatefulWidget {
   const VerifyEmailScreen({super.key});
@@ -119,7 +119,7 @@ class _VerifyEmailScreenState extends State<VerifyEmailScreen> {
               // Spacer
               const Expanded(child: SizedBox()),
 
-              // Title - perfectly centered
+              // Title
               Container(
                 height: 80,
                 alignment: Alignment.center,

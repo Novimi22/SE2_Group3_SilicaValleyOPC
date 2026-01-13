@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:draft_screens/constants/colors.dart';
-import 'package:draft_screens/screens/employee_only/account_setup/defaultpass_change_success.dart';
+import '../account_setup/defaultpass_change_success.dart';
 
 class CreatePasswordScreen2 extends StatefulWidget {
   const CreatePasswordScreen2({super.key});
