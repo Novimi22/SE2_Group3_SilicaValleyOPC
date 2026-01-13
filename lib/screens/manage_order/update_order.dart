@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:draft_screens/constants/app_bars.dart';
 import 'package:draft_screens/constants/colors.dart';
-
 import 'package:flutter/services.dart';
 
 class UpdateOrderScreen extends StatefulWidget {
@@ -510,59 +510,9 @@ class _UpdateOrderScreenState extends State<UpdateOrderScreen> {
     final screenWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(80),
-        child: Container(
-          decoration: BoxDecoration(
-            color: AppColors.appBarColor,
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.3),
-                blurRadius: 10,
-                offset: const Offset(0, 4),
-              ),
-            ],
-            border: Border(bottom: BorderSide(color: AppColors.borderColor, width: 1)),
-          ),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              // Spacer for balance
-              const Expanded(child: SizedBox()),
-
-              // Title
-              Container(
-                height: 80,
-                alignment: Alignment.center,
-                child: Text(
-                  'Update Order',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                  ),
-                ),
-              ),
-
-              // Spacer for balance
-              const Expanded(child: SizedBox()),
-
-              // Close icon
-              Container(
-                height: 80,
-                alignment: Alignment.center,
-                child: IconButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  icon: const Icon(Icons.close, color: Colors.black, size: 30),
-                  padding: const EdgeInsets.only(right: 30),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
+      appBar: CustomAppBars.closeOnlyAppBar(
+        context: context, 
+        title: 'Update Order'),
       body: SafeArea(
         child: GestureDetector(
           onTap: () {

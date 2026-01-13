@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:draft_screens/constants/colors.dart';
+import 'package:draft_screens/constants/app_bars.dart';
+
 import 'package:draft_screens/screens/owner_only/manage_employee_account/manage_employee_account.dart';
 
 class VerifyEmailScreen3 extends StatefulWidget {
@@ -89,60 +91,10 @@ class _VerifyEmailScreen3State extends State<VerifyEmailScreen3> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(80),
-        child: Container(
-          decoration: BoxDecoration(
-            color: AppColors.appBarColor,
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.3),
-                blurRadius: 10,
-                offset: const Offset(0, 4),
-              ),
-            ],
-          ),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              // Back button 
-              Container(
-                height: 80,
-                alignment: Alignment.center,
-                child: IconButton(
-                  icon: const Icon(Icons.arrow_back, color: Colors.black),
-                  padding:EdgeInsets.only(left: 30),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                ),
-              ),
-
-              // Spacer
-              const Expanded(child: SizedBox()),
-
-              // Title 
-              Container(
-                height: 80,
-                alignment: Alignment.center,
-                child: Text(
-                  'Delete Employee Account',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                  ),
-                ),
-              ),
-
-              // Spacer for balance
-              const Expanded(child: SizedBox()),
-
-              // Empty container to balance layout
-              SizedBox(width: 48, height: 80),
-            ],
-          ),
-        ),
+      appBar: CustomAppBars.defaultAppBar(
+        context: context,
+        title: 'Order Activity History',
+        navigationType: NavigationType.pop,
       ),
       body: Container(
         width: double.infinity,

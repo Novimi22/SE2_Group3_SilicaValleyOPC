@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:draft_screens/constants/colors.dart';
+import 'package:draft_screens/constants/app_bars.dart';
+
 import '../employee_only/employee_dashboard.dart';
 
 class CreateOrderFullScreenDialog extends StatefulWidget {
@@ -224,112 +226,12 @@ class _CreateOrderFullScreenDialogState
     final screenWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(80),
-        child: Container(
-          decoration: BoxDecoration(
-            color: AppColors.appBarColor,
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.3),
-                blurRadius: 10,
-                offset: const Offset(0, 4),
-              ),
-            ],
-            border: Border(bottom: BorderSide(color: AppColors.borderColor, width: 1)),
-          ),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              // CANCEL button 
-              if (!isConfirmed)
-                Container(
-                  height: 80,
-                  alignment: Alignment.center,
-                  child: TextButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const EmployeeDashboardScreen(),
-                        ),
-                      );
-                    },
-                    style: TextButton.styleFrom(
-                      padding: const EdgeInsets.only(left: 30, right: 20),
-                    ),
-                    child: Text(
-                      'CANCEL',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
-                      ),
-                    ),
-                  ),
-                ),
-
-              // Spacer
-              Expanded(
-                child: Container(
-                  height: 80,
-                  alignment: Alignment.center,
-                  child: Text(
-                    'Create Order',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
-                    ),
-                  ),
-                ),
-              ),
-
-              // CONFIRM button 
-              if (!isConfirmed)
-                Container(
-                  height: 80,
-                  alignment: Alignment.center,
-                  child: TextButton(
-                    onPressed: _confirmOrder,
-                    style: TextButton.styleFrom(
-                      padding: const EdgeInsets.only(right: 30, left: 20),
-                    ),
-                    child: Text(
-                      'CONFIRM',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
-                      ),
-                    ),
-                  ),
-                )
-              else
-                // After confirmation: X button to close and return to employee dashboard
-                Container(
-                  height: 80,
-                  alignment: Alignment.center,
-                  child: IconButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const EmployeeDashboardScreen(),
-                        ),
-                      );
-                    },
-                    icon: const Icon(
-                      Icons.close,
-                      color: Colors.black,
-                      size: 30,
-                    ),
-                    padding: const EdgeInsets.only(right: 30),
-                  ),
-                ),
-            ],
-          ),
-        ),
+      appBar: CustomAppBars.orderAppBar(
+        context: context,
+        title: 'Create Order',
+        isConfirmed: isConfirmed,
+        onConfirm: _confirmOrder,
+        dashboardScreen: const EmployeeDashboardScreen(),
       ),
       body: SafeArea(
         child: GestureDetector(

@@ -1,3 +1,4 @@
+import 'package:draft_screens/constants/app_bars.dart';
 import 'package:flutter/material.dart';
 import 'package:draft_screens/constants/colors.dart';
 
@@ -491,72 +492,10 @@ class _DocumentActivityHistoryScreenState extends State<DocumentActivityHistoryS
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(80),
-        child: Container(
-          decoration: BoxDecoration(
-            color: AppColors.appBarColor,
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.3),
-                blurRadius: 10,
-                offset: const Offset(0, 4),
-              ),
-            ],
-          ),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              // Back button 
-              Container(
-                height: 80,
-                alignment: Alignment.center,
-                child: IconButton(
-                  icon: const Icon(Icons.arrow_back, color: Colors.black),
-                  padding: const EdgeInsets.only(left: 30),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                ),
-              ),
-
-              // Spacer
-              const Expanded(child: SizedBox()),
-
-              // Title
-              Container(
-                height: 80,
-                alignment: Alignment.center,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    // Main title 
-                    Text(
-                      'Document Activity History',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
-                      ),
-                    ),
-                    const SizedBox(height: 4),
-                    // Subtitle 
-                    Text(
-                      widget.documentTitle,
-                      style: TextStyle(fontSize: 12, color: Colors.white),
-                    ),
-                  ],
-                ),
-              ),
-
-              // Spacer for balance
-              const Expanded(child: SizedBox()),
-
-              // Empty container to balance layout
-              const SizedBox(width: 48, height: 80),
-            ],
-          ),
-        ),
+      appBar: CustomAppBars.appBarWithSubtitle(
+        context: context,
+        title: 'Document Activity History',
+        subtitle: widget.documentTitle,
       ),
       body: Container(
         width: double.infinity,

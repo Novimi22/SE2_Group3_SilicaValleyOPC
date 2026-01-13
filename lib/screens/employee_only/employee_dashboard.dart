@@ -1,3 +1,4 @@
+import 'package:draft_screens/constants/app_bars.dart';
 import 'package:flutter/material.dart';
 import 'package:draft_screens/constants/colors.dart';
 
@@ -23,48 +24,7 @@ class _EmployeeDashboardScreenState extends State<EmployeeDashboardScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(80),
-        child: Container(
-          decoration: BoxDecoration(
-            color: AppColors.appBarColor,
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.3),
-                blurRadius: 10,
-                offset: const Offset(0, 4),
-              ),
-            ],
-          ),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              // Spacer
-              const Expanded(child: SizedBox()),
-
-              // Title
-              Container(
-                height: 80,
-                alignment: Alignment.center,
-                child: Text(
-                  'Employee Dashboard',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                  ),
-                ),
-              ),
-
-              // Spacer for balance
-              const Expanded(child: SizedBox()),
-
-              // Empty container to balance layout
-              SizedBox(width: 48, height: 80),
-            ],
-          ),
-        ),
-      ),
+      appBar: CustomAppBars.centeredAppBar(title: 'Employee Dashboard'),
       body: SafeArea(
         child: Container(
           width: double.infinity,

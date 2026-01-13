@@ -77,10 +77,10 @@ class _SignInScreenState extends State<SignInScreen> {
                 ),
                 color: Colors.white,  
                 clipBehavior: Clip.antiAlias,
-                // LayoutBuilder gives us information about available space
+                // LayoutBuilder gives information about available space
                 child: LayoutBuilder(
                   builder: (context, constraints) {
-                    // 'constraints' tells us how much space is available
+                    // 'constraints' tells how much space is available
                     return SingleChildScrollView(
                       // Allows scrolling if content is taller than available space
                       child: ConstrainedBox(

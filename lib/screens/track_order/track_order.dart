@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:draft_screens/constants/colors.dart';
+import 'package:draft_screens/constants/app_bars.dart';
 
 import 'package:image_picker/image_picker.dart';
 import 'package:draft_screens/screens/histories/doc_act_history.dart';
@@ -480,60 +481,10 @@ class _TrackRecordScreenState extends State<TrackRecordScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(80),
-        child: Container(
-          decoration: BoxDecoration(
-            color: AppColors.appBarColor,
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.3),
-                blurRadius: 10,
-                offset: const Offset(0, 4),
-              ),
-            ],
-          ),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              // Back button
-              Container(
-                height: 80,
-                alignment: Alignment.center,
-                child: IconButton(
-                  icon: const Icon(Icons.arrow_back, color: Colors.black),
-                  padding: const EdgeInsets.only(left: 30),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                ),
-              ),
-
-              // Spacer
-              const Expanded(child: SizedBox()),
-
-              //
-              Container(
-                height: 80,
-                alignment: Alignment.center,
-                child: const Text(
-                  'Track Order Record',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                  ),
-                ),
-              ),
-
-              // Spacer for balance
-              const Expanded(child: SizedBox()),
-
-              // Empty container to balance layout
-              const SizedBox(width: 48, height: 80),
-            ],
-          ),
-        ),
+      appBar: CustomAppBars.defaultAppBar(
+        context: context,
+        title: 'Track Order Record',
+        navigationType: NavigationType.pop,
       ),
       body: Container(
         width: double.infinity,
@@ -821,7 +772,7 @@ class _TrackRecordScreenState extends State<TrackRecordScreen> {
                         return Container(
                           width: double.infinity,
                           decoration: BoxDecoration(
-                            color: AppColors.tileColor,
+                            color: AppColors.tile2Color,
                             border:
                                 index > 0 &&
                                     _documentTitles[index - 1] !=

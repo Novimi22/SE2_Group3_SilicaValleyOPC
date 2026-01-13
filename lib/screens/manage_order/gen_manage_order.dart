@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:draft_screens/constants/colors.dart';
+import 'package:draft_screens/constants/app_bars.dart';
 
 import '../owner_only/owner_dashboard.dart';
 import '../employee_only/employee_dashboard.dart';
@@ -746,6 +747,26 @@ class _ManageOrderScreenState extends State<ManageOrderScreen> {
     );
   }
 
+    void _handleBackNavigation() {
+    if (widget.userType == 'owner') {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const OwnerDashboardScreen(),
+        ),
+      );
+    } else if (widget.userType == 'employee') {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const EmployeeDashboardScreen(),
+        ),
+      );
+    } else {
+      Navigator.pop(context);
+    }
+  }
+
   @override
   void dispose() {
     _searchController.dispose();
@@ -755,77 +776,10 @@ class _ManageOrderScreenState extends State<ManageOrderScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(80),
-        child: Container(
-          decoration: BoxDecoration(
-            color: AppColors.appBarColor,
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.3),
-                blurRadius: 10,
-                offset: const Offset(0, 4),
-              ),
-            ],
-          ),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              // Back button
-              Container(
-                height: 80,
-                alignment: Alignment.center,
-                child: IconButton(
-                  icon: const Icon(Icons.arrow_back, color: Colors.black),
-                  padding: const EdgeInsets.only(left: 30),
-                  onPressed: () {
-                    // Navigate back to appropriate dashboard based on userType
-                    if (widget.userType == 'owner') {
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const OwnerDashboardScreen(),
-                        ),
-                      );
-                    } else if (widget.userType == 'employee') {
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const EmployeeDashboardScreen(),
-                        ),
-                      );
-                    } else {
-                      Navigator.pop(context);
-                    }
-                  },
-                ),
-              ),
-
-              // Spacer
-              const Expanded(child: SizedBox()),
-
-              // Title
-              Container(
-                height: 80,
-                alignment: Alignment.center,
-                child: Text(
-                  'Manage Order',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                  ),
-                ),
-              ),
-
-              // Spacer for balance
-              const Expanded(child: SizedBox()),
-
-              // Empty container to balance layout
-              const SizedBox(width: 48, height: 80),
-            ],
-          ),
-        ),
+      appBar: CustomAppBars.defaultAppBar(
+        context: context,
+        title: 'Manage Order',
+        onBackPressed: _handleBackNavigation,
       ),
       body: Container(
         width: double.infinity,

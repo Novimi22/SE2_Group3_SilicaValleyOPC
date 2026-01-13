@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:draft_screens/constants/colors.dart';
+import 'package:draft_screens/constants/app_bars.dart';
+
 import '../account_setup/defaultpass_change_success.dart';
 
 class CreatePasswordScreen2 extends StatefulWidget {
@@ -58,75 +60,10 @@ class _CreatePasswordScreen2State extends State<CreatePasswordScreen2> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(80),
-        child: Container(
-          decoration: BoxDecoration(
-            color: AppColors.appBarColor,
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.3),
-                blurRadius: 10,
-                offset: const Offset(0, 4),
-              ),
-            ],
-          ),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              // Back button 
-              Container(
-                height: 80,
-                alignment: Alignment.center,
-                child: IconButton(
-                  icon: const Icon(Icons.arrow_back, color: Colors.black),
-                  padding:EdgeInsets.only(left: 30),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                ),
-              ),
-
-              // Spacer
-              const Expanded(child: SizedBox()),
-
-              // Title 
-              Container(
-                height: 80,
-                alignment: Alignment.center,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    // Main title
-                    Text(
-                      'Account Setup',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
-                      ),
-                    ),
-                    const SizedBox(height: 4),
-                    // Subtitle
-                    Text(
-                      'Create your password 2/2',
-                      style: TextStyle(fontSize: 12, color: Colors.white),
-                    ),
-                  ],
-                ),
-              ),
-
-              // Spacer for balance
-              const Expanded(child: SizedBox()),
-
-              // Empty container to balance layout
-              SizedBox(
-                width: 48, // Same as back button width
-                height: 80,
-              ),
-            ],
-          ),
-        ),
+      appBar: CustomAppBars.appBarWithSubtitle(
+        context: context,
+        title: 'Account Setup',
+        subtitle: 'Create your password 2/2',
       ),
       body: Container(
         width: double.infinity,

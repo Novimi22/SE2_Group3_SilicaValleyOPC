@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:draft_screens/constants/colors.dart';
+import 'package:draft_screens/constants/app_bars.dart';
 
 import 'package:draft_screens/screens/track_order/track_order.dart'; 
 
@@ -750,61 +751,11 @@ class _TORSearchPageState extends State<TORSearchPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(80),
-        child: Container(
-          decoration: BoxDecoration(
-            color: AppColors.appBarColor,
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.3),
-                blurRadius: 10,
-                offset: const Offset(0, 4),
-              ),
-            ],
-          ),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              // Back button
-              Container(
-                height: 80,
-                alignment: Alignment.center,
-                child: IconButton(
-                  icon: const Icon(Icons.arrow_back, color: Colors.black),
-                  padding: const EdgeInsets.only(left: 30),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                ),
-              ),
-
-              // Spacer
-              const Expanded(child: SizedBox()),
-
-              // Title
-              Container(
-                height: 80,
-                alignment: Alignment.center,
-                child: Text(
-                  'Track Order Record',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                  ),
-                ),
-              ),
-
-              // Spacer for balance
-              const Expanded(child: SizedBox()),
-
-              // Empty container to balance layout
-              const SizedBox(width: 48, height: 80),
-            ],
-          ),
-        ),
-      ),
+      appBar: CustomAppBars.defaultAppBar(
+        context: context,
+        title: 'Track Order Record',
+        navigationType: NavigationType.pop,
+      ),,
       body: Container(
         width: double.infinity,
         color: Colors.white,
@@ -941,7 +892,7 @@ class _TORSearchPageState extends State<TORSearchPage> {
                           return Container(
                             width: double.infinity,
                             decoration: BoxDecoration(
-                              color: AppColors.tileColor ,
+                              color: AppColors.tile2Color ,
                               border: index > 0
                                   ? const Border(
                                       top: BorderSide(
@@ -968,7 +919,7 @@ class _TORSearchPageState extends State<TORSearchPage> {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
-                                          // PO Number (bold, black, larger text)
+                                          // PO Number 
                                           Text(
                                             order['poNumber']!,
                                             style: const TextStyle(
@@ -979,7 +930,7 @@ class _TORSearchPageState extends State<TORSearchPage> {
                                           ),
                                           const SizedBox(height: 8),
 
-                                          // Last Updated (gray, smaller text)
+                                          // Last Updated 
                                           Text(
                                             'Last Updated: ${order['lastUpdated']!}',
                                             style: TextStyle(
@@ -991,14 +942,14 @@ class _TORSearchPageState extends State<TORSearchPage> {
                                       ),
                                     ),
 
-                                    // Expand button (centered vertically)
+                                    // Expand button 
                                     Container(
                                       height: 40,
                                       width: 40,
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(20),
                                         border: Border.all(
-                                          color: AppColors.darkGrayColor ,
+                                          color: AppColors.darkGrayColor,
                                         ),
                                       ),
                                       child: Material(
@@ -1018,7 +969,7 @@ class _TORSearchPageState extends State<TORSearchPage> {
                                             isExpanded
                                                 ? Icons.expand_less
                                                 : Icons.expand_more,
-                                            color: AppColors.darkGrayColor ,
+                                            color: AppColors.darkGrayColor,
                                             size: 24,
                                           ),
                                         ),

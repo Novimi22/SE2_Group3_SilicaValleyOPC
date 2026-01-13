@@ -1,3 +1,4 @@
+import 'package:draft_screens/constants/app_bars.dart';
 import 'package:flutter/material.dart';
 import 'package:draft_screens/constants/colors.dart';
 
@@ -474,60 +475,10 @@ class _OrderActivityHistoryScreenState extends State<OrderActivityHistoryScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(80),
-        child: Container(
-          decoration: BoxDecoration(
-            color: AppColors.appBarColor,
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.3),
-                blurRadius: 10,
-                offset: const Offset(0, 4),
-              ),
-            ],
-          ),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              // Back button 
-              Container(
-                height: 80,
-                alignment: Alignment.center,
-                child: IconButton(
-                  icon: const Icon(Icons.arrow_back, color: Colors.black),
-                  padding: const EdgeInsets.only(left: 30),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                ),
-              ),
-
-              // Spacer
-              const Expanded(child: SizedBox()),
-
-              // Title
-              Container(
-                height: 80,
-                alignment: Alignment.center,
-                child: Text(
-                  'Order Activity History',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                  ),
-                ),
-              ),
-
-              // Spacer for balance
-              const Expanded(child: SizedBox()),
-
-              // Empty container to balance layout
-              const SizedBox(width: 48, height: 80),
-            ],
-          ),
-        ),
+      appBar: CustomAppBars.defaultAppBar(
+        context: context,
+        title: 'Order Activity History',
+        navigationType: NavigationType.pop,
       ),
       body: Container(
         width: double.infinity,
@@ -679,7 +630,7 @@ class _OrderActivityHistoryScreenState extends State<OrderActivityHistoryScreen>
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                // Date (gray, smaller text)
+                                // Date 
                                 Text(
                                   activity['date']!,
                                   style: TextStyle(
@@ -689,7 +640,7 @@ class _OrderActivityHistoryScreenState extends State<OrderActivityHistoryScreen>
                                 ),
                                 const SizedBox(height: 8),
                                 
-                                // PO Number (black, bold, larger text)
+                                // PO Number 
                                 Text(
                                   activity['poNumber']!,
                                   style: const TextStyle(
@@ -700,7 +651,7 @@ class _OrderActivityHistoryScreenState extends State<OrderActivityHistoryScreen>
                                 ),
                                 const SizedBox(height: 12),
                                 
-                                // Edited by (gray, smaller text)
+                                // Edited by 
                                 Text(
                                   'Edited by: ${activity['editedBy']!}',
                                   style: TextStyle(
@@ -710,7 +661,7 @@ class _OrderActivityHistoryScreenState extends State<OrderActivityHistoryScreen>
                                 ),
                                 const SizedBox(height: 4),
                                 
-                                // Activity Type (gray, smaller text)
+                                // Activity Type 
                                 Text(
                                   'Activity Type: ${activity['activityType']!}',
                                   style: TextStyle(

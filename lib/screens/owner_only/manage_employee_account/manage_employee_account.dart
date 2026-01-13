@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:draft_screens/constants/colors.dart';
+import 'package:draft_screens/constants/app_bars.dart';
+
 
 import 'package:draft_screens/screens/owner_only/owner_landingpage.dart';
 import 'package:draft_screens/screens/owner_only/manage_employee_account/delete_employee_account_otp.dart'; 
@@ -92,68 +94,11 @@ class _ManageEmployeeAccountScreenState extends State<ManageEmployeeAccountScree
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(80),
-        child: Container(
-          decoration: BoxDecoration(
-            color: AppColors.appBarColor,
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.3),
-                blurRadius: 10,
-                offset: const Offset(0, 4),
-              ),
-            ],
-          ),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              // Back button
-              Container(
-                height: 80,
-                alignment: Alignment.center,
-                child: IconButton(
-                  icon: const Icon(Icons.arrow_back, color: Colors.black),
-                  padding: EdgeInsets.only(left: 30),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const OwnerLandingPage(),
-                      ),
-                    );
-                  },
-                ),
-              ),
-
-              // Spacer
-              const Expanded(child: SizedBox()),
-
-              // Appbar Title 
-              Container(
-                height: 80,
-                alignment: Alignment.center,
-                child: Text(
-                  'Manage Employee Account',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                  ),
-                ),
-              ),
-
-              // Spacer for balance
-              const Expanded(child: SizedBox()),
-
-              // Empty container to balance layout
-              SizedBox(
-                width: 48,
-                height: 80,
-              ),
-            ],
-          ),
-        ),
+      appBar: CustomAppBars.defaultAppBar(
+        context: context,
+        title: 'Manage Employee Account',
+        destination: const OwnerLandingPage(),
+        navigationType: NavigationType.push,
       ),
       body: Container(
         width: double.infinity,
@@ -237,7 +182,7 @@ class _ManageEmployeeAccountScreenState extends State<ManageEmployeeAccountScree
                       
                       return Container(
                         decoration: BoxDecoration(
-                          color: AppColors.tileColor,
+                          color: AppColors.tile2Color,
                           border: index < employees.length - 1
                               ? Border(
                                   bottom: BorderSide(

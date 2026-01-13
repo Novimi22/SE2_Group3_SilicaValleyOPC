@@ -6,7 +6,7 @@ class AppColors {
   static const Color primaryColor = Color(0xFFCC9304);
 
   // UI colors
-  static const Color borderColor = Color(0xFF19191B);
+  static const Color borderColor = Color(0xFFD0D0D0); // formerly 0xFF19191B 
   static const Color infoBoxColor = Color(0xFFF3F3F8);
   static const Color tableHeaderColor = Color(0xFF258651);
   static const Color circleColor = Color(0xFFFFD15E);
@@ -19,7 +19,8 @@ class AppColors {
   static const Color greenColor = Color(0xFF2E7D42);
   static const Color grayColor = Color(0xFF9E9E9E); 
 
-  static const Color tileColor = Color(0xFFFFEAB5);
+ // TODO: remove tile2Color?
+  static const Color tileColor = Color(0xFFFFEAB5); // previously 0xFFFFEAB5
   static const Color tile2Color = Color(0xFFF4F4FA);
 
   static const Color iconGrayColor = Color(0xFF636363);

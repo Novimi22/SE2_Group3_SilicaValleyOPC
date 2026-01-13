@@ -169,7 +169,7 @@ class CustomAppBars {
   }
 }
 
-  // Type 3: App bar with CANCEL/CONFIRM buttons + has extra border
+  // Type 3: App bar with CANCEL/CONFIRM buttons 
   static PreferredSizeWidget orderAppBar({
     required BuildContext context,
     required String title,
@@ -190,9 +190,6 @@ class CustomAppBars {
               offset: const Offset(0, 4),
             ),
           ],
-          border: Border(
-            bottom: BorderSide(color: AppColors.borderColor, width: 1),
-          ),
         ),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -329,7 +326,7 @@ class CustomAppBars {
   }
 
   // Type 5: Title and close (X) button 
-  static PreferredSizeWidget updateOrderAppBar({
+  static PreferredSizeWidget closeOnlyAppBar({
     required BuildContext context,
     required String title,
     VoidCallback? onClosePressed,

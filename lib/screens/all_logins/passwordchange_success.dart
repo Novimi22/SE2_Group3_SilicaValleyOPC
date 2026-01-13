@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:draft_screens/constants/colors.dart';
+import 'package:draft_screens/constants/app_bars.dart';
+
 import 'package:draft_screens/screens/all_logins/signin_screen.dart';
 
 class PasswordSuccessScreen extends StatefulWidget {
@@ -10,86 +12,21 @@ class PasswordSuccessScreen extends StatefulWidget {
 }
 
 class _PasswordSuccessScreenState extends State<PasswordSuccessScreen> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(80),
-        child: Container(
-          decoration: BoxDecoration(
-            color: AppColors.appBarColor,
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.3),
-                blurRadius: 10,
-                offset: const Offset(0, 4),
-              ),
-            ],
-          ),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              // Back button 
-              Container(
-                height: 80,
-                alignment: Alignment.center,
-                child: IconButton(
-                  icon: const Icon(Icons.arrow_back, color: Colors.black),
-                  padding:EdgeInsets.only(left: 30),
-                  onPressed: () {
-                    // Navigate back to SignInScreen
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const SignInScreen(),
-                      ),
-                    );
-                  },
-                ),
-              ),
-
-              // Spacer
-              const Expanded(child: SizedBox()),
-
-              // Title 
-              Container(
-                height: 80,
-                alignment: Alignment.center,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Reset Password',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
-                      ),
-                    ),
-                    // Subtitle removed - no white text
-                  ],
-                ),
-              ),
-
-              // Spacer for balance
-              const Expanded(child: SizedBox()),
-
-              // Empty container to balance layout
-              SizedBox(
-                width: 48, 
-                height: 80,
-              ),
-            ],
-          ),
-        ),
+      appBar: CustomAppBars.defaultAppBar(
+        context: context,
+        title: 'Reset Password',
+        destination: const SignInScreen(),
+        navigationType: NavigationType.pushReplacement,
       ),
       body: SafeArea(
         child: Column(
           children: [
-            // Top section with background image 
+            // Top section with background image
             Container(
-              height: 200, // fixed height
+              height: 200,
               width: double.infinity, // Takes full available width
               decoration: const BoxDecoration(
                 image: DecorationImage(
@@ -116,7 +53,12 @@ class _PasswordSuccessScreenState extends State<PasswordSuccessScreen> {
                           minHeight: constraints.maxHeight,
                         ),
                         child: Padding(
-                          padding: const EdgeInsets.fromLTRB(25.0, 60.0, 25.0, 20.0),
+                          padding: const EdgeInsets.fromLTRB(
+                            25.0,
+                            60.0,
+                            25.0,
+                            20.0,
+                          ),
                           child: _buildSuccessContent(constraints.maxHeight),
                         ),
                       ),
@@ -161,10 +103,7 @@ class _PasswordSuccessScreenState extends State<PasswordSuccessScreen> {
             child: Text(
               'Password has been changed successfully.\nUse your new password to log in.',
               textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 16,
-                color: AppColors.grayColor,
-              ),
+              style: TextStyle(fontSize: 16, color: AppColors.grayColor),
             ),
           ),
           const SizedBox(height: 60),
@@ -177,9 +116,7 @@ class _PasswordSuccessScreenState extends State<PasswordSuccessScreen> {
                 // Navigate back to SignInScreen
                 Navigator.pushReplacement(
                   context,
-                  MaterialPageRoute(
-                    builder: (context) => const SignInScreen(),
-                  ),
+                  MaterialPageRoute(builder: (context) => const SignInScreen()),
                 );
               },
               style: ElevatedButton.styleFrom(
@@ -202,9 +139,7 @@ class _PasswordSuccessScreenState extends State<PasswordSuccessScreen> {
           ),
 
           // Flexible spacer to push content up
-          Flexible(
-            child: Container(),
-          ),
+          Flexible(child: Container()),
         ],
       ),
     );
