@@ -170,25 +170,7 @@ class _TrackRecordScreenState extends State<TrackRecordScreen> {
                   const SizedBox(height: 15),
 
                   // Cancel button
-                  TextButton(
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                    style: TextButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 20,
-                        vertical: 12,
-                      ),
-                    ),
-                    child: const Text(
-                      'Cancel',
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.black,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ),
+                  CustomTextButtons.cancelButton(context: context),
                 ],
               ),
             ),
@@ -266,25 +248,7 @@ class _TrackRecordScreenState extends State<TrackRecordScreen> {
                   const SizedBox(height: 15),
 
                   // Cancel button
-                  TextButton(
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                    style: TextButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 20,
-                        vertical: 12,
-                      ),
-                    ),
-                    child: const Text(
-                      'Cancel',
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.black,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ),
+                  CustomTextButtons.cancelButton(context: context),
                 ],
               ),
             ),

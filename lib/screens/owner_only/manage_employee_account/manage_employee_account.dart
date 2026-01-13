@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:draft_screens/constants/colors.dart';
 import 'package:draft_screens/constants/app_bars.dart';
 import 'package:draft_screens/constants/buttons/elevated_buttons.dart';
+import 'package:draft_screens/constants/buttons/text_buttons.dart';
 
 import 'package:draft_screens/screens/owner_only/owner_landingpage.dart';
 import '../manage_employee_account/delete_employee_account_otp.dart';
@@ -370,25 +371,7 @@ class _ManageEmployeeAccountScreenState
                   const SizedBox(height: 15),
 
                   // Cancel button
-                  TextButton(
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                    style: TextButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 20,
-                        vertical: 12,
-                      ),
-                    ),
-                    child: Text(
-                      'Cancel',
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.black,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ),
+                  CustomTextButtons.cancelButton(context: context),
                 ],
               ),
             ),
@@ -696,25 +679,7 @@ class _CreateEmployeeDialogState extends State<CreateEmployeeDialog> {
                 const SizedBox(height: 15),
 
                 // Cancel button
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  style: TextButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 20,
-                      vertical: 12,
-                    ),
-                  ),
-                  child: const Text(
-                    'Cancel',
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.black,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                ),
+                CustomTextButtons.cancelButton(context: context),
               ],
             ),
           ),

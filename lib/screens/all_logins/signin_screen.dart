@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:draft_screens/constants/colors.dart';
 import 'package:draft_screens/constants/buttons/elevated_buttons.dart';
+import 'package:draft_screens/constants/buttons/text_buttons.dart';
 
 import '../owner_only/owner_landingpage.dart';
 import '../employee_only/employee_dashboard.dart';
@@ -269,24 +270,7 @@ class _SignInScreenState extends State<SignInScreen> {
           Padding(
             padding: const EdgeInsets.only(bottom: 20), 
             child: Center(
-              child: TextButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const ForgotPasswordScreen(),
-                    ),
-                  );
-                },
-                child: Text(
-                  'Forgot password?',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: AppColors.grayColor,
-                    fontSize: 14,
-                  ),
-                ),
-              ),
+              child: CustomTextButtons.forgotPasswordButton(context: context),
             ),
           ),
         ],

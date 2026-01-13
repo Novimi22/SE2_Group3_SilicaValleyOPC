@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:draft_screens/constants/colors.dart';
 import 'package:draft_screens/constants/app_bars.dart';
+import 'package:draft_screens/constants/buttons/text_buttons.dart';
 
 import 'package:draft_screens/screens/histories/order_act_history.dart';
 import 'package:draft_screens/screens/manage_order/gen_manage_order.dart';
@@ -336,12 +337,7 @@ class _OwnerDashboardScreenState extends State<OwnerDashboardScreen> {
           title: const Text('Logout'),
           content: const Text('Are you sure you want to logout?'),
           actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: Text('Cancel', style: TextStyle(color: AppColors.grayColor)),
-            ),
+            CustomTextButtons.grayCancelButton(context: context),
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();

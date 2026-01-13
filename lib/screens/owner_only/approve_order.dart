@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:draft_screens/constants/colors.dart';
 import 'package:draft_screens/constants/app_bars.dart';
 import 'package:draft_screens/constants/buttons/elevated_buttons.dart';
+import 'package:draft_screens/constants/buttons/text_buttons.dart';
 
 import 'package:draft_screens/screens/manage_order/view_order.dart';
 
@@ -574,25 +575,7 @@ class _ApproveOrderScreenState extends State<ApproveOrderScreen> {
                   const SizedBox(height: 15),
 
                   // Cancel button
-                  TextButton(
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                    style: TextButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 20,
-                        vertical: 12,
-                      ),
-                    ),
-                    child: const Text(
-                      'Cancel',
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.black,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ),
+                  CustomTextButtons.cancelButton(context: context),
                 ],
               ),
             ),
@@ -987,29 +970,14 @@ class _ApproveOrderScreenState extends State<ApproveOrderScreen> {
                                                 margin: const EdgeInsets.only(
                                                   left: 12,
                                                 ),
-                                                child: TextButton(
-                                                  onPressed: () {
+                                                child: CustomTextButtons.approveButton(
+                                                  context: context,
+                                                  onApprove: () {
                                                     _showApproveConfirmationDialog(
                                                       order['poNumber']!,
                                                       order['clientName']!,
                                                     );
                                                   },
-                                                  style: TextButton.styleFrom(
-                                                    padding:
-                                                        const EdgeInsets.symmetric(
-                                                          horizontal: 20,
-                                                          vertical: 8,
-                                                        ),
-                                                  ),
-                                                  child: Text(
-                                                    'Approve',
-                                                    style: TextStyle(
-                                                      fontSize: 16,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      color: greenColor,
-                                                    ),
-                                                  ),
                                                 ),
                                               ),
 
@@ -1018,72 +986,14 @@ class _ApproveOrderScreenState extends State<ApproveOrderScreen> {
                                                 margin: const EdgeInsets.only(
                                                   left: 12,
                                                 ),
-                                                child: TextButton(
-                                                  onPressed: () {
+                                                child: CustomTextButtons.rejectButton(
+                                                  context: context,
+                                                  onReject: () {
                                                     _showRejectConfirmationDialog(
                                                       order['poNumber']!,
                                                       order['clientName']!,
                                                     );
                                                   },
-                                                  style: TextButton.styleFrom(
-                                                    padding:
-                                                        const EdgeInsets.symmetric(
-                                                          horizontal: 20,
-                                                          vertical: 8,
-                                                        ),
-                                                  ),
-                                                  child: Text(
-                                                    'Reject',
-                                                    style: TextStyle(
-                                                      fontSize: 16,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      color: redColor,
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-
-                                              // View button
-                                              Container(
-                                                margin: const EdgeInsets.only(
-                                                  left: 12,
-                                                ),
-                                                child: TextButton(
-                                                  onPressed: () {
-                                                    Navigator.push(
-                                                      context,
-                                                      MaterialPageRoute(
-                                                        builder: (context) => ViewOrderScreen(
-                                                          purchaseOrderNumber:
-                                                              order['poNumber']!,
-                                                          customerName:
-                                                              order['clientName']!,
-                                                          creationDate:
-                                                              order['creationDate']!,
-                                                          netPrice:
-                                                              order['netPrice']!,
-                                                        ),
-                                                      ),
-                                                    );
-                                                  },
-                                                  style: TextButton.styleFrom(
-                                                    padding:
-                                                        const EdgeInsets.symmetric(
-                                                          horizontal: 20,
-                                                          vertical: 8,
-                                                        ),
-                                                  ),
-                                                  child: Text(
-                                                    'View',
-                                                    style: TextStyle(
-                                                      fontSize: 16,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      color: AppColors
-                                                          .primaryColor, // SAME COLOR
-                                                    ),
-                                                  ),
                                                 ),
                                               ),
                                             ],

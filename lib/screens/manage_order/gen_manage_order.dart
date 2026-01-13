@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:draft_screens/constants/colors.dart';
 import 'package:draft_screens/constants/app_bars.dart';
 import 'package:draft_screens/constants/buttons/elevated_buttons.dart';
+import 'package:draft_screens/constants/buttons/text_buttons.dart';
 
 import '../owner_only/owner_dashboard.dart';
 import '../employee_only/employee_dashboard.dart';
@@ -652,25 +653,7 @@ class _ManageOrderScreenState extends State<ManageOrderScreen> {
                       const SizedBox(height: 15),
 
                       // Cancel button
-                      TextButton(
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                        style: TextButton.styleFrom(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 20,
-                            vertical: 12,
-                          ),
-                        ),
-                        child: Text(
-                          'Cancel',
-                          style: TextStyle(
-                            fontSize: 16,
-                            color: Colors.black,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ),
+                      CustomTextButtons.cancelButton(context: context),
                     ],
                   ),
                 ),
@@ -1063,31 +1046,15 @@ class _ManageOrderScreenState extends State<ManageOrderScreen> {
                                                 margin: const EdgeInsets.only(
                                                   left: 12,
                                                 ),
-                                                child: TextButton(
-                                                  onPressed: () {
+                                                child: CustomTextButtons.deleteButton(
+                                                  context: context,
+                                                  onDelete: () {
                                                     _showDeleteConfirmationDialog(
                                                       context,
                                                       order['poNumber']!,
                                                       order['clientName']!,
                                                     );
                                                   },
-                                                  style: TextButton.styleFrom(
-                                                    padding:
-                                                        const EdgeInsets.symmetric(
-                                                          horizontal: 20,
-                                                          vertical: 8,
-                                                        ),
-                                                  ),
-                                                  child: Text(
-                                                    'Delete',
-                                                    style: TextStyle(
-                                                      fontSize: 16,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      color: AppColors
-                                                          .primaryColor,
-                                                    ),
-                                                  ),
                                                 ),
                                               ),
 
@@ -1096,9 +1063,9 @@ class _ManageOrderScreenState extends State<ManageOrderScreen> {
                                                 margin: const EdgeInsets.only(
                                                   left: 12,
                                                 ),
-                                                child: TextButton(
-                                                  onPressed: () {
-                                                    // Navigate to UpdateOrderScreen
+                                                child: CustomTextButtons.updateButton(
+                                                  context: context,
+                                                  onUpdate: () {
                                                     Navigator.push(
                                                       context,
                                                       MaterialPageRoute(
@@ -1115,23 +1082,6 @@ class _ManageOrderScreenState extends State<ManageOrderScreen> {
                                                       ),
                                                     );
                                                   },
-                                                  style: TextButton.styleFrom(
-                                                    padding:
-                                                        const EdgeInsets.symmetric(
-                                                          horizontal: 20,
-                                                          vertical: 8,
-                                                        ),
-                                                  ),
-                                                  child: Text(
-                                                    'Update',
-                                                    style: TextStyle(
-                                                      fontSize: 16,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      color: AppColors
-                                                          .primaryColor,
-                                                    ),
-                                                  ),
                                                 ),
                                               ),
 
@@ -1140,9 +1090,9 @@ class _ManageOrderScreenState extends State<ManageOrderScreen> {
                                                 margin: const EdgeInsets.only(
                                                   left: 12,
                                                 ),
-                                                child: TextButton(
-                                                  onPressed: () {
-                                                    // Navigate to ViewOrderScreen
+                                                child: CustomTextButtons.viewButton(
+                                                  context: context,
+                                                  onView: () {
                                                     Navigator.push(
                                                       context,
                                                       MaterialPageRoute(
@@ -1159,23 +1109,6 @@ class _ManageOrderScreenState extends State<ManageOrderScreen> {
                                                       ),
                                                     );
                                                   },
-                                                  style: TextButton.styleFrom(
-                                                    padding:
-                                                        const EdgeInsets.symmetric(
-                                                          horizontal: 20,
-                                                          vertical: 8,
-                                                        ),
-                                                  ),
-                                                  child: Text(
-                                                    'View',
-                                                    style: TextStyle(
-                                                      fontSize: 16,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      color: AppColors
-                                                          .primaryColor,
-                                                    ),
-                                                  ),
                                                 ),
                                               ),
                                             ],

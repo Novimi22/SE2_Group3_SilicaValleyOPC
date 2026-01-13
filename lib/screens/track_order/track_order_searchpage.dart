@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:draft_screens/constants/colors.dart';
 import 'package:draft_screens/constants/app_bars.dart';
 import 'package:draft_screens/constants/buttons/elevated_buttons.dart';
+import 'package:draft_screens/constants/buttons/text_buttons.dart';
 
 import 'package:draft_screens/screens/track_order/track_order.dart'; 
 
@@ -638,25 +639,7 @@ class _TORSearchPageState extends State<TORSearchPage> {
                       const SizedBox(height: 15),
 
                       // Cancel button
-                      TextButton(
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                        style: TextButton.styleFrom(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 20,
-                            vertical: 12,
-                          ),
-                        ),
-                        child: Text(
-                          'Cancel',
-                          style: TextStyle(
-                            fontSize: 16,
-                            color: Colors.black,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ),
+                      CustomTextButtons.cancelButton(context: context),
                     ],
                   ),
                 ),
@@ -1021,41 +1004,27 @@ class _TORSearchPageState extends State<TORSearchPage> {
                                             mainAxisAlignment:
                                                 MainAxisAlignment.end,
                                             children: [
-                                              // Track button 
+                                              // Track button
                                               Container(
                                                 margin: const EdgeInsets.only(
                                                   left: 12,
                                                 ),
-                                                child: TextButton(
-                                                  onPressed: () {
+                                                child: CustomTextButtons.trackButton(
+                                                  context: context,
+                                                  onTrack: () {
                                                     Navigator.push(
                                                       context,
                                                       MaterialPageRoute(
-                                                        builder: (context) => TrackRecordScreen(
-                                                          purchaseOrderNumber:
-                                                              order['poNumber']!,
-                                                          clientName:
-                                                              order['clientName']!,
-                                                        ),
+                                                        builder: (context) =>
+                                                            TrackRecordScreen(
+                                                              purchaseOrderNumber:
+                                                                  order['poNumber']!,
+                                                              clientName:
+                                                                  order['clientName']!,
+                                                            ),
                                                       ),
                                                     );
                                                   },
-                                                  style: TextButton.styleFrom(
-                                                    padding:
-                                                        const EdgeInsets.symmetric(
-                                                          horizontal: 20,
-                                                          vertical: 8,
-                                                        ),
-                                                  ),
-                                                  child: Text(
-                                                    'Track',
-                                                    style: TextStyle(
-                                                      fontSize: 16,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      color: AppColors.primaryColor,
-                                                    ),
-                                                  ),
                                                 ),
                                               ),
                                             ],

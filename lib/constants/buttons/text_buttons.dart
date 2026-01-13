@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:draft_screens/constants/colors.dart';
-import '../all_logins/forgotpass_step1.dart';
+import 'package:draft_screens/screens/all_logins/forgotpass_step1.dart';
 
 class CustomTextButtons {
   // Base text button style
@@ -81,7 +81,7 @@ class CustomTextButtons {
     );
   }
 
-  /// Gray cancel button (specific use case)
+  /// Gray cancel button
   static Widget grayCancelButton({
     required BuildContext context,
     String text = 'Cancel',
@@ -90,25 +90,6 @@ class CustomTextButtons {
       context: context,
       text: text,
       color: AppColors.grayColor,
-    );
-  }
-
-  /// Logout button (red color)
-  static Widget logoutButton({
-    required BuildContext context,
-    required VoidCallback onLogout,
-    String text = 'Logout',
-  }) {
-    return TextButton(
-      onPressed: () {
-        Navigator.of(context).pop();
-        onLogout(context);
-      },
-      style: _baseTextButtonStyle(),
-      child: Text(
-        text,
-        style: const TextStyle(color: Colors.red),
-      ),
     );
   }
 

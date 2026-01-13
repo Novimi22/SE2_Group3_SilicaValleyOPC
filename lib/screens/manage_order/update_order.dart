@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:draft_screens/constants/app_bars.dart';
 import 'package:draft_screens/constants/colors.dart';
 import 'package:draft_screens/constants/buttons/elevated_buttons.dart';
+import 'package:draft_screens/constants/buttons/text_buttons.dart';
 import 'package:flutter/services.dart';
 
 class UpdateOrderScreen extends StatefulWidget {
@@ -362,26 +363,7 @@ class _UpdateOrderScreenState extends State<UpdateOrderScreen> {
                         const SizedBox(height: 15),
 
                         // Cancel button
-                        TextButton(
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                            _clearPendingAction();
-                          },
-                          style: TextButton.styleFrom(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 20,
-                              vertical: 12,
-                            ),
-                          ),
-                          child: Text(
-                            'Cancel',
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.black,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ),
+                        CustomTextButtons.cancelButton(context: context),
                       ],
                     ),
                   ),
