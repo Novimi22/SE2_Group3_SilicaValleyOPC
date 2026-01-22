@@ -768,7 +768,7 @@ class _EmployeeDashboardScreenState extends State<EmployeeDashboardScreen> {
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
-                _performLogout(context);
+                _performLogout(context); 
               },
               child: const Text('Logout', style: TextStyle(color: Colors.red)),
             ),
