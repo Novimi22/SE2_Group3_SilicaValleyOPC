@@ -1,16 +1,3 @@
-# draft_screens
+## Centralized Order Tracking and Document Archival System for Silica Valley OPC
 
-A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+is a **cross-platform** application developed using **Flutter** as part of a year-long Software Engineering project. The system is designed to replace the company’s manual, Viber-based workflow by enabling employees to log Purchase Orders, upload and categorize supporting documents, and track order progress in real time across both mobile and desktop platforms. With role-based access control, secure authentication, document categorization, activity logging, and centralized data storage, the system improves organization, transparency, and efficiency in managing business transactions.
