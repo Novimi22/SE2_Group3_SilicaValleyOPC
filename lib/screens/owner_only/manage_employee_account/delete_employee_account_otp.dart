@@ -93,7 +93,7 @@ class _VerifyEmailScreen3State extends State<VerifyEmailScreen3> {
     return Scaffold(
       appBar: CustomAppBars.defaultAppBar(
         context: context,
-        title: 'Order Activity History',
+        title: 'Delete Employee Account',
         navigationType: NavigationType.pop,
       ),
       body: Container(

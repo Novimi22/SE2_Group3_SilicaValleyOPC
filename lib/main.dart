@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
       title: 'Application for Silica Valley OPC',
       theme: ThemeData(
         textTheme: GoogleFonts.workSansTextTheme(
-          Theme.of(context).textTheme, // Inherit other styles
+          Theme.of(context).textTheme, // inherits other styles
       ),
     ),
       home: const SignInScreen(),
