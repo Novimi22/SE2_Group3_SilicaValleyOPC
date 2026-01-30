@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:draft_screens/constants/app_bars.dart';
 import 'package:draft_screens/constants/colors.dart';
-import 'package:draft_screens/constants/buttons/elevated_buttons.dart';
+import 'package:draft_screens/constants/search_bar.dart';
+import 'package:draft_screens/constants/search_filter.dart';
 
 class OrderActivityHistoryScreen extends StatefulWidget {
   const OrderActivityHistoryScreen({super.key});
@@ -108,379 +109,112 @@ class _OrderActivityHistoryScreenState
   }
 
   // Apply sorting based on selected criteria
-  void _applySorting() {
-    setState(() {
-      _filteredActivityHistory.sort((a, b) {
-        int comparison = 0;
+void _applySorting() {
+  setState(() {
+    _filteredActivityHistory.sort((a, b) {
+      int comparison = 0;
 
-        switch (_selectedSortBy) {
-          case 'Name':
+      switch (_selectedSortBy) {
+        case 'Name':
+          // Extract numbers from names for proper numeric sorting
+          final numA = _extractNumberFromString(a['editedBy']!);
+          final numB = _extractNumberFromString(b['editedBy']!);
+          
+          // If both have numbers, sort numerically
+          if (numA != null && numB != null) {
+            comparison = numA.compareTo(numB);
+          } else {
+            // Fallback to string comparison
             comparison = a['editedBy']!.compareTo(b['editedBy']!);
-            break;
-          case 'Activity Type':
+          }
+          break;
+        case 'Activity Type':
+          // Extract numbers from activity types for proper numeric sorting
+          final numA = _extractNumberFromString(a['activityType']!);
+          final numB = _extractNumberFromString(b['activityType']!);
+          
+          // If both have numbers, sort numerically
+          if (numA != null && numB != null) {
+            comparison = numA.compareTo(numB);
+          } else {
+            // Fallback to string comparison
             comparison = a['activityType']!.compareTo(b['activityType']!);
-            break;
-          case 'Modification Date':
-          default:
-            // For date comparison
-            comparison = a['date']!.compareTo(b['date']!);
-            break;
-        }
+          }
+          break;
+        case 'Modification Date':
+        default:
+          // Use proper date comparison
+          comparison = _compareDates(a['date']!, b['date']!);
+          break;
+      }
 
-        // Apply sort order
-        return _selectedSortOrder == 'Descending' ? -comparison : comparison;
-      });
+      // Apply sort order
+      return _selectedSortOrder == 'Descending' ? -comparison : comparison;
     });
-  }
+  });
+}
 
+// Helper function for proper date comparison (MM/DD/YYYY format)
+int _compareDates(String dateA, String dateB) {
+  try {
+    // Parse dates in MM/DD/YYYY format
+    final partsA = dateA.split('/');
+    final partsB = dateB.split('/');
+    
+    if (partsA.length == 3 && partsB.length == 3) {
+      final yearA = int.parse(partsA[2]);
+      final monthA = int.parse(partsA[0]);
+      final dayA = int.parse(partsA[1]);
+      
+      final yearB = int.parse(partsB[2]);
+      final monthB = int.parse(partsB[0]);
+      final dayB = int.parse(partsB[1]);
+      
+      // Compare year first
+      if (yearA != yearB) return yearA.compareTo(yearB);
+      // Then month
+      if (monthA != monthB) return monthA.compareTo(monthB);
+      // Then day
+      return dayA.compareTo(dayB);
+    }
+  } catch (e) {
+    // Fallback to string comparison if parsing fails
+  }
+  return dateA.compareTo(dateB);
+}
+
+// Helper function to extract numbers from strings
+int? _extractNumberFromString(String text) {
+  try {
+    // Find all sequences of digits
+    final matches = RegExp(r'\d+').allMatches(text);
+    if (matches.isNotEmpty) {
+      // Take the first number found
+      return int.parse(matches.first.group(0)!);
+    }
+  } catch (e) {
+    // If parsing fails, return null
+  }
+  return null;
+}
   // Show filter dialog
-  void _showFilterDialog(BuildContext context) {
-    // Local variables for dialog state
-    String dialogSortBy = _selectedSortBy;
-    String dialogSortOrder = _selectedSortOrder;
-    String? dialogActivityType = _selectedActivityType;
-
-    // Get the position of the filter icon
-    final renderBox =
-        _filterIconKey.currentContext?.findRenderObject() as RenderBox?;
-    if (renderBox == null) return;
-
-    final position = renderBox.localToGlobal(Offset.zero);
-
-    // Calculate position for the dialog
-    final double dialogTop = position.dy + renderBox.size.height + 10;
-    final double dialogLeft = position.dx - 200;
-
-    showDialog(
-      context: context,
-      barrierColor: Colors.transparent,
-      builder: (BuildContext context) {
-        return Stack(
-          children: [
-            // Click outside to close
-            Positioned.fill(
-              child: GestureDetector(
-                onTap: () => Navigator.of(context).pop(),
-                child: Container(color: Colors.transparent),
-              ),
-            ),
-            // Filter dialog positioned below the icon
-            Positioned(
-              top: dialogTop,
-              left: dialogLeft,
-              child: StatefulBuilder(
-                builder: (context, setDialogState) {
-                  return Material(
-                    elevation: 10,
-                    borderRadius: BorderRadius.circular(12),
-                    child: Container(
-                      width: 300,
-                      padding: const EdgeInsets.all(20),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(12),
-                        border: Border.all(
-                          color: AppColors.darkGrayColor,
-                          width: 1,
-                        ),
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          // Sort By section
-                          Container(
-                            width: double.infinity,
-                            padding: const EdgeInsets.all(12),
-                            decoration: BoxDecoration(
-                              color: AppColors.lightGrayColor,
-                              borderRadius: BorderRadius.circular(8),
-                              border: Border.all(
-                                color: AppColors.darkGrayColor,
-                                width: 1,
-                              ),
-                            ),
-                            child: Text(
-                              'Sort By',
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black,
-                              ),
-                            ),
-                          ),
-
-                          // Name selection row
-                          Container(
-                            width: double.infinity,
-                            padding: const EdgeInsets.symmetric(vertical: 12),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  'Name',
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: dialogSortBy == 'Name'
-                                        ? FontWeight.bold
-                                        : FontWeight.normal,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                                Radio<String>(
-                                  value: 'Name',
-                                  groupValue: dialogSortBy,
-                                  onChanged: (value) {
-                                    setDialogState(() {
-                                      dialogSortBy = value!;
-                                      dialogActivityType = null;
-                                    });
-                                  },
-                                  activeColor: AppColors.primaryColor,
-                                ),
-                              ],
-                            ),
-                          ),
-
-                          // Activity Type selection row
-                          Container(
-                            width: double.infinity,
-                            padding: const EdgeInsets.symmetric(vertical: 12),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      'Activity Type',
-                                      style: TextStyle(
-                                        fontSize: 14,
-                                        fontWeight:
-                                            dialogSortBy == 'Activity Type'
-                                            ? FontWeight.bold
-                                            : FontWeight.normal,
-                                        color: Colors.black,
-                                      ),
-                                    ),
-                                    Radio<String>(
-                                      value: 'Activity Type',
-                                      groupValue: dialogSortBy,
-                                      onChanged: (value) {
-                                        setDialogState(() {
-                                          dialogSortBy = value!;
-                                        });
-                                      },
-                                      activeColor: AppColors.primaryColor,
-                                    ),
-                                  ],
-                                ),
-
-                                // Activity Type dropdown (shown when Activity Type is selected)
-                                if (dialogSortBy == 'Activity Type')
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                      top: 8,
-                                      left: 8,
-                                    ),
-                                    child: Container(
-                                      width: double.infinity,
-                                      padding: const EdgeInsets.symmetric(
-                                        horizontal: 12,
-                                        vertical: 8,
-                                      ),
-                                      decoration: BoxDecoration(
-                                        border: Border.all(
-                                          color: AppColors.borderColor,
-                                        ),
-                                        borderRadius: BorderRadius.circular(4),
-                                      ),
-                                      child: DropdownButton<String>(
-                                        value: dialogActivityType,
-                                        hint: Text(
-                                          'Select Activity Type',
-                                          style: TextStyle(
-                                            color: AppColors.grayColor,
-                                          ),
-                                        ),
-                                        isExpanded: true,
-                                        underline: const SizedBox(),
-                                        icon: const Icon(
-                                          Icons.arrow_drop_down,
-                                          color: Colors.black,
-                                        ),
-                                        items:
-                                            [
-                                              'Option 1',
-                                              'Option 2',
-                                              'Option 3',
-                                            ].map((String value) {
-                                              return DropdownMenuItem<String>(
-                                                value: value,
-                                                child: Text(value),
-                                              );
-                                            }).toList(),
-                                        onChanged: (String? newValue) {
-                                          setDialogState(() {
-                                            dialogActivityType = newValue;
-                                          });
-                                        },
-                                      ),
-                                    ),
-                                  ),
-                              ],
-                            ),
-                          ),
-
-                          // Modification Date selection row
-                          Container(
-                            width: double.infinity,
-                            padding: const EdgeInsets.symmetric(vertical: 6),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  'Modification Date',
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight:
-                                        dialogSortBy == 'Modification Date'
-                                        ? FontWeight.bold
-                                        : FontWeight.normal,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                                Radio<String>(
-                                  value: 'Modification Date',
-                                  groupValue: dialogSortBy,
-                                  onChanged: (value) {
-                                    setDialogState(() {
-                                      dialogSortBy = value!;
-                                      dialogActivityType = null;
-                                    });
-                                  },
-                                  activeColor: AppColors.primaryColor,
-                                ),
-                              ],
-                            ),
-                          ),
-
-                          const SizedBox(height: 20),
-
-                          // Sort Order section - Only title in gray box
-                          Container(
-                            width: double.infinity,
-                            padding: const EdgeInsets.all(12),
-                            decoration: BoxDecoration(
-                              color: AppColors.lightGrayColor,
-                              borderRadius: BorderRadius.circular(8),
-                              border: Border.all(
-                                color: AppColors.darkGrayColor,
-                                width: 1,
-                              ),
-                            ),
-                            child: Text(
-                              'Sort Order',
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black,
-                              ),
-                            ),
-                          ),
-
-                          // Ascending selection row
-                          Container(
-                            width: double.infinity,
-                            padding: const EdgeInsets.symmetric(vertical: 12),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  'Ascending',
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: dialogSortOrder == 'Ascending'
-                                        ? FontWeight.bold
-                                        : FontWeight.normal,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                                Radio<String>(
-                                  value: 'Ascending',
-                                  groupValue: dialogSortOrder,
-                                  onChanged: (value) {
-                                    setDialogState(() {
-                                      dialogSortOrder = value!;
-                                    });
-                                  },
-                                  activeColor: AppColors.primaryColor,
-                                ),
-                              ],
-                            ),
-                          ),
-
-                          // Descending selection row
-                          Container(
-                            width: double.infinity,
-                            padding: const EdgeInsets.symmetric(vertical: 12),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  'Descending',
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: dialogSortOrder == 'Descending'
-                                        ? FontWeight.bold
-                                        : FontWeight.normal,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                                Radio<String>(
-                                  value: 'Descending',
-                                  groupValue: dialogSortOrder,
-                                  onChanged: (value) {
-                                    setDialogState(() {
-                                      dialogSortOrder = value!;
-                                    });
-                                  },
-                                  activeColor: AppColors.primaryColor,
-                                ),
-                              ],
-                            ),
-                          ),
-
-                          const SizedBox(height: 20),
-
-                          // Apply button
-                          SizedBox(
-                            width: double.infinity,
-                            child: CustomButtons.applyButton(
-                              context: context,
-                              onApply: () {
-                                setState(() {
-                                  _selectedSortBy = dialogSortBy;
-                                  _selectedSortOrder = dialogSortOrder;
-                                  _selectedActivityType = dialogActivityType;
-                                  _applyFiltersAndSorting();
-                                });
-                                Navigator.of(context).pop();
-                              },
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  );
-                },
-              ),
-            ),
-          ],
-        );
-      },
-    );
-  }
+void _showFilterDialog(BuildContext context) {
+  SearchFilterDialog.showFilterDialog(
+    context: context,
+    filterIconKey: _filterIconKey,
+    selectedSortBy: _selectedSortBy,
+    selectedSortOrder: _selectedSortOrder,
+    selectedActivityType: _selectedActivityType,
+    onApply: (sortBy, sortOrder, activityType) {
+      setState(() {
+        _selectedSortBy = sortBy;
+        _selectedSortOrder = sortOrder;
+        _selectedActivityType = activityType;
+        _applyFiltersAndSorting();
+      });
+    },
+  );
+}
 
   @override
   void dispose() {
@@ -501,103 +235,15 @@ class _OrderActivityHistoryScreenState
         color: Colors.white,
         child: Column(
           children: [
-            // Search bar section (fixed at top)
-            Padding(
-              padding: const EdgeInsets.fromLTRB(25.0, 40.0, 25.0, 20.0),
-              child: Center(
-                child: SizedBox(
-                  width: 700,
-                  child: Row(
-                    children: [
-                      // Search field
-                      Expanded(
-                        child: Container(
-                          height: 50,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(25),
-                            border: Border.all(color: AppColors.borderColor),
-                          ),
-                          child: Row(
-                            children: [
-                              const SizedBox(width: 16),
-                              const Icon(
-                                Icons.search,
-                                color: AppColors.grayColor,
-                                size: 20,
-                              ),
-                              const SizedBox(width: 12),
-                              Expanded(
-                                child: TextField(
-                                  controller: _searchController,
-                                  decoration: InputDecoration(
-                                    hintText:
-                                        'Search by name, activity type, or modification date...',
-                                    hintStyle: TextStyle(
-                                      color: AppColors.grayColor,
-                                    ),
-                                    border: InputBorder.none,
-                                    contentPadding: EdgeInsets.zero,
-                                  ),
-                                  style: const TextStyle(
-                                    fontSize: 16,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                              ),
-                              // Clear button
-                              if (_showClearButton)
-                                MouseRegion(
-                                  cursor: SystemMouseCursors.click,
-                                  child: GestureDetector(
-                                    onTap: _clearSearch,
-                                    child: Container(
-                                      padding: const EdgeInsets.all(8),
-                                      margin: const EdgeInsets.only(right: 8),
-                                      child: const Icon(
-                                        Icons.close,
-                                        color: AppColors.grayColor,
-                                        size: 18,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              const SizedBox(width: 8),
-                            ],
-                          ),
-                        ),
-                      ),
-
-                      const SizedBox(width: 12),
-
-                      // Filter search icon button
-                      Container(
-                        key: _filterIconKey,
-                        width: 50,
-                        height: 50,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(25),
-                          border: Border.all(color: AppColors.borderColor),
-                        ),
-                        child: Material(
-                          color: Colors.transparent,
-                          borderRadius: BorderRadius.circular(25),
-                          child: InkWell(
-                            onTap: () {
-                              _showFilterDialog(context);
-                            },
-                            borderRadius: BorderRadius.circular(25),
-                            child: const Icon(
-                              Icons.filter_list,
-                              color: Colors.black,
-                              size: 24,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
+            // Search bar section (fixed at top) - Using reusable component
+            SearchBarWidget(
+              searchController: _searchController,
+              filterIconKey: _filterIconKey,
+              onFilterPressed: _showFilterDialog,
+              onClearSearch: _clearSearch,
+              hintText: 'Search by name, activity type, or modification date...',
+              showClearButton: _showClearButton,
+              width: 700,
             ),
 
             // Activity history list (scrollable)

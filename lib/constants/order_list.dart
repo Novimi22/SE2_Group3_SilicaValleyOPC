@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import '../constants/colors.dart';
 import '../constants/buttons/text_buttons.dart';
 import '../constants/buttons/elevated_buttons.dart';
+import '../constants/search_bar.dart';
+import '../constants/search_filter.dart';
 
 class OrderListWidget extends StatefulWidget {
   final String screenTitle;
@@ -11,8 +13,6 @@ class OrderListWidget extends StatefulWidget {
   final List<Map<String, String>> initialOrders;
   final bool showDeleteOption;
   final Function(String, String)? onDelete;
-  
-  // NEW: For multiple buttons
   final bool showMultipleButtons;
   final Function(Map<String, String>)? onUpdate;
   final Function(Map<String, String>)? onView;
@@ -27,7 +27,6 @@ class OrderListWidget extends StatefulWidget {
     required this.initialOrders,
     this.showDeleteOption = false,
     this.onDelete,
-    
     this.showMultipleButtons = false,
     this.onUpdate,
     this.onView,
@@ -114,197 +113,92 @@ class _OrderListWidgetState extends State<OrderListWidget> {
     });
   }
 
-  void _applySorting() {
-    setState(() {
-      _filteredOrders.sort((a, b) {
-        int comparison = 0;
+void _applySorting() {
+  setState(() {
+    _filteredOrders.sort((a, b) {
+      int comparison = 0;
 
-        switch (_selectedSortBy) {
-          case 'Client Name':
+      switch (_selectedSortBy) {
+        case 'Client Name':
+          // Extract numbers from client names for proper numeric sorting
+          final numA = _extractNumberFromString(a['clientName']!);
+          final numB = _extractNumberFromString(b['clientName']!);
+          
+          // If both have numbers, sort numerically
+          if (numA != null && numB != null) {
+            comparison = numA.compareTo(numB);
+          } else {
+            // Fallback to string comparison
             comparison = a['clientName']!.compareTo(b['clientName']!);
-            break;
-          case 'Purchase Order Number':
+          }
+          break;
+        case 'Purchase Order Number':
+          // Extract numbers from PO numbers for proper numeric sorting
+          final numA = _extractNumberFromString(a['poNumber']!);
+          final numB = _extractNumberFromString(b['poNumber']!);
+          
+          // If both have numbers, sort numerically
+          if (numA != null && numB != null) {
+            comparison = numA.compareTo(numB);
+          } else {
+            // Fallback to string comparison
             comparison = a['poNumber']!.compareTo(b['poNumber']!);
-            break;
-          case 'Creation Date':
-            comparison = a['creationDate']!.compareTo(b['creationDate']!);
-            break;
-          case 'Net Price':
-            double priceA = double.tryParse(
-                  a['netPrice']!.replaceAll('\₱', '').replaceAll(',', '').replaceAll('₱', ''),
-                ) ??
-                0.0;
-            double priceB = double.tryParse(
-                  b['netPrice']!.replaceAll('\₱', '').replaceAll(',', '').replaceAll('₱', ''),
-                ) ??
-                0.0;
-            comparison = priceA.compareTo(priceB);
-            break;
-          default:
-            comparison = a['creationDate']!.compareTo(b['creationDate']!);
-            break;
-        }
+          }
+          break;
+        case 'Creation Date':
+          comparison = a['creationDate']!.compareTo(b['creationDate']!);
+          break;
+        case 'Net Price':
+          double priceA = double.tryParse(
+                a['netPrice']!.replaceAll('\₱', '').replaceAll(',', '').replaceAll('₱', ''),
+              ) ??
+              0.0;
+          double priceB = double.tryParse(
+                b['netPrice']!.replaceAll('\₱', '').replaceAll(',', '').replaceAll('₱', ''),
+              ) ??
+              0.0;
+          comparison = priceA.compareTo(priceB);
+          break;
+        default:
+          comparison = a['creationDate']!.compareTo(b['creationDate']!);
+          break;
+      }
 
-        return _selectedSortOrder == 'Descending' ? -comparison : comparison;
-      });
+      return _selectedSortOrder == 'Descending' ? -comparison : comparison;
     });
+  });
+}
+
+// Helper function to extract numbers from strings like "Client 1", "PO1000001", etc.
+int? _extractNumberFromString(String text) {
+  try {
+    // Find all sequences of digits
+    final matches = RegExp(r'\d+').allMatches(text);
+    if (matches.isNotEmpty) {
+      // Take the first number found
+      return int.parse(matches.first.group(0)!);
+    }
+  } catch (e) {
+    // If parsing fails, return null
   }
+  return null;
+}
 
-  void _showFilterDialog(BuildContext context) {
-    String dialogSortBy = _selectedSortBy;
-    String dialogSortOrder = _selectedSortOrder;
-
-    final renderBox =
-        _filterIconKey.currentContext?.findRenderObject() as RenderBox?;
-    if (renderBox == null) return;
-
-    final position = renderBox.localToGlobal(Offset.zero);
-    final double dialogTop = position.dy + renderBox.size.height + 10;
-    final double dialogLeft = position.dx - 200;
-
-    showDialog(
-      context: context,
-      barrierColor: Colors.transparent,
-      builder: (BuildContext context) {
-        return Stack(
-          children: [
-            Positioned.fill(
-              child: GestureDetector(
-                onTap: () => Navigator.of(context).pop(),
-                child: Container(color: Colors.transparent),
-              ),
-            ),
-            Positioned(
-              top: dialogTop,
-              left: dialogLeft,
-              child: StatefulBuilder(
-                builder: (context, setDialogState) {
-                  return Material(
-                    elevation: 10,
-                    borderRadius: BorderRadius.circular(12),
-                    child: Container(
-                      width: 300,
-                      padding: const EdgeInsets.all(20),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(12),
-                        border: Border.all(color: AppColors.darkGrayColor, width: 1),
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            width: double.infinity,
-                            padding: const EdgeInsets.all(12),
-                            decoration: BoxDecoration(
-                              color: AppColors.lightGrayColor,
-                              borderRadius: BorderRadius.circular(8),
-                              border: Border.all(color: AppColors.darkGrayColor, width: 1),
-                            ),
-                            child: Text(
-                              'Sort By',
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black,
-                              ),
-                            ),
-                          ),
-
-                          _buildRadioRow('Client Name', dialogSortBy, (value) {
-                            setDialogState(() => dialogSortBy = value!);
-                          }),
-                          _buildRadioRow('Purchase Order Number', dialogSortBy, (value) {
-                            setDialogState(() => dialogSortBy = value!);
-                          }),
-                          _buildRadioRow('Creation Date', dialogSortBy, (value) {
-                            setDialogState(() => dialogSortBy = value!);
-                          }),
-                          _buildRadioRow('Net Price', dialogSortBy, (value) {
-                            setDialogState(() => dialogSortBy = value!);
-                          }),
-
-                          const SizedBox(height: 20),
-
-                          Container(
-                            width: double.infinity,
-                            padding: const EdgeInsets.all(12),
-                            decoration: BoxDecoration(
-                              color: AppColors.lightGrayColor,
-                              borderRadius: BorderRadius.circular(8),
-                              border: Border.all(color: AppColors.darkGrayColor, width: 1),
-                            ),
-                            child: Text(
-                              'Sort Order',
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black,
-                              ),
-                            ),
-                          ),
-
-                          _buildRadioRow('Ascending', dialogSortOrder, (value) {
-                            setDialogState(() => dialogSortOrder = value!);
-                          }),
-                          _buildRadioRow('Descending', dialogSortOrder, (value) {
-                            setDialogState(() => dialogSortOrder = value!);
-                          }),
-
-                          const SizedBox(height: 20),
-
-                          SizedBox(
-                            width: double.infinity,
-                            child: CustomButtons.applyButton(
-                              context: context,
-                              onApply: () {
-                                setState(() {
-                                  _selectedSortBy = dialogSortBy;
-                                  _selectedSortOrder = dialogSortOrder;
-                                });
-                                _applySorting();
-                                Navigator.of(context).pop();
-                              },
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  );
-                },
-              ),
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-  Widget _buildRadioRow(String label, String groupValue, ValueChanged<String?> onChanged) {
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.symmetric(vertical: 12),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            label,
-            style: TextStyle(
-              fontSize: 14,
-              fontWeight: groupValue == label ? FontWeight.bold : FontWeight.normal,
-              color: Colors.black,
-            ),
-          ),
-          Radio<String>(
-            value: label,
-            groupValue: groupValue,
-            onChanged: onChanged,
-            activeColor: AppColors.primaryColor,
-          ),
-        ],
-      ),
-    );
-  }
+void _showFilterDialog(BuildContext context) {
+  SearchFilterDialog.showOrderFilterDialog(
+    context: context,
+    filterIconKey: _filterIconKey,
+    selectedSortBy: _selectedSortBy,
+    selectedSortOrder: _selectedSortOrder,
+    onApply: (sortBy, sortOrder) {
+      setState(() {
+        _selectedSortBy = sortBy;
+        _selectedSortOrder = sortOrder;
+      });
+      _applySorting();
+    },
+  );
+}
 
   void _showDeleteConfirmationDialog(String poNumber, String clientName) {
     String purchaseOrderNumber = '';
@@ -512,78 +406,15 @@ class _OrderListWidgetState extends State<OrderListWidget> {
         color: Colors.white,
         child: Column(
           children: [
-            // Search bar
-            Padding(
-              padding: const EdgeInsets.fromLTRB(25.0, 40.0, 25.0, 20.0),
-              child: Center(
-                child: Container(
-                  width: 700,
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: Container(
-                          height: 50,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(25),
-                            border: Border.all(color: AppColors.borderColor),
-                          ),
-                          child: Row(
-                            children: [
-                              const SizedBox(width: 16),
-                              const Icon(Icons.search, color: AppColors.grayColor, size: 20),
-                              const SizedBox(width: 12),
-                              Expanded(
-                                child: TextField(
-                                  controller: _searchController,
-                                  decoration: InputDecoration(
-                                    hintText: 'Search by PO number or client name...',
-                                    hintStyle: TextStyle(color: AppColors.grayColor),
-                                    border: InputBorder.none,
-                                    contentPadding: EdgeInsets.zero,
-                                  ),
-                                  style: const TextStyle(fontSize: 16, color: Colors.black),
-                                ),
-                              ),
-                              if (_showClearButton)
-                                MouseRegion(
-                                  cursor: SystemMouseCursors.click,
-                                  child: GestureDetector(
-                                    onTap: _clearSearch,
-                                    child: Container(
-                                      padding: const EdgeInsets.all(8),
-                                      margin: const EdgeInsets.only(right: 8),
-                                      child: const Icon(Icons.close, color: AppColors.grayColor, size: 18),
-                                    ),
-                                  ),
-                                ),
-                              const SizedBox(width: 8),
-                            ],
-                          ),
-                        ),
-                      ),
-                      const SizedBox(width: 12),
-                      Container(
-                        key: _filterIconKey,
-                        width: 50,
-                        height: 50,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(25),
-                          border: Border.all(color: AppColors.borderColor),
-                        ),
-                        child: Material(
-                          color: Colors.transparent,
-                          borderRadius: BorderRadius.circular(25),
-                          child: InkWell(
-                            onTap: () => _showFilterDialog(context),
-                            borderRadius: BorderRadius.circular(25),
-                            child: const Icon(Icons.filter_list, color: Colors.black, size: 24),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
+            // Search bar using reusable component
+            SearchBarWidget(
+              searchController: _searchController,
+              filterIconKey: _filterIconKey,
+              onFilterPressed: _showFilterDialog,
+              onClearSearch: _clearSearch,
+              hintText: 'Search by PO number or client name...',
+              showClearButton: _showClearButton,
+              width: 700,
             ),
 
             // Orders list
