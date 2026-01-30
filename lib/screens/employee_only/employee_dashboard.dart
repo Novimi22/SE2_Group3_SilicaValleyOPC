@@ -5,6 +5,7 @@ import 'package:draft_screens/constants/buttons/elevated_buttons.dart';
 import 'package:draft_screens/constants/buttons/text_buttons.dart';
 
 import '../histories/order_act_history.dart';
+import '../histories/doc_act_history/doc_act_searchpage.dart';
 import '../manage_order/gen_manage_order.dart';
 import '../track_order/track_order_searchpage.dart';
 import '../all_logins/signin_screen.dart';
@@ -25,7 +26,11 @@ class _EmployeeDashboardScreenState extends State<EmployeeDashboardScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBars.centeredAppBar(title: 'Employee Dashboard'),
+      appBar: CustomAppBars.defaultAppBar(
+        context: context,
+        title: 'Employee Dashboard',
+        navigationType: NavigationType.pop,
+      ),
       body: SafeArea(
         child: Container(
           width: double.infinity,
@@ -198,12 +203,10 @@ class _EmployeeDashboardScreenState extends State<EmployeeDashboardScreen> {
                               smallText: 'View',
                               largeText: 'Document Activity History',
                               onTap: () {
-                                // TODO: Correct navigation later
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                    content: Text(
-                                      'View Order Record History tile tapped',
-                                    ),
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const DoctActHisSearchPage(),
                                   ),
                                 );
                               },
@@ -412,7 +415,7 @@ class _EmployeeDashboardScreenState extends State<EmployeeDashboardScreen> {
                             // Automatically capitalize if user types in lowercase
                             String formattedValue = value;
                             if (value.toLowerCase().startsWith('po')) {
-                              formattedValue = 'PO' + value.substring(2);
+                              formattedValue = 'PO${value.substring(2)}';
                             }
 
                             setState(() {
@@ -426,7 +429,7 @@ class _EmployeeDashboardScreenState extends State<EmployeeDashboardScreen> {
                             // Format the value
                             String formattedValue = value;
                             if (value.toLowerCase().startsWith('po')) {
-                              formattedValue = 'PO' + value.substring(2);
+                              formattedValue = 'PO${value.substring(2)}';
                             }
 
                             // Update the state

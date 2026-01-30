@@ -46,8 +46,9 @@ class _CreatePasswordScreenState extends State<CreatePasswordScreen> {
     if (!RegExp(r'[a-z]').hasMatch(_newPasswordValue)) return false;
 
     // Check for at least one symbol
-    if (!RegExp(r'[!@#$%^&*(),.?":{}|<>]').hasMatch(_newPasswordValue))
+    if (!RegExp(r'[!@#$%^&*(),.?":{}|<>]').hasMatch(_newPasswordValue)) {
       return false;
+    }
 
     return true;
   }

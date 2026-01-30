@@ -53,7 +53,9 @@ class _CreateOrderFullScreenDialogState
   void dispose() {
     // Dispose all text controllers
     for (var controllers in controllersList) {
-      controllers.values.forEach((controller) => controller.dispose());
+      for (var controller in controllers.values) {
+        controller.dispose();
+      }
     }
     super.dispose();
   }
@@ -88,9 +90,9 @@ class _CreateOrderFullScreenDialogState
   void _deleteItem(int index) {
     setState(() {
       // Dispose controllers for this row
-      controllersList[index].values.forEach((controller) {
+      for (var controller in controllersList[index].values) {
         controller.dispose();
-      });
+      }
 
       // Remove item
       items.removeAt(index);
@@ -432,7 +434,7 @@ class _CreateOrderFullScreenDialogState
                       const SizedBox(height: 20),
 
                       // Table container with fixed width to prevent overflow
-                      Container(
+                      SizedBox(
                         width:
                             screenWidth -
                             50, // Account for padding on both sides

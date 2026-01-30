@@ -520,7 +520,7 @@ class _DocumentActivityHistoryScreenState
             Padding(
               padding: const EdgeInsets.fromLTRB(25.0, 40.0, 25.0, 20.0),
               child: Center(
-                child: Container(
+                child: SizedBox(
                   width: 700,
                   child: Row(
                     children: [
@@ -700,7 +700,7 @@ class _DocumentActivityHistoryScreenState
                               ],
                             ),
                           );
-                        }).toList(),
+                        }),
                       ],
                     ),
                   ),

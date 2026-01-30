@@ -3,11 +3,12 @@ import 'package:draft_screens/constants/colors.dart';
 import 'package:draft_screens/constants/app_bars.dart';
 import 'package:draft_screens/constants/buttons/text_buttons.dart';
 
-import 'package:draft_screens/screens/histories/order_act_history.dart';
-import 'package:draft_screens/screens/manage_order/gen_manage_order.dart';
-import 'package:draft_screens/screens/owner_only/approve_order.dart';
-import 'package:draft_screens/screens/track_order/track_order_searchpage.dart';
-import 'package:draft_screens/screens/all_logins/signin_screen.dart';
+import '../histories/doc_act_history/doc_act_searchpage.dart';
+import '../histories/order_act_history.dart';
+import '../manage_order/gen_manage_order.dart';
+import '../owner_only/approve_order.dart';
+import '../track_order/track_order_searchpage.dart';
+import '../all_logins/signin_screen.dart';
 
 class OwnerDashboardScreen extends StatefulWidget {
   const OwnerDashboardScreen({super.key});
@@ -202,12 +203,10 @@ class _OwnerDashboardScreenState extends State<OwnerDashboardScreen> {
                               smallText: 'View',
                               largeText: 'Document Activity History',
                               onTap: () {
-                                // TODO: add proper navigation later
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                    content: Text(
-                                      'View Order Record History tile tapped',
-                                    ),
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const DoctActHisSearchPage(),
                                   ),
                                 );
                               },

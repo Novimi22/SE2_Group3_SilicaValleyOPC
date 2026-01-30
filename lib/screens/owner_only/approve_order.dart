@@ -39,7 +39,7 @@ class _ApproveOrderScreenState extends State<ApproveOrderScreen> {
       'lastUpdated': '01/${(index + 10).toString().padLeft(2, '0')}/2024',
       'clientName': 'Client ${index + 1}',
       'creationDate': '01/${(index + 5).toString().padLeft(2, '0')}/2024',
-      'netPrice': '\₱${(index + 1) * 1000}.00',
+      'netPrice': '₱${(index + 1) * 1000}.00',
     };
   });
 
@@ -124,12 +124,12 @@ class _ApproveOrderScreenState extends State<ApproveOrderScreen> {
           case 'Net Price':
             double priceA =
                 double.tryParse(
-                  a['netPrice']!.replaceAll('\₱', '').replaceAll(',', ''),
+                  a['netPrice']!.replaceAll('₱', '').replaceAll(',', ''),
                 ) ??
                 0.0;
             double priceB =
                 double.tryParse(
-                  b['netPrice']!.replaceAll('\₱', '').replaceAll(',', ''),
+                  b['netPrice']!.replaceAll('₱', '').replaceAll(',', ''),
                 ) ??
                 0.0;
             comparison = priceA.compareTo(priceB);
@@ -663,7 +663,7 @@ class _ApproveOrderScreenState extends State<ApproveOrderScreen> {
             Padding(
               padding: const EdgeInsets.fromLTRB(25.0, 40.0, 25.0, 20.0),
               child: Center(
-                child: Container(
+                child: SizedBox(
                   width: 700,
                   child: Row(
                     children: [
@@ -1001,7 +1001,7 @@ class _ApproveOrderScreenState extends State<ApproveOrderScreen> {
                               ],
                             ),
                           );
-                        }).toList(),
+                        }),
 
                         // END indicator (outside the last tile)
                         if (_filteredOrders.isNotEmpty)

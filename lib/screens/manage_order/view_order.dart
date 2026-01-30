@@ -223,7 +223,7 @@ class _ViewOrderScreenState extends State<ViewOrderScreen> {
                     const SizedBox(height: 20),
 
                     // Table container 
-                    Container(
+                    SizedBox(
                       width: screenWidth - 50,
                       child: Column(
                         children: [

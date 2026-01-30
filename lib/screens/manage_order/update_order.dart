@@ -106,7 +106,9 @@ class _UpdateOrderScreenState extends State<UpdateOrderScreen> {
   void dispose() {
     // Dispose all text controllers
     for (var controllers in controllersList) {
-      controllers.values.forEach((controller) => controller.dispose());
+      for (var controller in controllers.values) {
+        controller.dispose();
+      }
     }
     super.dispose();
   }
@@ -400,9 +402,9 @@ class _UpdateOrderScreenState extends State<UpdateOrderScreen> {
         final index = _pendingActionIndex!;
         setState(() {
           // Dispose controllers for this row
-          controllersList[index].values.forEach((controller) {
+          for (var controller in controllersList[index].values) {
             controller.dispose();
-          });
+          }
 
           // Remove item
           items.removeAt(index);
@@ -682,7 +684,7 @@ class _UpdateOrderScreenState extends State<UpdateOrderScreen> {
                       const SizedBox(height: 20),
 
                       // Table container with fixed width to prevent overflow
-                      Container(
+                      SizedBox(
                         width: screenWidth - 50,
                         child: Column(
                           children: [

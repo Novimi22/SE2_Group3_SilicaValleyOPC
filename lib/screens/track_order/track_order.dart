@@ -5,7 +5,7 @@ import 'package:draft_screens/constants/buttons/elevated_buttons.dart';
 import 'package:draft_screens/constants/buttons/text_buttons.dart';
 
 import 'package:image_picker/image_picker.dart';
-import 'package:draft_screens/screens/histories/doc_act_history.dart';
+import 'package:draft_screens/screens/histories/doc_act_history/doc_act_history.dart';
 
 import 'dart:io';
 
@@ -53,7 +53,7 @@ class _TrackRecordScreenState extends State<TrackRecordScreen> {
 
   // Track miscellaneous documents
   int _miscellaneousCount = 1;
-  List<int> _miscellaneousIndices = []; // Store indices of miscellaneous docs
+  final List<int> _miscellaneousIndices = []; // Store indices of miscellaneous docs
 
   // Image picker
   final ImagePicker _picker = ImagePicker();
@@ -428,7 +428,7 @@ class _TrackRecordScreenState extends State<TrackRecordScreen> {
             Padding(
               padding: const EdgeInsets.fromLTRB(25.0, 40.0, 25.0, 20.0),
               child: Center(
-                child: Container(
+                child: SizedBox(
                   width: 700,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -536,7 +536,7 @@ class _TrackRecordScreenState extends State<TrackRecordScreen> {
                       const SizedBox(height: 20),
 
                       // Legends and Download Button row
-                      Container(
+                      SizedBox(
                         width: double.infinity,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
