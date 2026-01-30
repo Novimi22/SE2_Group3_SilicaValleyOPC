@@ -196,7 +196,7 @@ class _EmployeeDashboardScreenState extends State<EmployeeDashboardScreen> {
                             child: _buildDashboardTile(
                               imagePath: 'assets/images/history.png',
                               smallText: 'View',
-                              largeText: 'Order Record History',
+                              largeText: 'Document Activity History',
                               onTap: () {
                                 // TODO: Correct navigation later
                                 ScaffoldMessenger.of(context).showSnackBar(

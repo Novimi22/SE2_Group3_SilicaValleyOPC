@@ -667,9 +667,7 @@ class _CreateEmployeeDialogState extends State<CreateEmployeeDialog> {
                     email: emailController.text,
                     middleInitial: middleInitialController.text,
                     onEmployeeCreated: (newEmployee) {
-                      // Call the original callback
                       widget.onEmployeeCreated(newEmployee);
-                      // Then close the dialog
                       Navigator.of(context).pop();
                     },
                     onFormError: (hasError) {

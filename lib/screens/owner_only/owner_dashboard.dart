@@ -200,7 +200,7 @@ class _OwnerDashboardScreenState extends State<OwnerDashboardScreen> {
                             child: _buildDashboardTile(
                               imagePath: 'assets/images/history.png',
                               smallText: 'View',
-                              largeText: 'Order Record History',
+                              largeText: 'Document Activity History',
                               onTap: () {
                                 // TODO: add proper navigation later
                                 ScaffoldMessenger.of(context).showSnackBar(
