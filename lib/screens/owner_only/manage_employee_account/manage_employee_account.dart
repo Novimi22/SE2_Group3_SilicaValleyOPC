@@ -666,7 +666,12 @@ class _CreateEmployeeDialogState extends State<CreateEmployeeDialog> {
                     lastName: lastNameController.text,
                     email: emailController.text,
                     middleInitial: middleInitialController.text,
-                    onEmployeeCreated: widget.onEmployeeCreated,
+                    onEmployeeCreated: (newEmployee) {
+                      // Call the original callback
+                      widget.onEmployeeCreated(newEmployee);
+                      // Then close the dialog
+                      Navigator.of(context).pop();
+                    },
                     onFormError: (hasError) {
                       setState(() {
                         showFormError = hasError;
