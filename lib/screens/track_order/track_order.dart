@@ -412,8 +412,7 @@ class _TrackRecordScreenState extends State<TrackRecordScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
+    return Scaffold(
       appBar: CustomAppBars.defaultAppBar(
         context: context,
         title: 'Track Order Record',
@@ -1068,7 +1067,6 @@ class _TrackRecordScreenState extends State<TrackRecordScreen> {
           ],
         ),
       ),
-    )
     );
   }
 
