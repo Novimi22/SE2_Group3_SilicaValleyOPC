@@ -22,9 +22,6 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   // Hardcoded correct email
   static const String _correctEmail = 'employee@gmail.com';
 
-  // Check if email field has text
-  bool get _isSendEnabled => _emailValue.isNotEmpty;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

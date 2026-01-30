@@ -4,8 +4,6 @@ import 'package:draft_screens/constants/app_bars.dart';
 import 'package:draft_screens/constants/buttons/elevated_buttons.dart';
 import 'package:draft_screens/constants/buttons/text_buttons.dart';
 
-import 'package:draft_screens/screens/manage_order/view_order.dart';
-
 class ApproveOrderScreen extends StatefulWidget {
   const ApproveOrderScreen({super.key});
 
@@ -14,9 +12,7 @@ class ApproveOrderScreen extends StatefulWidget {
 }
 
 class _ApproveOrderScreenState extends State<ApproveOrderScreen> {
-  // For Approve and Reject buttons
-  static const Color greenColor = Color(0xFF2E7D42);
-  static const Color redColor = Color(0xFFB71B1B);
+
   static const Color snackbarGreenColor = Color(0xFF4CAF50);
 
   // Filter state
