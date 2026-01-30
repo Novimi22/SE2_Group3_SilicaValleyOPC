@@ -783,16 +783,38 @@ class _TrackRecordScreenState extends State<TrackRecordScreen> {
                                                   const SizedBox(height: 8),
 
                                                   // Show "Last updated: MM/DD/YYYY" only if date is set
-                                                  Text(
-                                                    _lastUpdatedDates[index] !=
-                                                            null
-                                                        ? 'Last updated: ${_lastUpdatedDates[index]}'
-                                                        : '', // Blank initially
-                                                    style: TextStyle(
-                                                      fontSize: 14,
-                                                      color: AppColors.grayColor,
-                                                    ),
-                                                  ),
+                                                  if (_lastUpdatedDates[index] !=
+                                                      null)
+                                                    Column(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        // Uploaded by row
+                                                        Text(
+                                                          'Uploaded by: [name]', // Hardcoded placeholder name
+                                                          style: TextStyle(
+                                                            fontSize: 14,
+                                                            color: AppColors
+                                                                .grayColor,
+                                                          ),
+                                                        ),
+                                                        const SizedBox(
+                                                          height: 4,
+                                                        ),
+                                                        // Last updated row
+                                                        Text(
+                                                          'Last updated: ${_lastUpdatedDates[index]}',
+                                                          style: TextStyle(
+                                                            fontSize: 14,
+                                                            color: AppColors
+                                                                .grayColor,
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    )
+                                                  else
+                                                    Container(),
                                                 ],
                                               ),
                                             ),
