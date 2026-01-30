@@ -516,7 +516,7 @@ class _DocumentActivityHistoryScreenState
         color: Colors.white,
         child: Column(
           children: [
-            // Search bar section (fixed at top)
+            // Search bar section
             Padding(
               padding: const EdgeInsets.fromLTRB(25.0, 40.0, 25.0, 20.0),
               child: Center(

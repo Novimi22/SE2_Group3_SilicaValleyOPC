@@ -40,10 +40,9 @@ class TORSearchPage extends StatelessWidget {
         );
       },
       initialOrders: orders,
-      showDeleteOption: true,
+      /*showDeleteOption: true,
       onDelete: (poNumber, clientName) {
-        // Your delete logic if needed
-      },
+      },*/
     );
   }
 }

@@ -1,4 +1,3 @@
-// search_bar.dart
 import 'package:flutter/material.dart';
 import 'package:draft_screens/constants/colors.dart';
 

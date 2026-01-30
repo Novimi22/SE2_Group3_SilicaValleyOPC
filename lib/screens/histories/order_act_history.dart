@@ -28,7 +28,7 @@ class _OrderActivityHistoryScreenState
   // Track search input for clear button visibility
   bool _showClearButton = false;
 
-  // Original sample data for activity history
+  // sample data
   final List<Map<String, String>> _allActivityHistory = List.generate(15, (
     index,
   ) {
@@ -235,7 +235,7 @@ void _showFilterDialog(BuildContext context) {
         color: Colors.white,
         child: Column(
           children: [
-            // Search bar section (fixed at top) - Using reusable component
+            // Search bar section 
             SearchBarWidget(
               searchController: _searchController,
               filterIconKey: _filterIconKey,
