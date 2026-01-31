@@ -12,62 +12,63 @@ class OwnerLandingPage extends StatefulWidget {
 }
 
 class _OwnerLandingPageState extends State<OwnerLandingPage> {
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Column(
-          children: [
-            // Top section with background image
-            Container(
-              height: 200, 
-              width: double.infinity, // Takes full available width
-              decoration: const BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage('assets/images/bg2.png'),
-                  fit: BoxFit.cover, // image cover the entire container
-                ),
-              ),
-            ),
-
-            // White container
-            // Expanded makes this widget take all available vertical space
-            Expanded(
-              child: Material(
-                borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(40.0),
-                  topRight: Radius.circular(40.0),
-                ),
-                color: Colors.white,
-                clipBehavior: Clip.antiAlias,
-                child: SizedBox(
-                  width:
-                      double.infinity, // This makes it expand to screen width
-                  child: LayoutBuilder(
-                    builder: (context, constraints) {
-                      return SingleChildScrollView(
-                        child: ConstrainedBox(
-                          constraints: BoxConstraints(
-                            minHeight: constraints.maxHeight,
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.fromLTRB(
-                              25.0,
-                              40.0,
-                              25.0,
-                              20.0,
-                            ),
-                            child: _buildTilesContent(constraints.maxHeight),
-                          ),
-                        ),
-                      );
-                    },
+    return SafeArea(
+      child: Scaffold(
+        body: SafeArea(
+          child: Column(
+            children: [
+              // Top section with background image
+              Container(
+                height: 200,
+                width: double.infinity, // Takes full available width
+                decoration: const BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage('assets/images/bg2.png'),
+                    fit: BoxFit.cover, // image cover the entire container
                   ),
                 ),
               ),
-            ),
-          ],
+
+              // White container
+              // Expanded makes this widget take all available vertical space
+              Expanded(
+                child: Material(
+                  borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(40.0),
+                    topRight: Radius.circular(40.0),
+                  ),
+                  color: Colors.white,
+                  clipBehavior: Clip.antiAlias,
+                  child: SizedBox(
+                    width:
+                        double.infinity, // This makes it expand to screen width
+                    child: LayoutBuilder(
+                      builder: (context, constraints) {
+                        return SingleChildScrollView(
+                          child: ConstrainedBox(
+                            constraints: BoxConstraints(
+                              minHeight: constraints.maxHeight,
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.fromLTRB(
+                                25.0,
+                                40.0,
+                                25.0,
+                                20.0,
+                              ),
+                              child: _buildTilesContent(constraints.maxHeight),
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -102,12 +103,12 @@ class _OwnerLandingPageState extends State<OwnerLandingPage> {
           // First tile - Manage Employee Account
           GestureDetector(
             onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const ManageEmployeeAccountScreen(),
-                      ),
-                    );
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const ManageEmployeeAccountScreen(),
+                ),
+              );
             },
             child: Container(
               width: 700,

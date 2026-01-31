@@ -479,165 +479,69 @@ class _UpdateOrderScreenState extends State<UpdateOrderScreen> {
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
 
-    return Scaffold(
-      appBar: CustomAppBars.closeOnlyAppBar(
-        context: context,
-        title: 'Update Order',
-      ),
-      body: SafeArea(
-        child: GestureDetector(
-          onTap: () {
-            // Save all editing rows when tapping outside the table area
-            FocusScope.of(context).unfocus(); // Also hide keyboard
-            for (int i = 0; i < items.length; i++) {
-              if (isEditingList[i]) {
-                _handleEditConfirmation(i);
-                break; // Only handle first editing row
+    return SafeArea(
+      child: Scaffold(
+        appBar: CustomAppBars.closeOnlyAppBar(
+          context: context,
+          title: 'Update Order',
+        ),
+        body: SafeArea(
+          child: GestureDetector(
+            onTap: () {
+              // Save all editing rows when tapping outside the table area
+              FocusScope.of(context).unfocus(); // Also hide keyboard
+              for (int i = 0; i < items.length; i++) {
+                if (isEditingList[i]) {
+                  _handleEditConfirmation(i);
+                  break; // Only handle first editing row
+                }
               }
-            }
-          },
-          behavior: HitTestBehavior.opaque,
-          child: SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(25.0, 40.0, 25.0, 20.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // Purchase Order Number section
-                  Text(
-                    'Purchase Order Number:',
-                    style: TextStyle(fontSize: 14, color: AppColors.grayColor),
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    widget.purchaseOrderNumber,
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
-                    ),
-                  ),
-
-                  const SizedBox(height: 30),
-
-                  // Customer Information box
-                  Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.all(20),
-                    decoration: BoxDecoration(
-                      color: AppColors.infoBoxColor,
-                      borderRadius: BorderRadius.circular(10),
-                      border: Border.all(
-                        color: AppColors.borderColor,
-                        width: 1,
+            },
+            behavior: HitTestBehavior.opaque,
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(25.0, 40.0, 25.0, 20.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // Purchase Order Number section
+                    Text(
+                      'Purchase Order Number:',
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: AppColors.grayColor,
                       ),
                     ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        // Customer Information header
-                        Text(
-                          'Customer Information',
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: AppColors.primaryColor,
-                          ),
-                        ),
-
-                        const SizedBox(height: 20),
-
-                        // Name row
-                        RichText(
-                          text: TextSpan(
-                            children: [
-                              TextSpan(
-                                text: 'Name: ',
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black,
-                                ),
-                              ),
-                              TextSpan(
-                                text: widget.customerName,
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.normal,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-
-                        const SizedBox(height: 12),
-
-                        // Creation Date row
-                        RichText(
-                          text: TextSpan(
-                            children: [
-                              TextSpan(
-                                text: 'Creation Date: ',
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black,
-                                ),
-                              ),
-                              TextSpan(
-                                text: widget.creationDate,
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.normal,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-
-                        const SizedBox(height: 12),
-
-                        // Net Price row
-                        RichText(
-                          text: TextSpan(
-                            children: [
-                              TextSpan(
-                                text: 'Net Price: ',
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                  color: AppColors.tableHeaderColor,
-                                ),
-                              ),
-                              TextSpan(
-                                text: '₱${currentNetPrice.toStringAsFixed(2)}',
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  color: AppColors.tableHeaderColor,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
+                    const SizedBox(height: 8),
+                    Text(
+                      widget.purchaseOrderNumber,
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
                     ),
-                  ),
 
-                  const SizedBox(height: 30),
+                    const SizedBox(height: 30),
 
-                  // Order Details section
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      // Order Details header
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    // Customer Information box
+                    Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.all(20),
+                      decoration: BoxDecoration(
+                        color: AppColors.infoBoxColor,
+                        borderRadius: BorderRadius.circular(10),
+                        border: Border.all(
+                          color: AppColors.borderColor,
+                          width: 1,
+                        ),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          // Customer Information header
                           Text(
-                            'Order Details',
+                            'Customer Information',
                             style: TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
@@ -645,433 +549,546 @@ class _UpdateOrderScreenState extends State<UpdateOrderScreen> {
                             ),
                           ),
 
-                          // Add Item button
-                          Material(
-                            color: AppColors.primaryColor,
-                            borderRadius: BorderRadius.circular(8),
-                            child: InkWell(
-                              onTap: _prepareAddItem,
-                              borderRadius: BorderRadius.circular(8),
-                              child: Container(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 10,
-                                  vertical: 6,
+                          const SizedBox(height: 20),
+
+                          // Name row
+                          RichText(
+                            text: TextSpan(
+                              children: [
+                                TextSpan(
+                                  text: 'Name: ',
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                  ),
                                 ),
-                                child: Row(
-                                  children: [
-                                    const Icon(
-                                      Icons.add,
-                                      size: 20,
-                                      color: Colors.white,
-                                    ),
-                                    const SizedBox(width: 8),
-                                    Text(
-                                      'Add Item',
-                                      style: TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w600,
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                  ],
+                                TextSpan(
+                                  text: widget.customerName,
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.normal,
+                                  ),
                                 ),
-                              ),
+                              ],
+                            ),
+                          ),
+
+                          const SizedBox(height: 12),
+
+                          // Creation Date row
+                          RichText(
+                            text: TextSpan(
+                              children: [
+                                TextSpan(
+                                  text: 'Creation Date: ',
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                                TextSpan(
+                                  text: widget.creationDate,
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.normal,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+
+                          const SizedBox(height: 12),
+
+                          // Net Price row
+                          RichText(
+                            text: TextSpan(
+                              children: [
+                                TextSpan(
+                                  text: 'Net Price: ',
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                    color: AppColors.tableHeaderColor,
+                                  ),
+                                ),
+                                TextSpan(
+                                  text:
+                                      '₱${currentNetPrice.toStringAsFixed(2)}',
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    color: AppColors.tableHeaderColor,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ],
                       ),
+                    ),
 
-                      const SizedBox(height: 20),
+                    const SizedBox(height: 30),
 
-                      // Table container with fixed width to prevent overflow
-                      SizedBox(
-                        width: screenWidth - 50,
-                        child: Column(
+                    // Order Details section
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        // Order Details header
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            // Table headers
-                            if (items.isNotEmpty)
-                              Container(
-                                decoration: BoxDecoration(
-                                  border: Border.all(
-                                    color: AppColors.borderColor,
+                            Text(
+                              'Order Details',
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                color: AppColors.primaryColor,
+                              ),
+                            ),
+
+                            // Add Item button
+                            Material(
+                              color: AppColors.primaryColor,
+                              borderRadius: BorderRadius.circular(8),
+                              child: InkWell(
+                                onTap: _prepareAddItem,
+                                borderRadius: BorderRadius.circular(8),
+                                child: Container(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 10,
+                                    vertical: 6,
                                   ),
-                                ),
-                                child: Table(
-                                  columnWidths: {
-                                    0: FlexColumnWidth(2.5), // Name
-                                    1: FlexColumnWidth(0.8), // Qty
-                                    2: FlexColumnWidth(0.8), // UoM
-                                    3: FlexColumnWidth(1.2), // Unit Price
-                                    4: FixedColumnWidth(80), // Actions
-                                  },
-                                  defaultVerticalAlignment:
-                                      TableCellVerticalAlignment.middle,
-                                  children: [
-                                    TableRow(
-                                      decoration: BoxDecoration(
-                                        color: Colors.grey[100],
+                                  child: Row(
+                                    children: [
+                                      const Icon(
+                                        Icons.add,
+                                        size: 20,
+                                        color: Colors.white,
                                       ),
-                                      children: [
-                                        _buildTableHeaderCell(
-                                          'Name',
-                                          compact: true,
+                                      const SizedBox(width: 8),
+                                      Text(
+                                        'Add Item',
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w600,
+                                          color: Colors.white,
                                         ),
-                                        _buildTableHeaderCell(
-                                          'Qty',
-                                          compact: true,
-                                        ),
-                                        _buildTableHeaderCell(
-                                          'UoM',
-                                          compact: true,
-                                        ),
-                                        _buildTableHeaderCell(
-                                          'Unit Price',
-                                          compact: true,
-                                        ),
-                                        _buildTableHeaderCell(
-                                          'Actions',
-                                          compact: true,
-                                        ),
-                                      ],
-                                    ),
-                                  ],
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
+                            ),
+                          ],
+                        ),
 
-                            // Table rows
-                            if (items.isNotEmpty)
-                              Container(
-                                decoration: BoxDecoration(
-                                  border: Border(
-                                    left: BorderSide(
-                                      color: AppColors.borderColor,
-                                    ),
-                                    right: BorderSide(
-                                      color: AppColors.borderColor,
-                                    ),
-                                    bottom: BorderSide(
+                        const SizedBox(height: 20),
+
+                        // Table container with fixed width to prevent overflow
+                        SizedBox(
+                          width: screenWidth - 50,
+                          child: Column(
+                            children: [
+                              // Table headers
+                              if (items.isNotEmpty)
+                                Container(
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
                                       color: AppColors.borderColor,
                                     ),
                                   ),
-                                ),
-                                child: Column(
-                                  children: items.asMap().entries.map((entry) {
-                                    final index = entry.key;
-                                    final item = entry.value;
-                                    final isEditing = isEditingList[index];
-                                    final controllers = controllersList[index];
-
-                                    return Container(
-                                      decoration: BoxDecoration(
-                                        border: index > 0
-                                            ? const Border(
-                                                top: BorderSide(
-                                                  color: Color(0xFFD0D0D0),
-                                                ),
-                                              )
-                                            : null,
-                                      ),
-                                      child: Table(
-                                        columnWidths: {
-                                          0: FlexColumnWidth(2.5), // Name
-                                          1: FlexColumnWidth(0.8), // Qty
-                                          2: FlexColumnWidth(0.8), // UoM
-                                          3: FlexColumnWidth(1.2), // Unit Price
-                                          4: FixedColumnWidth(80), // Actions
-                                        },
-                                        defaultVerticalAlignment:
-                                            TableCellVerticalAlignment.middle,
+                                  child: Table(
+                                    columnWidths: {
+                                      0: FlexColumnWidth(2.5), // Name
+                                      1: FlexColumnWidth(0.8), // Qty
+                                      2: FlexColumnWidth(0.8), // UoM
+                                      3: FlexColumnWidth(1.2), // Unit Price
+                                      4: FixedColumnWidth(80), // Actions
+                                    },
+                                    defaultVerticalAlignment:
+                                        TableCellVerticalAlignment.middle,
+                                    children: [
+                                      TableRow(
+                                        decoration: BoxDecoration(
+                                          color: Colors.grey[100],
+                                        ),
                                         children: [
-                                          TableRow(
-                                            children: [
-                                              // Name cell
-                                              Padding(
-                                                padding: const EdgeInsets.all(
-                                                  8,
-                                                ),
-                                                child: isEditing
-                                                    ? TextField(
-                                                        controller:
-                                                            controllers['name'],
-                                                        decoration:
-                                                            const InputDecoration(
-                                                              hintText:
-                                                                  'Enter item name',
-                                                              hintStyle:
-                                                                  TextStyle(
-                                                                    color: Colors
-                                                                        .grey,
-                                                                  ),
-                                                              border:
-                                                                  InputBorder
-                                                                      .none,
-                                                              contentPadding:
-                                                                  EdgeInsets
-                                                                      .zero,
-                                                            ),
-                                                        style: TextStyle(
-                                                          fontSize: 14,
-                                                          color: Colors.black,
-                                                        ),
-                                                        onSubmitted: (_) {
-                                                          _handleEditConfirmation(
-                                                            index,
-                                                          );
-                                                        },
-                                                      )
-                                                    : Text(
-                                                        item['name']
-                                                                ?.toString() ??
-                                                            '',
-                                                        style: TextStyle(
-                                                          fontSize: 14,
-                                                          color: Colors.black,
-                                                        ),
-                                                      ),
-                                              ),
-
-                                              // Qty cell
-                                              Padding(
-                                                padding: const EdgeInsets.all(
-                                                  8,
-                                                ),
-                                                child: isEditing
-                                                    ? TextField(
-                                                        controller:
-                                                            controllers['qty'],
-                                                        keyboardType:
-                                                            TextInputType.numberWithOptions(
-                                                              decimal: true,
-                                                            ),
-                                                        decoration:
-                                                            const InputDecoration(
-                                                              hintText: 'Qty',
-                                                              hintStyle:
-                                                                  TextStyle(
-                                                                    color: Colors
-                                                                        .grey,
-                                                                  ),
-                                                              border:
-                                                                  InputBorder
-                                                                      .none,
-                                                              contentPadding:
-                                                                  EdgeInsets
-                                                                      .zero,
-                                                            ),
-                                                        style: TextStyle(
-                                                          fontSize: 14,
-                                                          color: Colors.black,
-                                                        ),
-                                                        onChanged: (_) {
-                                                          _calculateNetPrice();
-                                                        },
-                                                        onSubmitted: (_) {
-                                                          _handleEditConfirmation(
-                                                            index,
-                                                          );
-                                                        },
-                                                      )
-                                                    : Text(
-                                                        item['qty']
-                                                                ?.toString() ??
-                                                            '',
-                                                        style: TextStyle(
-                                                          fontSize: 14,
-                                                          color: Colors.black,
-                                                        ),
-                                                      ),
-                                              ),
-
-                                              // UoM cell
-                                              Padding(
-                                                padding: const EdgeInsets.all(
-                                                  8,
-                                                ),
-                                                child: isEditing
-                                                    ? TextField(
-                                                        controller:
-                                                            controllers['uom'],
-                                                        decoration:
-                                                            const InputDecoration(
-                                                              hintText: 'UoM',
-                                                              hintStyle:
-                                                                  TextStyle(
-                                                                    color: Colors
-                                                                        .grey,
-                                                                  ),
-                                                              border:
-                                                                  InputBorder
-                                                                      .none,
-                                                              contentPadding:
-                                                                  EdgeInsets
-                                                                      .zero,
-                                                            ),
-                                                        style: TextStyle(
-                                                          fontSize: 14,
-                                                          color: Colors.black,
-                                                        ),
-                                                        onSubmitted: (_) {
-                                                          _handleEditConfirmation(
-                                                            index,
-                                                          );
-                                                        },
-                                                      )
-                                                    : Text(
-                                                        item['uom']
-                                                                ?.toString() ??
-                                                            '',
-                                                        style: TextStyle(
-                                                          fontSize: 14,
-                                                          color: Colors.black,
-                                                        ),
-                                                      ),
-                                              ),
-
-                                              // Unit Price cell
-                                              Padding(
-                                                padding: const EdgeInsets.all(
-                                                  8,
-                                                ),
-                                                child: isEditing
-                                                    ? TextField(
-                                                        controller:
-                                                            controllers['unitPrice'],
-                                                        keyboardType:
-                                                            TextInputType.numberWithOptions(
-                                                              decimal: true,
-                                                            ),
-                                                        decoration:
-                                                            const InputDecoration(
-                                                              hintText: 'Price',
-                                                              hintStyle:
-                                                                  TextStyle(
-                                                                    color: Colors
-                                                                        .grey,
-                                                                  ),
-                                                              border:
-                                                                  InputBorder
-                                                                      .none,
-                                                              contentPadding:
-                                                                  EdgeInsets
-                                                                      .zero,
-                                                            ),
-                                                        style: TextStyle(
-                                                          fontSize: 14,
-                                                          color: Colors.black,
-                                                        ),
-                                                        onChanged: (_) {
-                                                          _calculateNetPrice();
-                                                        },
-                                                        onSubmitted: (_) {
-                                                          _handleEditConfirmation(
-                                                            index,
-                                                          );
-                                                        },
-                                                      )
-                                                    : Text(
-                                                        item['unitPrice']
-                                                                ?.toString() ??
-                                                            '',
-                                                        style: TextStyle(
-                                                          fontSize: 14,
-                                                          color: Colors.black,
-                                                        ),
-                                                      ),
-                                              ),
-
-                                              // Actions cell
-                                              Padding(
-                                                padding: const EdgeInsets.all(
-                                                  8,
-                                                ),
-                                                child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.center,
-                                                  children: [
-                                                    // Pencil icon - disabled when editing, enabled when saved
-                                                    IconButton(
-                                                      onPressed: isEditing
-                                                          ? null // Disabled during editing
-                                                          : () {
-                                                              _editItem(index);
-                                                            },
-                                                      icon: Icon(
-                                                        Icons.edit,
-                                                        color: isEditing
-                                                            ? AppColors
-                                                                  .iconGrayColor
-                                                                  .withOpacity(
-                                                                    0.3,
-                                                                  )
-                                                            : AppColors
-                                                                  .iconGrayColor,
-                                                        size: 18,
-                                                      ),
-                                                      padding: EdgeInsets.zero,
-                                                      constraints:
-                                                          const BoxConstraints(
-                                                            minWidth: 24,
-                                                            minHeight: 24,
-                                                          ),
-                                                    ),
-
-                                                    const SizedBox(width: 4),
-
-                                                    // Trash bin icon (always enabled)
-                                                    IconButton(
-                                                      onPressed: () {
-                                                        _deleteItem(index);
-                                                      },
-                                                      icon: Icon(
-                                                        Icons.delete_outline,
-                                                        color: AppColors
-                                                            .iconGrayColor,
-                                                        size: 18,
-                                                      ),
-                                                      padding: EdgeInsets.zero,
-                                                      constraints:
-                                                          const BoxConstraints(
-                                                            minWidth: 24,
-                                                            minHeight: 24,
-                                                          ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            ],
+                                          _buildTableHeaderCell(
+                                            'Name',
+                                            compact: true,
+                                          ),
+                                          _buildTableHeaderCell(
+                                            'Qty',
+                                            compact: true,
+                                          ),
+                                          _buildTableHeaderCell(
+                                            'UoM',
+                                            compact: true,
+                                          ),
+                                          _buildTableHeaderCell(
+                                            'Unit Price',
+                                            compact: true,
+                                          ),
+                                          _buildTableHeaderCell(
+                                            'Actions',
+                                            compact: true,
                                           ),
                                         ],
                                       ),
-                                    );
-                                  }).toList(),
+                                    ],
+                                  ),
                                 ),
-                              ),
 
-                            // Empty state message
-                            if (items.isEmpty)
-                              Container(
-                                padding: const EdgeInsets.all(40),
-                                width: double.infinity,
-                                decoration: BoxDecoration(
-                                  border: Border.all(
-                                    color: AppColors.borderColor,
+                              // Table rows
+                              if (items.isNotEmpty)
+                                Container(
+                                  decoration: BoxDecoration(
+                                    border: Border(
+                                      left: BorderSide(
+                                        color: AppColors.borderColor,
+                                      ),
+                                      right: BorderSide(
+                                        color: AppColors.borderColor,
+                                      ),
+                                      bottom: BorderSide(
+                                        color: AppColors.borderColor,
+                                      ),
+                                    ),
+                                  ),
+                                  child: Column(
+                                    children: items.asMap().entries.map((
+                                      entry,
+                                    ) {
+                                      final index = entry.key;
+                                      final item = entry.value;
+                                      final isEditing = isEditingList[index];
+                                      final controllers =
+                                          controllersList[index];
+
+                                      return Container(
+                                        decoration: BoxDecoration(
+                                          border: index > 0
+                                              ? const Border(
+                                                  top: BorderSide(
+                                                    color: Color(0xFFD0D0D0),
+                                                  ),
+                                                )
+                                              : null,
+                                        ),
+                                        child: Table(
+                                          columnWidths: {
+                                            0: FlexColumnWidth(2.5), // Name
+                                            1: FlexColumnWidth(0.8), // Qty
+                                            2: FlexColumnWidth(0.8), // UoM
+                                            3: FlexColumnWidth(
+                                              1.2,
+                                            ), // Unit Price
+                                            4: FixedColumnWidth(80), // Actions
+                                          },
+                                          defaultVerticalAlignment:
+                                              TableCellVerticalAlignment.middle,
+                                          children: [
+                                            TableRow(
+                                              children: [
+                                                // Name cell
+                                                Padding(
+                                                  padding: const EdgeInsets.all(
+                                                    8,
+                                                  ),
+                                                  child: isEditing
+                                                      ? TextField(
+                                                          controller:
+                                                              controllers['name'],
+                                                          decoration:
+                                                              const InputDecoration(
+                                                                hintText:
+                                                                    'Enter item name',
+                                                                hintStyle:
+                                                                    TextStyle(
+                                                                      color: Colors
+                                                                          .grey,
+                                                                    ),
+                                                                border:
+                                                                    InputBorder
+                                                                        .none,
+                                                                contentPadding:
+                                                                    EdgeInsets
+                                                                        .zero,
+                                                              ),
+                                                          style: TextStyle(
+                                                            fontSize: 14,
+                                                            color: Colors.black,
+                                                          ),
+                                                          onSubmitted: (_) {
+                                                            _handleEditConfirmation(
+                                                              index,
+                                                            );
+                                                          },
+                                                        )
+                                                      : Text(
+                                                          item['name']
+                                                                  ?.toString() ??
+                                                              '',
+                                                          style: TextStyle(
+                                                            fontSize: 14,
+                                                            color: Colors.black,
+                                                          ),
+                                                        ),
+                                                ),
+
+                                                // Qty cell
+                                                Padding(
+                                                  padding: const EdgeInsets.all(
+                                                    8,
+                                                  ),
+                                                  child: isEditing
+                                                      ? TextField(
+                                                          controller:
+                                                              controllers['qty'],
+                                                          keyboardType:
+                                                              TextInputType.numberWithOptions(
+                                                                decimal: true,
+                                                              ),
+                                                          decoration:
+                                                              const InputDecoration(
+                                                                hintText: 'Qty',
+                                                                hintStyle:
+                                                                    TextStyle(
+                                                                      color: Colors
+                                                                          .grey,
+                                                                    ),
+                                                                border:
+                                                                    InputBorder
+                                                                        .none,
+                                                                contentPadding:
+                                                                    EdgeInsets
+                                                                        .zero,
+                                                              ),
+                                                          style: TextStyle(
+                                                            fontSize: 14,
+                                                            color: Colors.black,
+                                                          ),
+                                                          onChanged: (_) {
+                                                            _calculateNetPrice();
+                                                          },
+                                                          onSubmitted: (_) {
+                                                            _handleEditConfirmation(
+                                                              index,
+                                                            );
+                                                          },
+                                                        )
+                                                      : Text(
+                                                          item['qty']
+                                                                  ?.toString() ??
+                                                              '',
+                                                          style: TextStyle(
+                                                            fontSize: 14,
+                                                            color: Colors.black,
+                                                          ),
+                                                        ),
+                                                ),
+
+                                                // UoM cell
+                                                Padding(
+                                                  padding: const EdgeInsets.all(
+                                                    8,
+                                                  ),
+                                                  child: isEditing
+                                                      ? TextField(
+                                                          controller:
+                                                              controllers['uom'],
+                                                          decoration:
+                                                              const InputDecoration(
+                                                                hintText: 'UoM',
+                                                                hintStyle:
+                                                                    TextStyle(
+                                                                      color: Colors
+                                                                          .grey,
+                                                                    ),
+                                                                border:
+                                                                    InputBorder
+                                                                        .none,
+                                                                contentPadding:
+                                                                    EdgeInsets
+                                                                        .zero,
+                                                              ),
+                                                          style: TextStyle(
+                                                            fontSize: 14,
+                                                            color: Colors.black,
+                                                          ),
+                                                          onSubmitted: (_) {
+                                                            _handleEditConfirmation(
+                                                              index,
+                                                            );
+                                                          },
+                                                        )
+                                                      : Text(
+                                                          item['uom']
+                                                                  ?.toString() ??
+                                                              '',
+                                                          style: TextStyle(
+                                                            fontSize: 14,
+                                                            color: Colors.black,
+                                                          ),
+                                                        ),
+                                                ),
+
+                                                // Unit Price cell
+                                                Padding(
+                                                  padding: const EdgeInsets.all(
+                                                    8,
+                                                  ),
+                                                  child: isEditing
+                                                      ? TextField(
+                                                          controller:
+                                                              controllers['unitPrice'],
+                                                          keyboardType:
+                                                              TextInputType.numberWithOptions(
+                                                                decimal: true,
+                                                              ),
+                                                          decoration:
+                                                              const InputDecoration(
+                                                                hintText:
+                                                                    'Price',
+                                                                hintStyle:
+                                                                    TextStyle(
+                                                                      color: Colors
+                                                                          .grey,
+                                                                    ),
+                                                                border:
+                                                                    InputBorder
+                                                                        .none,
+                                                                contentPadding:
+                                                                    EdgeInsets
+                                                                        .zero,
+                                                              ),
+                                                          style: TextStyle(
+                                                            fontSize: 14,
+                                                            color: Colors.black,
+                                                          ),
+                                                          onChanged: (_) {
+                                                            _calculateNetPrice();
+                                                          },
+                                                          onSubmitted: (_) {
+                                                            _handleEditConfirmation(
+                                                              index,
+                                                            );
+                                                          },
+                                                        )
+                                                      : Text(
+                                                          item['unitPrice']
+                                                                  ?.toString() ??
+                                                              '',
+                                                          style: TextStyle(
+                                                            fontSize: 14,
+                                                            color: Colors.black,
+                                                          ),
+                                                        ),
+                                                ),
+
+                                                // Actions cell
+                                                Padding(
+                                                  padding: const EdgeInsets.all(
+                                                    8,
+                                                  ),
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      // Pencil icon - disabled when editing, enabled when saved
+                                                      IconButton(
+                                                        onPressed: isEditing
+                                                            ? null // Disabled during editing
+                                                            : () {
+                                                                _editItem(
+                                                                  index,
+                                                                );
+                                                              },
+                                                        icon: Icon(
+                                                          Icons.edit,
+                                                          color: isEditing
+                                                              ? AppColors
+                                                                    .iconGrayColor
+                                                                    .withOpacity(
+                                                                      0.3,
+                                                                    )
+                                                              : AppColors
+                                                                    .iconGrayColor,
+                                                          size: 18,
+                                                        ),
+                                                        padding:
+                                                            EdgeInsets.zero,
+                                                        constraints:
+                                                            const BoxConstraints(
+                                                              minWidth: 24,
+                                                              minHeight: 24,
+                                                            ),
+                                                      ),
+
+                                                      const SizedBox(width: 4),
+
+                                                      // Trash bin icon (always enabled)
+                                                      IconButton(
+                                                        onPressed: () {
+                                                          _deleteItem(index);
+                                                        },
+                                                        icon: Icon(
+                                                          Icons.delete_outline,
+                                                          color: AppColors
+                                                              .iconGrayColor,
+                                                          size: 18,
+                                                        ),
+                                                        padding:
+                                                            EdgeInsets.zero,
+                                                        constraints:
+                                                            const BoxConstraints(
+                                                              minWidth: 24,
+                                                              minHeight: 24,
+                                                            ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                      );
+                                    }).toList(),
                                   ),
                                 ),
-                                child: Text(
-                                  'No items added. Click "Add Item" to start.',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    color: AppColors.grayColor,
+
+                              // Empty state message
+                              if (items.isEmpty)
+                                Container(
+                                  padding: const EdgeInsets.all(40),
+                                  width: double.infinity,
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                      color: AppColors.borderColor,
+                                    ),
+                                  ),
+                                  child: Text(
+                                    'No items added. Click "Add Item" to start.',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      color: AppColors.grayColor,
+                                    ),
                                   ),
                                 ),
-                              ),
-                          ],
+                            ],
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                ],
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

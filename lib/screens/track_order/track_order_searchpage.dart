@@ -20,29 +20,31 @@ class TORSearchPage extends StatelessWidget {
       };
     });
 
-    return OrderListWidget(
-      screenTitle: 'Track Order Record',
-      appBar: CustomAppBars.defaultAppBar(
-        context: context,
-        title: 'Track Order Record',
-        navigationType: NavigationType.pop,
-      ),
-      buttonText: 'Track',
-      onButtonPressed: (order) {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => TrackRecordScreen(
-              purchaseOrderNumber: order['poNumber']!,
-              clientName: order['clientName']!,
+    return SafeArea(
+      child: OrderListWidget(
+        screenTitle: 'Track Order Record',
+        appBar: CustomAppBars.defaultAppBar(
+          context: context,
+          title: 'Track Order Record',
+          navigationType: NavigationType.pop,
+        ),
+        buttonText: 'Track',
+        onButtonPressed: (order) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => TrackRecordScreen(
+                purchaseOrderNumber: order['poNumber']!,
+                clientName: order['clientName']!,
+              ),
             ),
-          ),
-        );
-      },
-      initialOrders: orders,
-      /*showDeleteOption: true,
+          );
+        },
+        initialOrders: orders,
+        /*showDeleteOption: true,
       onDelete: (poNumber, clientName) {
       },*/
+      ),
     );
   }
 }

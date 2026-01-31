@@ -15,60 +15,62 @@ class PasswordSuccessScreen2 extends StatefulWidget {
 class _PasswordSuccessScreen2State extends State<PasswordSuccessScreen2> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: CustomAppBars.defaultAppBar(
-        context: context,
-        title: 'Account Setup',
-        destination: const SignInScreen(),
-        navigationType: NavigationType.pushReplacement,
-      ),
-      body: SafeArea(
-        child: Column(
-          children: [
-            // Top section with background image
-            Container(
-              height: 200, // fixed height
-              width: double.infinity, // Takes full available width
-              decoration: const BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage('assets/images/bg2.png'),
-                  fit: BoxFit.cover, // image cover the entire container
+    return SafeArea(
+      child: Scaffold(
+        appBar: CustomAppBars.defaultAppBar(
+          context: context,
+          title: 'Account Setup',
+          destination: const SignInScreen(),
+          navigationType: NavigationType.pushReplacement,
+        ),
+        body: SafeArea(
+          child: Column(
+            children: [
+              // Top section with background image
+              Container(
+                height: 200, 
+                width: double.infinity, 
+                decoration: const BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage('assets/images/bg2.png'),
+                    fit: BoxFit.cover, // image cover the entire container
+                  ),
                 ),
               ),
-            ),
 
-            // White form container
-            Expanded(
-              child: Material(
-                borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(40.0),
-                  topRight: Radius.circular(40.0),
-                ),
-                color: Colors.white,
-                clipBehavior: Clip.antiAlias,
-                child: LayoutBuilder(
-                  builder: (context, constraints) {
-                    return SingleChildScrollView(
-                      child: ConstrainedBox(
-                        constraints: BoxConstraints(
-                          minHeight: constraints.maxHeight,
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.fromLTRB(
-                            25.0,
-                            60.0,
-                            25.0,
-                            20.0,
+              // White form container
+              Expanded(
+                child: Material(
+                  borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(40.0),
+                    topRight: Radius.circular(40.0),
+                  ),
+                  color: Colors.white,
+                  clipBehavior: Clip.antiAlias,
+                  child: LayoutBuilder(
+                    builder: (context, constraints) {
+                      return SingleChildScrollView(
+                        child: ConstrainedBox(
+                          constraints: BoxConstraints(
+                            minHeight: constraints.maxHeight,
                           ),
-                          child: _buildSuccessContent(constraints.maxHeight),
+                          child: Padding(
+                            padding: const EdgeInsets.fromLTRB(
+                              25.0,
+                              60.0,
+                              25.0,
+                              20.0,
+                            ),
+                            child: _buildSuccessContent(constraints.maxHeight),
+                          ),
                         ),
-                      ),
-                    );
-                  },
+                      );
+                    },
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

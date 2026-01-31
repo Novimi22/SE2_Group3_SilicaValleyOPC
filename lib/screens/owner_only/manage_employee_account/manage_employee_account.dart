@@ -87,115 +87,123 @@ class _ManageEmployeeAccountScreenState
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: CustomAppBars.defaultAppBar(
-        context: context,
-        title: 'Manage Employee Account',
-        destination: const OwnerLandingPage(),
-        navigationType: NavigationType.push,
-      ),
-      body: Container(
-        width: double.infinity,
-        color: Colors.white,
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(25.0, 40.0, 25.0, 20.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                // Header
-                Container(
-                  width: 700,
-                  margin: const EdgeInsets.only(bottom: 30),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      // Employee List header
-                      Text(
-                        'Employee List',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w700,
-                          color: Colors.black,
+    return SafeArea(
+      child: Scaffold(
+        appBar: CustomAppBars.defaultAppBar(
+          context: context,
+          title: 'Manage Employee Account',
+          destination: const OwnerLandingPage(),
+          navigationType: NavigationType.push,
+        ),
+        body: Container(
+          width: double.infinity,
+          color: Colors.white,
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(25.0, 40.0, 25.0, 20.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  // Header
+                  Container(
+                    width: 700,
+                    margin: const EdgeInsets.only(bottom: 30),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        // Employee List header
+                        Text(
+                          'Employee List',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w700,
+                            color: Colors.black,
+                          ),
                         ),
-                      ),
 
-                      // Create Employee Account button
-                      Material(
-                        color: AppColors.primaryColor,
-                        borderRadius: BorderRadius.circular(8),
-                        child: InkWell(
-                          onTap: () {
-                            _showCreateEmployeeDialog(context);
-                          },
+                        // Create Employee Account button
+                        Material(
+                          color: AppColors.primaryColor,
                           borderRadius: BorderRadius.circular(8),
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 9,
-                              vertical: 8,
-                            ),
-                            child: Row(
-                              children: [
-                                const Icon(
-                                  Icons.add,
-                                  size: 20,
-                                  color: Colors.white,
-                                ),
-                                const SizedBox(width: 8),
-                                const Text(
-                                  'Create Employee Account',
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w600,
+                          child: InkWell(
+                            onTap: () {
+                              _showCreateEmployeeDialog(context);
+                            },
+                            borderRadius: BorderRadius.circular(8),
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 9,
+                                vertical: 8,
+                              ),
+                              child: Row(
+                                children: [
+                                  const Icon(
+                                    Icons.add,
+                                    size: 20,
                                     color: Colors.white,
                                   ),
-                                ),
-                              ],
+                                  const SizedBox(width: 8),
+                                  const Text(
+                                    'Create Employee Account',
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w600,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ),
+                      ],
+                    ),
+                  ),
+
+                  // Employee tiles container
+                  Container(
+                    width: 700,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(0),
+                      border: Border.all(
+                        color: AppColors.borderColor,
+                        width: 1,
                       ),
-                    ],
-                  ),
-                ),
+                    ),
+                    child: Column(
+                      children: employees.asMap().entries.map((entry) {
+                        int index = entry.key;
+                        Map<String, String> employee = entry.value;
 
-                // Employee tiles container
-                Container(
-                  width: 700,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(0),
-                    border: Border.all(color: AppColors.borderColor, width: 1),
+                        return Container(
+                          decoration: BoxDecoration(
+                            color: AppColors.tile2Color,
+                            border: index < employees.length - 1
+                                ? Border(
+                                    bottom: BorderSide(
+                                      color: AppColors.borderColor,
+                                      width: 1,
+                                    ),
+                                  )
+                                : null,
+                          ),
+                          child: _buildEmployeeTile(
+                            name: employee['name']!,
+                            email: employee['email']!,
+                            role: employee['role']!,
+                            onDelete: () {
+                              _showDeleteConfirmation(
+                                context,
+                                employee['name']!,
+                              );
+                            },
+                          ),
+                        );
+                      }).toList(),
+                    ),
                   ),
-                  child: Column(
-                    children: employees.asMap().entries.map((entry) {
-                      int index = entry.key;
-                      Map<String, String> employee = entry.value;
-
-                      return Container(
-                        decoration: BoxDecoration(
-                          color: AppColors.tile2Color,
-                          border: index < employees.length - 1
-                              ? Border(
-                                  bottom: BorderSide(
-                                    color: AppColors.borderColor,
-                                    width: 1,
-                                  ),
-                                )
-                              : null,
-                        ),
-                        child: _buildEmployeeTile(
-                          name: employee['name']!,
-                          email: employee['email']!,
-                          role: employee['role']!,
-                          onDelete: () {
-                            _showDeleteConfirmation(context, employee['name']!);
-                          },
-                        ),
-                      );
-                    }).toList(),
-                  ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),

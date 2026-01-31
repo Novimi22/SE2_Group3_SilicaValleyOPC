@@ -90,207 +90,219 @@ class _VerifyEmailScreen3State extends State<VerifyEmailScreen3> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: CustomAppBars.defaultAppBar(
-        context: context,
-        title: 'Delete Employee Account',
-        navigationType: NavigationType.pop,
-      ),
-      body: Container(
-        width: double.infinity,
-        color: Colors.white,
-        child: Column(
-          children: [
-            Expanded(
-              child: ScrollConfiguration(
-                // This hides the scrollbar
-                behavior: ScrollConfiguration.of(
-                  context,
-                ).copyWith(scrollbars: false),
-                child: SingleChildScrollView(
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(25.0, 100.0, 25.0, 20.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        // Instruction text
-                        SizedBox(
-                          width: 450,
-                          child: Text(
-                            'This is a required step to delete an employee account.\n\nWe just sent a 5-digit verification code to\njuandelacruz@gmail.com, enter the OTP below.',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(fontSize: 16, color: Colors.black),
-                          ),
-                        ),
-                        const SizedBox(height: 40),
-
-                        // Label for OTP
-                        SizedBox(
-                          width: 450,
-                          child: Text(
-                            'Code',
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.black,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ),
-                        const SizedBox(height: 10),
-
-                        // OTP input boxes
-                        SizedBox(
-                          width: 450,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: List.generate(5, (index) {
-                              return SizedBox(
-                                width: 60,
-                                height: 60,
-                                child: TextField(
-                                  controller: _controllers[index],
-                                  textAlign: TextAlign.center,
-                                  maxLength: 1,
-                                  keyboardType: TextInputType.number,
-                                  style: const TextStyle(
-                                    fontSize: 24,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black,
-                                  ),
-                                  decoration: InputDecoration(
-                                    counterText: '',
-                                    border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(10),
-                                      borderSide: const BorderSide(
-                                        color: Color(0xFF19191B),
-                                      ),
-                                    ),
-                                    enabledBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(10),
-                                      borderSide: const BorderSide(
-                                        color: Color(0xFF19191B),
-                                      ),
-                                    ),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(10),
-                                      borderSide: const BorderSide(
-                                        color: Color(0xFFCC9304),
-                                        width: 2,
-                                      ),
-                                    ),
-                                  ),
-                                  onChanged: (value) =>
-                                      _handleOtpChange(index, value),
-                                ),
-                              );
-                            }),
-                          ),
-                        ),
-
-                        // Error message if OTP is incorrect
-                        if (_showOtpError)
+    return SafeArea(
+      child: Scaffold(
+        appBar: CustomAppBars.defaultAppBar(
+          context: context,
+          title: 'Delete Employee Account',
+          navigationType: NavigationType.pop,
+        ),
+        body: Container(
+          width: double.infinity,
+          color: Colors.white,
+          child: Column(
+            children: [
+              Expanded(
+                child: ScrollConfiguration(
+                  // This hides the scrollbar
+                  behavior: ScrollConfiguration.of(
+                    context,
+                  ).copyWith(scrollbars: false),
+                  child: SingleChildScrollView(
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(
+                        25.0,
+                        100.0,
+                        25.0,
+                        20.0,
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          // Instruction text
                           SizedBox(
                             width: 450,
-                            child: Padding(
-                              padding: const EdgeInsets.only(top: 16.0),
-                              child: Row(
-                                children: const [
-                                  Icon(
-                                    Icons.error_outline,
-                                    color: Colors.red,
-                                    size: 20,
-                                  ),
-                                  SizedBox(width: 8),
-                                  Expanded(
-                                    child: Text(
-                                      'Incorrect code',
-                                      style: TextStyle(
-                                        color: Colors.red,
-                                        fontSize: 14,
-                                      ),
-                                    ),
-                                  ),
-                                ],
+                            child: Text(
+                              'This is a required step to delete an employee account.\n\nWe just sent a 5-digit verification code to\njuandelacruz@gmail.com, enter the OTP below.',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.black,
                               ),
                             ),
                           ),
+                          const SizedBox(height: 40),
 
-                        // TODO: Use flexible container
-                        const SizedBox(height: 40),
-
-                        // Verify button
-                        SizedBox(
-                          width: 350,
-                          child: CustomButtons.deleteAccountVerifyButton(
-                            context: context,
-                            isEnabled: _isVerifyEnabled,
-                            enteredOtp: _otpValues.join(''),
-                            correctOtp: _correctOtp,
-                            employeeName: widget.employeeName,
-                            destination: const ManageEmployeeAccountScreen(),
-                            onError: (showError) {
-                              setState(() {
-                                _showOtpError = showError;
-                              });
-                            },
+                          // Label for OTP
+                          SizedBox(
+                            width: 450,
+                            child: Text(
+                              'Code',
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.black,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
                           ),
-                        ),
+                          const SizedBox(height: 10),
 
-                        const SizedBox(height: 20),
+                          // OTP input boxes
+                          SizedBox(
+                            width: 450,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: List.generate(5, (index) {
+                                return SizedBox(
+                                  width: 60,
+                                  height: 60,
+                                  child: TextField(
+                                    controller: _controllers[index],
+                                    textAlign: TextAlign.center,
+                                    maxLength: 1,
+                                    keyboardType: TextInputType.number,
+                                    style: const TextStyle(
+                                      fontSize: 24,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black,
+                                    ),
+                                    decoration: InputDecoration(
+                                      counterText: '',
+                                      border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(10),
+                                        borderSide: const BorderSide(
+                                          color: Color(0xFF19191B),
+                                        ),
+                                      ),
+                                      enabledBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(10),
+                                        borderSide: const BorderSide(
+                                          color: Color(0xFF19191B),
+                                        ),
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(10),
+                                        borderSide: const BorderSide(
+                                          color: Color(0xFFCC9304),
+                                          width: 2,
+                                        ),
+                                      ),
+                                    ),
+                                    onChanged: (value) =>
+                                        _handleOtpChange(index, value),
+                                  ),
+                                );
+                              }),
+                            ),
+                          ),
 
-                        // Resend email text
-                        SizedBox(
-                          width: 450,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const Text(
-                                'Haven\'t gotten the email yet? ',
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  color: Colors.black,
+                          // Error message if OTP is incorrect
+                          if (_showOtpError)
+                            SizedBox(
+                              width: 450,
+                              child: Padding(
+                                padding: const EdgeInsets.only(top: 16.0),
+                                child: Row(
+                                  children: const [
+                                    Icon(
+                                      Icons.error_outline,
+                                      color: Colors.red,
+                                      size: 20,
+                                    ),
+                                    SizedBox(width: 8),
+                                    Expanded(
+                                      child: Text(
+                                        'Incorrect code',
+                                        style: TextStyle(
+                                          color: Colors.red,
+                                          fontSize: 14,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
-                              MouseRegion(
-                                cursor: SystemMouseCursors.click,
-                                child: GestureDetector(
-                                  onTap: _isResendEnabled ? _resendEmail : null,
-                                  child: Text(
-                                    'Resend email',
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.bold,
-                                      color: _isResendEnabled
-                                          ? const Color(0xFFCC9304)
-                                          : const Color(0xFF9E9E9E),
+                            ),
+
+                          // TODO: Use flexible container
+                          const SizedBox(height: 40),
+
+                          // Verify button
+                          SizedBox(
+                            width: 350,
+                            child: CustomButtons.deleteAccountVerifyButton(
+                              context: context,
+                              isEnabled: _isVerifyEnabled,
+                              enteredOtp: _otpValues.join(''),
+                              correctOtp: _correctOtp,
+                              employeeName: widget.employeeName,
+                              destination: const ManageEmployeeAccountScreen(),
+                              onError: (showError) {
+                                setState(() {
+                                  _showOtpError = showError;
+                                });
+                              },
+                            ),
+                          ),
+
+                          const SizedBox(height: 20),
+
+                          // Resend email text
+                          SizedBox(
+                            width: 450,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Text(
+                                  'Haven\'t gotten the email yet? ',
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                                MouseRegion(
+                                  cursor: SystemMouseCursors.click,
+                                  child: GestureDetector(
+                                    onTap: _isResendEnabled
+                                        ? _resendEmail
+                                        : null,
+                                    child: Text(
+                                      'Resend email',
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.bold,
+                                        color: _isResendEnabled
+                                            ? const Color(0xFFCC9304)
+                                            : const Color(0xFF9E9E9E),
+                                      ),
                                     ),
                                   ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
-                        ),
 
-                        // TODO: add flexible container like in sign in screen
-                        // Timer at the bottom
-                        const SizedBox(height: 150),
-                        Text(
-                          _timerStarted && _timerSeconds > 0
-                              ? 'Resend in 0:${_timerSeconds.toString().padLeft(2, '0')}'
-                              : '',
-                          style: const TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            color: AppColors.grayColor,
+                          // TODO: add flexible container like in sign in screen
+                          // Timer at the bottom
+                          const SizedBox(height: 150),
+                          Text(
+                            _timerStarted && _timerSeconds > 0
+                                ? 'Resend in 0:${_timerSeconds.toString().padLeft(2, '0')}'
+                                : '',
+                            style: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: AppColors.grayColor,
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

@@ -24,7 +24,6 @@ class TrackRecordScreen extends StatefulWidget {
 }
 
 class _TrackRecordScreenState extends State<TrackRecordScreen> {
-
   // Payment status
   String _paymentStatus = 'Pending';
   final List<String> _paymentOptions = ['Paid', 'Pending'];
@@ -53,7 +52,8 @@ class _TrackRecordScreenState extends State<TrackRecordScreen> {
 
   // Track miscellaneous documents
   int _miscellaneousCount = 1;
-  final List<int> _miscellaneousIndices = []; // Store indices of miscellaneous docs
+  final List<int> _miscellaneousIndices =
+      []; // Store indices of miscellaneous docs
 
   // Image picker
   final ImagePicker _picker = ImagePicker();
@@ -148,7 +148,10 @@ class _TrackRecordScreenState extends State<TrackRecordScreen> {
                     child: Text(
                       'Are you sure you want to delete the file for this document?',
                       textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 16, color: AppColors.grayColor),
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: AppColors.grayColor,
+                      ),
                     ),
                   ),
 
@@ -226,7 +229,10 @@ class _TrackRecordScreenState extends State<TrackRecordScreen> {
                     child: Text(
                       'Are you sure you want to generate a report?',
                       textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 16, color: AppColors.grayColor),
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: AppColors.grayColor,
+                      ),
                     ),
                   ),
 
@@ -412,202 +418,97 @@ class _TrackRecordScreenState extends State<TrackRecordScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: CustomAppBars.defaultAppBar(
-        context: context,
-        title: 'Track Order Record',
-        navigationType: NavigationType.pop,
-      ),
-      body: Container(
-        width: double.infinity,
-        color: Colors.white,
-        child: Column(
-          children: [
-            // Top section with PO info, legends, and download button
-            Padding(
-              padding: const EdgeInsets.fromLTRB(25.0, 40.0, 25.0, 20.0),
-              child: Center(
-                child: SizedBox(
-                  width: 700,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      // PO Number and Document Count row
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          // PO Number and Payment Status
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              // Purchase Order Number
-                              Text(
-                                'Purchase Order Number:',
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  color: AppColors.grayColor,
-                                ),
-                              ),
-                              const SizedBox(height: 8),
-                              Text(
-                                widget.purchaseOrderNumber,
-                                style: const TextStyle(
-                                  fontSize: 24,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black,
-                                ),
-                              ),
-
-                              const SizedBox(height: 16),
-
-                              // Payment Status row
-                              Row(
-                                children: [
-                                  Text(
-                                    'Payment Status:',
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      color: AppColors.grayColor,
-                                    ),
-                                  ),
-                                  const SizedBox(width: 12),
-                                  Container(
-                                    width: 150,
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 12,
-                                    ),
-                                    decoration: BoxDecoration(
-                                      color: Colors.grey[100],
-                                      borderRadius: BorderRadius.circular(8),
-                                      border: Border.all(color: AppColors.borderColor),
-                                    ),
-                                    child: DropdownButtonHideUnderline(
-                                      child: DropdownButton<String>(
-                                        value: _paymentStatus,
-                                        isExpanded: true,
-                                        items: _paymentOptions.map((
-                                          String value,
-                                        ) {
-                                          return DropdownMenuItem<String>(
-                                            value: value,
-                                            child: Text(value),
-                                          );
-                                        }).toList(),
-                                        onChanged: (String? newValue) {
-                                          setState(() {
-                                            _paymentStatus = newValue!;
-                                          });
-                                        },
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-
-                          // Document Count
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [
-                              Text(
-                                'Document Count:',
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  color: AppColors.grayColor,
-                                ),
-                              ),
-                              const SizedBox(height: 8),
-                              Text(
-                                _documentCount.toString(),
-                                style: const TextStyle(
-                                  fontSize: 24,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-
-                      const SizedBox(height: 20),
-
-                      // Legends and Download Button row
-                      SizedBox(
-                        width: double.infinity,
-                        child: Row(
+    return SafeArea(
+      child: Scaffold(
+        appBar: CustomAppBars.defaultAppBar(
+          context: context,
+          title: 'Track Order Record',
+          navigationType: NavigationType.pop,
+        ),
+        body: Container(
+          width: double.infinity,
+          color: Colors.white,
+          child: Column(
+            children: [
+              // Top section with PO info, legends, and download button
+              Padding(
+                padding: const EdgeInsets.fromLTRB(25.0, 40.0, 25.0, 20.0),
+                child: Center(
+                  child: SizedBox(
+                    width: 700,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        // PO Number and Document Count row
+                        Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            // Legends
-                            Row(
+                            // PO Number and Payment Status
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                // First legend: "File attached"
-                                Row(
-                                  children: [
-                                    Container(
-                                      width: 12,
-                                      height: 12,
-                                      decoration: BoxDecoration(
-                                        color: AppColors.redColor,
-                                        shape: BoxShape.circle,
-                                      ),
-                                    ),
-                                    const SizedBox(width: 8),
-                                    Text(
-                                      'File attached',
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                        color: AppColors.grayColor,
-                                      ),
-                                    ),
-                                  ],
+                                // Purchase Order Number
+                                Text(
+                                  'Purchase Order Number:',
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    color: AppColors.grayColor,
+                                  ),
+                                ),
+                                const SizedBox(height: 8),
+                                Text(
+                                  widget.purchaseOrderNumber,
+                                  style: const TextStyle(
+                                    fontSize: 24,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                  ),
                                 ),
 
-                                const SizedBox(width: 20),
+                                const SizedBox(height: 16),
 
-                                // Second legend: "No file attached"
+                                // Payment Status row
                                 Row(
                                   children: [
-                                    Container(
-                                      width: 12,
-                                      height: 12,
-                                      decoration: BoxDecoration(
-                                        color: AppColors.greenColor,
-                                        shape: BoxShape.circle,
-                                      ),
-                                    ),
-                                    const SizedBox(width: 8),
                                     Text(
-                                      'No file attached',
+                                      'Payment Status:',
                                       style: TextStyle(
-                                        fontSize: 12,
+                                        fontSize: 14,
                                         color: AppColors.grayColor,
                                       ),
                                     ),
-                                  ],
-                                ),
-
-                                const SizedBox(width: 20),
-
-                                // Third legend: "Optional"
-                                Row(
-                                  children: [
+                                    const SizedBox(width: 12),
                                     Container(
-                                      width: 12,
-                                      height: 12,
-                                      decoration: BoxDecoration(
-                                        color: AppColors.grayColor,
-                                        shape: BoxShape.circle,
+                                      width: 150,
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 12,
                                       ),
-                                    ),
-                                    const SizedBox(width: 8),
-                                    Text(
-                                      'Optional',
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                        color: AppColors.grayColor,
+                                      decoration: BoxDecoration(
+                                        color: Colors.grey[100],
+                                        borderRadius: BorderRadius.circular(8),
+                                        border: Border.all(
+                                          color: AppColors.borderColor,
+                                        ),
+                                      ),
+                                      child: DropdownButtonHideUnderline(
+                                        child: DropdownButton<String>(
+                                          value: _paymentStatus,
+                                          isExpanded: true,
+                                          items: _paymentOptions.map((
+                                            String value,
+                                          ) {
+                                            return DropdownMenuItem<String>(
+                                              value: value,
+                                              child: Text(value),
+                                            );
+                                          }).toList(),
+                                          onChanged: (String? newValue) {
+                                            setState(() {
+                                              _paymentStatus = newValue!;
+                                            });
+                                          },
+                                        ),
                                       ),
                                     ),
                                   ],
@@ -615,478 +516,601 @@ class _TrackRecordScreenState extends State<TrackRecordScreen> {
                               ],
                             ),
 
-                            // Download Report button
-                            Material(
-                              color: AppColors.primaryColor,
-                              borderRadius: BorderRadius.circular(8),
-                              child: InkWell(
-                                onTap: () {
-                                  _showDownloadConfirmationDialog();
-                                },
-                                borderRadius: BorderRadius.circular(8),
-                                child: Container(
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 15,
-                                    vertical: 8,
+                            // Document Count
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                Text(
+                                  'Document Count:',
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    color: AppColors.grayColor,
                                   ),
-                                  child: Row(
+                                ),
+                                const SizedBox(height: 8),
+                                Text(
+                                  _documentCount.toString(),
+                                  style: const TextStyle(
+                                    fontSize: 24,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+
+                        const SizedBox(height: 20),
+
+                        // Legends and Download Button row
+                        SizedBox(
+                          width: double.infinity,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              // Legends
+                              Row(
+                                children: [
+                                  // First legend: "File attached"
+                                  Row(
                                     children: [
-                                      const Icon(
-                                        Icons.download,
-                                        size: 20,
-                                        color: Colors.white,
+                                      Container(
+                                        width: 12,
+                                        height: 12,
+                                        decoration: BoxDecoration(
+                                          color: AppColors.redColor,
+                                          shape: BoxShape.circle,
+                                        ),
                                       ),
                                       const SizedBox(width: 8),
-                                      const Text(
-                                        'Generate Report',
+                                      Text(
+                                        'File attached',
                                         style: TextStyle(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w600,
-                                          color: Colors.white,
+                                          fontSize: 12,
+                                          color: AppColors.grayColor,
                                         ),
                                       ),
                                     ],
                                   ),
+
+                                  const SizedBox(width: 20),
+
+                                  // Second legend: "No file attached"
+                                  Row(
+                                    children: [
+                                      Container(
+                                        width: 12,
+                                        height: 12,
+                                        decoration: BoxDecoration(
+                                          color: AppColors.greenColor,
+                                          shape: BoxShape.circle,
+                                        ),
+                                      ),
+                                      const SizedBox(width: 8),
+                                      Text(
+                                        'No file attached',
+                                        style: TextStyle(
+                                          fontSize: 12,
+                                          color: AppColors.grayColor,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+
+                                  const SizedBox(width: 20),
+
+                                  // Third legend: "Optional"
+                                  Row(
+                                    children: [
+                                      Container(
+                                        width: 12,
+                                        height: 12,
+                                        decoration: BoxDecoration(
+                                          color: AppColors.grayColor,
+                                          shape: BoxShape.circle,
+                                        ),
+                                      ),
+                                      const SizedBox(width: 8),
+                                      Text(
+                                        'Optional',
+                                        style: TextStyle(
+                                          fontSize: 12,
+                                          color: AppColors.grayColor,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+
+                              // Download Report button
+                              Material(
+                                color: AppColors.primaryColor,
+                                borderRadius: BorderRadius.circular(8),
+                                child: InkWell(
+                                  onTap: () {
+                                    _showDownloadConfirmationDialog();
+                                  },
+                                  borderRadius: BorderRadius.circular(8),
+                                  child: Container(
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 15,
+                                      vertical: 8,
+                                    ),
+                                    child: Row(
+                                      children: [
+                                        const Icon(
+                                          Icons.download,
+                                          size: 20,
+                                          color: Colors.white,
+                                        ),
+                                        const SizedBox(width: 8),
+                                        const Text(
+                                          'Generate Report',
+                                          style: TextStyle(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w600,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
                                 ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
 
-            // Document Tiles section (scrollable)
-            Expanded(
-              child: Center(
-                child: SingleChildScrollView(
-                  child: Container(
-                    width: 700,
-                    margin: const EdgeInsets.symmetric(horizontal: 25),
-                    decoration: BoxDecoration(
-                      border: Border.all(color: AppColors.borderColor, width: 1),
-                    ),
-                    child: Column(
-                      children: _documentTitles.asMap().entries.map((entry) {
-                        final index = entry.key;
-                        final title = entry.value;
-                        final isExpanded = _isExpandedList[index];
+              // Document Tiles section (scrollable)
+              Expanded(
+                child: Center(
+                  child: SingleChildScrollView(
+                    child: Container(
+                      width: 700,
+                      margin: const EdgeInsets.symmetric(horizontal: 25),
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: AppColors.borderColor,
+                          width: 1,
+                        ),
+                      ),
+                      child: Column(
+                        children: _documentTitles.asMap().entries.map((entry) {
+                          final index = entry.key;
+                          final title = entry.value;
+                          final isExpanded = _isExpandedList[index];
 
-                        // Handle horizontal line separator
-                        if (title == '[HORIZONTAL_LINE]') {
+                          // Handle horizontal line separator
+                          if (title == '[HORIZONTAL_LINE]') {
+                            return Container(
+                              width: double.infinity,
+                              height: 1,
+                              color: AppColors.borderColor,
+                              margin: const EdgeInsets.symmetric(vertical: 20),
+                            );
+                          }
+
+                          // Handle END indicator
+                          if (title == '- END -') {
+                            return Container(
+                              padding: const EdgeInsets.all(30),
+                              child: Text(
+                                '- END -',
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold,
+                                  color: AppColors.grayColor,
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
+                            );
+                          }
+
                           return Container(
                             width: double.infinity,
-                            height: 1,
-                            color: AppColors.borderColor,
-                            margin: const EdgeInsets.symmetric(vertical: 20),
-                          );
-                        }
-
-                        // Handle END indicator
-                        if (title == '- END -') {
-                          return Container(
-                            padding: const EdgeInsets.all(30),
-                            child: Text(
-                              '- END -',
-                              style: TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.bold,
-                                color: AppColors.grayColor,
-                              ),
-                              textAlign: TextAlign.center,
+                            decoration: BoxDecoration(
+                              color: AppColors.tile2Color,
+                              border:
+                                  index > 0 &&
+                                      _documentTitles[index - 1] !=
+                                          '[HORIZONTAL_LINE]' &&
+                                      _documentTitles[index - 1] != '- END -'
+                                  ? const Border(
+                                      top: BorderSide(
+                                        color: AppColors.borderColor,
+                                        width: 1,
+                                      ),
+                                    )
+                                  : null,
                             ),
-                          );
-                        }
-
-                        return Container(
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                            color: AppColors.tile2Color,
-                            border:
-                                index > 0 &&
-                                    _documentTitles[index - 1] !=
-                                        '[HORIZONTAL_LINE]' &&
-                                    _documentTitles[index - 1] != '- END -'
-                                ? const Border(
-                                    top: BorderSide(
-                                      color: AppColors.borderColor,
-                                      width: 1,
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 25,
+                              vertical: 20,
+                            ),
+                            child: Material(
+                              color: Colors.transparent,
+                              child: InkWell(
+                                onTap: () {
+                                  // Navigate to DocumentActivityHistoryScreen when tile is clicked
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          DocumentActivityHistoryScreen(
+                                            documentTitle: title,
+                                            purchaseOrderNumber:
+                                                widget.purchaseOrderNumber,
+                                            clientName: widget.clientName,
+                                          ),
                                     ),
-                                  )
-                                : null,
-                          ),
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 25,
-                            vertical: 20,
-                          ),
-                          child: Material(
-                            color: Colors.transparent,
-                            child: InkWell(
-                              onTap: () {
-                                // Navigate to DocumentActivityHistoryScreen when tile is clicked
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        DocumentActivityHistoryScreen(
-                                          documentTitle: title,
-                                          purchaseOrderNumber:
-                                              widget.purchaseOrderNumber,
-                                          clientName: widget.clientName,
-                                        ),
-                                  ),
-                                );
-                              },
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  // Status Indicator Line
-                                  Container(
-                                    width: 4,
-                                    height: 60,
-                                    margin: const EdgeInsets.only(right: 16),
-                                    decoration: BoxDecoration(
-                                      color: _getStatusIndicatorColor(index),
-                                      borderRadius: BorderRadius.circular(2),
+                                  );
+                                },
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    // Status Indicator Line
+                                    Container(
+                                      width: 4,
+                                      height: 60,
+                                      margin: const EdgeInsets.only(right: 16),
+                                      decoration: BoxDecoration(
+                                        color: _getStatusIndicatorColor(index),
+                                        borderRadius: BorderRadius.circular(2),
+                                      ),
                                     ),
-                                  ),
 
-                                  Expanded(
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        // Main row with title and expand button
-                                        Row(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          children: [
-                                            // Document info
-                                            Expanded(
-                                              child: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  // Document Title
-                                                  Text(
-                                                    title,
-                                                    style: const TextStyle(
-                                                      fontSize: 18,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      color: Colors.black,
+                                    Expanded(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          // Main row with title and expand button
+                                          Row(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            children: [
+                                              // Document info
+                                              Expanded(
+                                                child: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    // Document Title
+                                                    Text(
+                                                      title,
+                                                      style: const TextStyle(
+                                                        fontSize: 18,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        color: Colors.black,
+                                                      ),
                                                     ),
-                                                  ),
-                                                  const SizedBox(height: 8),
+                                                    const SizedBox(height: 8),
 
-                                                  // Show "Last updated: MM/DD/YYYY" only if date is set
-                                                  if (_lastUpdatedDates[index] !=
-                                                      null)
-                                                    Column(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      children: [
-                                                        // Uploaded by row
-                                                        Text(
-                                                          'Uploaded by: [name]', // Hardcoded placeholder name
-                                                          style: TextStyle(
-                                                            fontSize: 14,
-                                                            color: AppColors
-                                                                .grayColor,
+                                                    // Show "Last updated: MM/DD/YYYY" only if date is set
+                                                    if (_lastUpdatedDates[index] !=
+                                                        null)
+                                                      Column(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          // Uploaded by row
+                                                          Text(
+                                                            'Uploaded by: [name]', // Hardcoded placeholder name
+                                                            style: TextStyle(
+                                                              fontSize: 14,
+                                                              color: AppColors
+                                                                  .grayColor,
+                                                            ),
                                                           ),
-                                                        ),
-                                                        const SizedBox(
-                                                          height: 4,
-                                                        ),
-                                                        // Last updated row
-                                                        Text(
-                                                          'Last updated: ${_lastUpdatedDates[index]}',
-                                                          style: TextStyle(
-                                                            fontSize: 14,
-                                                            color: AppColors
-                                                                .grayColor,
+                                                          const SizedBox(
+                                                            height: 4,
                                                           ),
-                                                        ),
-                                                      ],
-                                                    )
-                                                  else
-                                                    Container(),
-                                                ],
+                                                          // Last updated row
+                                                          Text(
+                                                            'Last updated: ${_lastUpdatedDates[index]}',
+                                                            style: TextStyle(
+                                                              fontSize: 14,
+                                                              color: AppColors
+                                                                  .grayColor,
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      )
+                                                    else
+                                                      Container(),
+                                                  ],
+                                                ),
                                               ),
-                                            ),
 
-                                            // Action buttons
-                                            Row(
-                                              children: [
-                                                // Delete button
-                                                Container(
-                                                  width: 40,
-                                                  height: 40,
-                                                  decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                          20,
-                                                        ),
-                                                    border: Border.all(
-                                                      color:
-                                                          _attachedFiles[index] !=
-                                                              null
-                                                          ? AppColors.iconDarkGrayColor
-                                                          : AppColors.iconDarkGrayColor
-                                                                .withOpacity(
-                                                                  0.3,
-                                                                ),
-                                                    ),
-                                                  ),
-                                                  child: Material(
-                                                    color: Colors.transparent,
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                          20,
-                                                        ),
-                                                    child: InkWell(
-                                                      onTap: () {
-                                                        // Prevent tile navigation by handling it here
-                                                        if (_attachedFiles[index] !=
-                                                            null) {
-                                                          _showDeleteConfirmationDialog(
-                                                            index,
-                                                          );
-                                                        }
-                                                      },
+                                              // Action buttons
+                                              Row(
+                                                children: [
+                                                  // Delete button
+                                                  Container(
+                                                    width: 40,
+                                                    height: 40,
+                                                    decoration: BoxDecoration(
                                                       borderRadius:
                                                           BorderRadius.circular(
                                                             20,
                                                           ),
-                                                      child: Icon(
-                                                        Icons.delete_outline,
+                                                      border: Border.all(
                                                         color:
                                                             _attachedFiles[index] !=
                                                                 null
-                                                            ? AppColors.iconDarkGrayColor
-                                                            : AppColors.iconDarkGrayColor
+                                                            ? AppColors
+                                                                  .iconDarkGrayColor
+                                                            : AppColors
+                                                                  .iconDarkGrayColor
                                                                   .withOpacity(
                                                                     0.3,
                                                                   ),
-                                                        size: 20,
                                                       ),
                                                     ),
-                                                  ),
-                                                ),
-
-                                                const SizedBox(width: 12),
-
-                                                // Attach File button
-                                                Container(
-                                                  width: 40,
-                                                  height: 40,
-                                                  decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                          20,
-                                                        ),
-                                                    border: Border.all(
-                                                      color: AppColors.iconDarkGrayColor,
-                                                    ),
-                                                  ),
-                                                  child: Material(
-                                                    color: Colors.transparent,
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                          20,
-                                                        ),
-                                                    child: InkWell(
-                                                      onTap: () {
-                                                        // Prevent tile navigation by handling it here
-                                                        _showImageSourceDialog(
-                                                          index,
-                                                        );
-                                                      },
+                                                    child: Material(
+                                                      color: Colors.transparent,
                                                       borderRadius:
                                                           BorderRadius.circular(
                                                             20,
                                                           ),
-                                                      child: Icon(
-                                                        Icons.attach_file,
-                                                        color: AppColors.iconDarkGrayColor,
-                                                        size: 20,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-
-                                                const SizedBox(width: 12),
-
-                                                // Expand button
-                                                Container(
-                                                  width: 40,
-                                                  height: 40,
-                                                  decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                          20,
-                                                        ),
-                                                    border: Border.all(
-                                                      color: AppColors.iconDarkGrayColor,
-                                                    ),
-                                                  ),
-                                                  child: Material(
-                                                    color: Colors.transparent,
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                          20,
-                                                        ),
-                                                    child: InkWell(
-                                                      onTap: () {
-                                                        // Prevent tile navigation by handling it here
-                                                        setState(() {
-                                                          _isExpandedList[index] =
-                                                              !isExpanded;
-                                                        });
-                                                      },
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                            20,
-                                                          ),
-                                                      child: Icon(
-                                                        isExpanded
-                                                            ? Icons.expand_less
-                                                            : Icons.expand_more,
-                                                        color: AppColors.iconDarkGrayColor,
-                                                        size: 24,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ],
-                                        ),
-
-                                        // Expanded content (scrollable within expanded area)
-                                        if (isExpanded)
-                                          Padding(
-                                            padding: const EdgeInsets.only(
-                                              top: 20,
-                                            ),
-                                            child: SingleChildScrollView(
-                                              child: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  if (_attachedFiles[index] !=
-                                                      null)
-                                                    Column(
-                                                      children: [
-                                                        Text(
-                                                          'File attached: ${_attachedFiles[index]!.path.split('/').last}',
-                                                          style: TextStyle(
-                                                            fontSize: 14,
-                                                            color:
-                                                                AppColors.grayColor,
-                                                          ),
-                                                        ),
-                                                        const SizedBox(
-                                                          height: 16,
-                                                        ),
-
-                                                        Container(
-                                                          width:
-                                                              double.infinity,
-                                                          height: 200,
-                                                          decoration: BoxDecoration(
-                                                            border: Border.all(
-                                                              color:
-                                                                  AppColors.borderColor,
-                                                            ),
-                                                            borderRadius:
-                                                                BorderRadius.circular(
-                                                                  8,
-                                                                ),
-                                                            color: Colors
-                                                                .grey[200],
-                                                          ),
-                                                          child:
-                                                              _attachedFiles[index] !=
-                                                                  null
-                                                              ? _buildImagePreview(
-                                                                  index,
-                                                                )
-                                                              : const Center(
-                                                                  child: Icon(
-                                                                    Icons
-                                                                        .insert_drive_file,
-                                                                    size: 48,
-                                                                    color:
-                                                                        AppColors.grayColor,
-                                                                  ),
-                                                                ),
-                                                        ),
-                                                      ],
-                                                    )
-                                                  else
-                                                    // Message: no file is attached
-                                                    Container(
-                                                      width: double.infinity,
-                                                      padding:
-                                                          const EdgeInsets.symmetric(
-                                                            vertical: 20,
-                                                          ),
-                                                      decoration: BoxDecoration(
-                                                        border: Border.all(
-                                                          color: AppColors.borderColor,
-                                                        ),
+                                                      child: InkWell(
+                                                        onTap: () {
+                                                          // Prevent tile navigation by handling it here
+                                                          if (_attachedFiles[index] !=
+                                                              null) {
+                                                            _showDeleteConfirmationDialog(
+                                                              index,
+                                                            );
+                                                          }
+                                                        },
                                                         borderRadius:
                                                             BorderRadius.circular(
-                                                              8,
+                                                              20,
                                                             ),
+                                                        child: Icon(
+                                                          Icons.delete_outline,
+                                                          color:
+                                                              _attachedFiles[index] !=
+                                                                  null
+                                                              ? AppColors
+                                                                    .iconDarkGrayColor
+                                                              : AppColors
+                                                                    .iconDarkGrayColor
+                                                                    .withOpacity(
+                                                                      0.3,
+                                                                    ),
+                                                          size: 20,
+                                                        ),
                                                       ),
-                                                      child: Column(
+                                                    ),
+                                                  ),
+
+                                                  const SizedBox(width: 12),
+
+                                                  // Attach File button
+                                                  Container(
+                                                    width: 40,
+                                                    height: 40,
+                                                    decoration: BoxDecoration(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                            20,
+                                                          ),
+                                                      border: Border.all(
+                                                        color: AppColors
+                                                            .iconDarkGrayColor,
+                                                      ),
+                                                    ),
+                                                    child: Material(
+                                                      color: Colors.transparent,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                            20,
+                                                          ),
+                                                      child: InkWell(
+                                                        onTap: () {
+                                                          // Prevent tile navigation by handling it here
+                                                          _showImageSourceDialog(
+                                                            index,
+                                                          );
+                                                        },
+                                                        borderRadius:
+                                                            BorderRadius.circular(
+                                                              20,
+                                                            ),
+                                                        child: Icon(
+                                                          Icons.attach_file,
+                                                          color: AppColors
+                                                              .iconDarkGrayColor,
+                                                          size: 20,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+
+                                                  const SizedBox(width: 12),
+
+                                                  // Expand button
+                                                  Container(
+                                                    width: 40,
+                                                    height: 40,
+                                                    decoration: BoxDecoration(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                            20,
+                                                          ),
+                                                      border: Border.all(
+                                                        color: AppColors
+                                                            .iconDarkGrayColor,
+                                                      ),
+                                                    ),
+                                                    child: Material(
+                                                      color: Colors.transparent,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                            20,
+                                                          ),
+                                                      child: InkWell(
+                                                        onTap: () {
+                                                          // Prevent tile navigation by handling it here
+                                                          setState(() {
+                                                            _isExpandedList[index] =
+                                                                !isExpanded;
+                                                          });
+                                                        },
+                                                        borderRadius:
+                                                            BorderRadius.circular(
+                                                              20,
+                                                            ),
+                                                        child: Icon(
+                                                          isExpanded
+                                                              ? Icons
+                                                                    .expand_less
+                                                              : Icons
+                                                                    .expand_more,
+                                                          color: AppColors
+                                                              .iconDarkGrayColor,
+                                                          size: 24,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ],
+                                          ),
+
+                                          // Expanded content (scrollable within expanded area)
+                                          if (isExpanded)
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                top: 20,
+                                              ),
+                                              child: SingleChildScrollView(
+                                                child: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    if (_attachedFiles[index] !=
+                                                        null)
+                                                      Column(
                                                         children: [
-                                                          const Icon(
-                                                            Icons
-                                                                .insert_drive_file,
-                                                            size: 48,
-                                                            color:
-                                                                AppColors.grayColor,
+                                                          Text(
+                                                            'File attached: ${_attachedFiles[index]!.path.split('/').last}',
+                                                            style: TextStyle(
+                                                              fontSize: 14,
+                                                              color: AppColors
+                                                                  .grayColor,
+                                                            ),
                                                           ),
                                                           const SizedBox(
                                                             height: 16,
                                                           ),
-                                                          Text(
-                                                            'No file attached',
-                                                            style: TextStyle(
-                                                              fontSize: 16,
-                                                              color:
-                                                                  AppColors.grayColor,
+
+                                                          Container(
+                                                            width:
+                                                                double.infinity,
+                                                            height: 200,
+                                                            decoration: BoxDecoration(
+                                                              border: Border.all(
+                                                                color: AppColors
+                                                                    .borderColor,
+                                                              ),
+                                                              borderRadius:
+                                                                  BorderRadius.circular(
+                                                                    8,
+                                                                  ),
+                                                              color: Colors
+                                                                  .grey[200],
                                                             ),
+                                                            child:
+                                                                _attachedFiles[index] !=
+                                                                    null
+                                                                ? _buildImagePreview(
+                                                                    index,
+                                                                  )
+                                                                : const Center(
+                                                                    child: Icon(
+                                                                      Icons
+                                                                          .insert_drive_file,
+                                                                      size: 48,
+                                                                      color: AppColors
+                                                                          .grayColor,
+                                                                    ),
+                                                                  ),
                                                           ),
                                                         ],
+                                                      )
+                                                    else
+                                                      // Message: no file is attached
+                                                      Container(
+                                                        width: double.infinity,
+                                                        padding:
+                                                            const EdgeInsets.symmetric(
+                                                              vertical: 20,
+                                                            ),
+                                                        decoration: BoxDecoration(
+                                                          border: Border.all(
+                                                            color: AppColors
+                                                                .borderColor,
+                                                          ),
+                                                          borderRadius:
+                                                              BorderRadius.circular(
+                                                                8,
+                                                              ),
+                                                        ),
+                                                        child: Column(
+                                                          children: [
+                                                            const Icon(
+                                                              Icons
+                                                                  .insert_drive_file,
+                                                              size: 48,
+                                                              color: AppColors
+                                                                  .grayColor,
+                                                            ),
+                                                            const SizedBox(
+                                                              height: 16,
+                                                            ),
+                                                            Text(
+                                                              'No file attached',
+                                                              style: TextStyle(
+                                                                fontSize: 16,
+                                                                color: AppColors
+                                                                    .grayColor,
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        ),
                                                       ),
-                                                    ),
-                                                ],
+                                                  ],
+                                                ),
                                               ),
                                             ),
-                                          ),
-                                      ],
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             ),
-                          ),
-                        );
-                      }).toList(),
+                          );
+                        }).toList(),
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -1110,7 +1134,11 @@ class _TrackRecordScreenState extends State<TrackRecordScreen> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Icon(Icons.insert_drive_file, size: 48, color: AppColors.iconDarkGrayColor),
+          const Icon(
+            Icons.insert_drive_file,
+            size: 48,
+            color: AppColors.iconDarkGrayColor,
+          ),
           const SizedBox(height: 16),
           Text(
             'File: ${_attachedFiles[index]!.path.split('/').last}',

@@ -39,14 +39,10 @@ class _SignInScreenState extends State<SignInScreen> {
   bool get _isLoginEnabled =>
       _emailValue.isNotEmpty && _passwordValue.isNotEmpty;
 
-  // This is the main build method that creates the UI
-  // It runs every time the widget needs to be rebuilt (when setState() is called)
   @override
   Widget build(BuildContext context) {
-    // Scaffold is the basic material design layout structure
-    // It provides app bars, drawers, snackbars, etc.
-    return Scaffold(
-      // SafeArea makes sure content isn't hidden by device notches or status bars
+    return SafeArea(
+    child: Scaffold(
       body: SafeArea(
         child: Column(
           children: [
@@ -106,6 +102,7 @@ class _SignInScreenState extends State<SignInScreen> {
           ],
         ),
       ),
+    )
     );
   }
 

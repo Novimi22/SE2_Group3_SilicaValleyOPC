@@ -12,7 +12,6 @@ class ApproveOrderScreen extends StatefulWidget {
 }
 
 class _ApproveOrderScreenState extends State<ApproveOrderScreen> {
-
   static const Color snackbarGreenColor = Color(0xFF4CAF50);
 
   // Filter state
@@ -648,382 +647,389 @@ class _ApproveOrderScreenState extends State<ApproveOrderScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: CustomAppBars.defaultAppBar(
-        context: context,
-        title: 'Approve Order',
-        navigationType: NavigationType.pop,
-      ),
-      body: Container(
-        width: double.infinity,
-        color: Colors.white,
-        child: Column(
-          children: [
-            // Search bar section (fixed at top)
-            Padding(
-              padding: const EdgeInsets.fromLTRB(25.0, 40.0, 25.0, 20.0),
-              child: Center(
-                child: SizedBox(
-                  width: 700,
-                  child: Row(
-                    children: [
-                      // Search field
-                      Expanded(
-                        child: Container(
+    return SafeArea(
+      child: Scaffold(
+        appBar: CustomAppBars.defaultAppBar(
+          context: context,
+          title: 'Approve Order',
+          navigationType: NavigationType.pop,
+        ),
+        body: Container(
+          width: double.infinity,
+          color: Colors.white,
+          child: Column(
+            children: [
+              // Search bar section (fixed at top)
+              Padding(
+                padding: const EdgeInsets.fromLTRB(25.0, 40.0, 25.0, 20.0),
+                child: Center(
+                  child: SizedBox(
+                    width: 700,
+                    child: Row(
+                      children: [
+                        // Search field
+                        Expanded(
+                          child: Container(
+                            height: 50,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(25),
+                              border: Border.all(color: AppColors.borderColor),
+                            ),
+                            child: Row(
+                              children: [
+                                const SizedBox(width: 16),
+                                const Icon(
+                                  Icons.search,
+                                  color: AppColors.grayColor,
+                                  size: 20,
+                                ),
+                                const SizedBox(width: 12),
+                                Expanded(
+                                  child: TextField(
+                                    controller: _searchController,
+                                    decoration: const InputDecoration(
+                                      hintText:
+                                          'Search by PO number or client name...',
+                                      hintStyle: TextStyle(
+                                        color: AppColors.grayColor,
+                                      ),
+                                      border: InputBorder.none,
+                                      contentPadding: EdgeInsets.zero,
+                                    ),
+                                    style: const TextStyle(
+                                      fontSize: 16,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                ),
+                                // Clear button
+                                if (_showClearButton)
+                                  MouseRegion(
+                                    cursor: SystemMouseCursors.click,
+                                    child: GestureDetector(
+                                      onTap: _clearSearch,
+                                      child: Container(
+                                        padding: const EdgeInsets.all(8),
+                                        margin: const EdgeInsets.only(right: 8),
+                                        child: const Icon(
+                                          Icons.close,
+                                          color: AppColors.grayColor,
+                                          size: 18,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                const SizedBox(width: 8),
+                              ],
+                            ),
+                          ),
+                        ),
+
+                        const SizedBox(width: 12),
+
+                        // Filter search icon button
+                        Container(
+                          key: _filterIconKey,
+                          width: 50,
                           height: 50,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(25),
                             border: Border.all(color: AppColors.borderColor),
                           ),
-                          child: Row(
-                            children: [
-                              const SizedBox(width: 16),
-                              const Icon(
-                                Icons.search,
-                                color: AppColors.grayColor,
-                                size: 20,
-                              ),
-                              const SizedBox(width: 12),
-                              Expanded(
-                                child: TextField(
-                                  controller: _searchController,
-                                  decoration: const InputDecoration(
-                                    hintText:
-                                        'Search by PO number or client name...',
-                                    hintStyle: TextStyle(
-                                      color: AppColors.grayColor,
-                                    ),
-                                    border: InputBorder.none,
-                                    contentPadding: EdgeInsets.zero,
-                                  ),
-                                  style: const TextStyle(
-                                    fontSize: 16,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                              ),
-                              // Clear button
-                              if (_showClearButton)
-                                MouseRegion(
-                                  cursor: SystemMouseCursors.click,
-                                  child: GestureDetector(
-                                    onTap: _clearSearch,
-                                    child: Container(
-                                      padding: const EdgeInsets.all(8),
-                                      margin: const EdgeInsets.only(right: 8),
-                                      child: const Icon(
-                                        Icons.close,
-                                        color: AppColors.grayColor,
-                                        size: 18,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              const SizedBox(width: 8),
-                            ],
-                          ),
-                        ),
-                      ),
-
-                      const SizedBox(width: 12),
-
-                      // Filter search icon button
-                      Container(
-                        key: _filterIconKey,
-                        width: 50,
-                        height: 50,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(25),
-                          border: Border.all(color: AppColors.borderColor),
-                        ),
-                        child: Material(
-                          color: Colors.transparent,
-                          borderRadius: BorderRadius.circular(25),
-                          child: InkWell(
-                            onTap: () {
-                              _showFilterDialog(context);
-                            },
+                          child: Material(
+                            color: Colors.transparent,
                             borderRadius: BorderRadius.circular(25),
-                            child: const Icon(
-                              Icons.filter_list,
-                              color: Colors.black,
-                              size: 24,
+                            child: InkWell(
+                              onTap: () {
+                                _showFilterDialog(context);
+                              },
+                              borderRadius: BorderRadius.circular(25),
+                              child: const Icon(
+                                Icons.filter_list,
+                                color: Colors.black,
+                                size: 24,
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-
-            // Orders list (scrollable)
-            Expanded(
-              child: Center(
-                child: SingleChildScrollView(
-                  child: Container(
-                    width: 700,
-                    margin: const EdgeInsets.symmetric(horizontal: 25),
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: AppColors.borderColor,
-                        width: 1,
-                      ),
-                    ),
-                    child: Column(
-                      children: [
-                        // Show message if no results
-                        if (_filteredOrders.isEmpty)
-                          Container(
-                            padding: const EdgeInsets.all(40),
-                            child: Text(
-                              'No orders found${_searchController.text.isNotEmpty ? ' for "${_searchController.text}"' : ''}',
-                              style: TextStyle(
-                                fontSize: 16,
-                                color: AppColors.grayColor,
-                              ),
-                            ),
-                          ),
-
-                        // Generate order tiles
-                        ..._filteredOrders.asMap().entries.map((entry) {
-                          final index = entry.key;
-                          final order = entry.value;
-                          final isExpanded = _isExpandedList[index];
-
-                          return Container(
-                            width: double.infinity,
-                            decoration: BoxDecoration(
-                              color: AppColors.tile2Color,
-                              border: index > 0
-                                  ? const Border(
-                                      top: BorderSide(
-                                        color: AppColors.borderColor,
-                                        width: 1,
-                                      ),
-                                    )
-                                  : null,
-                            ),
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 25,
-                              vertical: 20,
-                            ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                // Main row with PO number and expand button
-                                Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    // Order info
-                                    Expanded(
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          // PO Number
-                                          Text(
-                                            order['poNumber']!,
-                                            style: const TextStyle(
-                                              fontSize: 18,
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.black,
-                                            ),
-                                          ),
-                                          const SizedBox(height: 8),
-
-                                          // Last Updated
-                                          Text(
-                                            'Last Updated: ${order['lastUpdated']!}',
-                                            style: TextStyle(
-                                              fontSize: 14,
-                                              color: AppColors.grayColor,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-
-                                    // Expand button (centered vertically)
-                                    Container(
-                                      height: 40,
-                                      width: 40,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(20),
-                                        border: Border.all(
-                                          color: AppColors.darkGrayColor,
-                                        ),
-                                      ),
-                                      child: Material(
-                                        color: Colors.transparent,
-                                        borderRadius: BorderRadius.circular(20),
-                                        child: InkWell(
-                                          onTap: () {
-                                            setState(() {
-                                              _isExpandedList[index] =
-                                                  !isExpanded;
-                                            });
-                                          },
-                                          borderRadius: BorderRadius.circular(
-                                            20,
-                                          ),
-                                          child: Icon(
-                                            isExpanded
-                                                ? Icons.expand_less
-                                                : Icons.expand_more,
-                                            color: AppColors.darkGrayColor,
-                                            size: 24,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-
-                                // Expanded content (shown when expanded)
-                                if (isExpanded)
-                                  Padding(
-                                    padding: const EdgeInsets.only(top: 20),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        // Additional order details
-                                        Row(
-                                          children: [
-                                            Text(
-                                              'Client: ',
-                                              style: TextStyle(
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.w500,
-                                                color: AppColors.grayColor,
-                                              ),
-                                            ),
-                                            Text(
-                                              order['clientName']!,
-                                              style: TextStyle(
-                                                fontSize: 14,
-                                                color: AppColors.grayColor,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                        const SizedBox(height: 4),
-
-                                        Row(
-                                          children: [
-                                            Text(
-                                              'Created: ',
-                                              style: TextStyle(
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.w500,
-                                                color: AppColors.grayColor,
-                                              ),
-                                            ),
-                                            Text(
-                                              order['creationDate']!,
-                                              style: TextStyle(
-                                                fontSize: 14,
-                                                color: AppColors.grayColor,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                        const SizedBox(height: 4),
-
-                                        Row(
-                                          children: [
-                                            Text(
-                                              'Net Price: ',
-                                              style: TextStyle(
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.w500,
-                                                color: AppColors.grayColor,
-                                              ),
-                                            ),
-                                            Text(
-                                              order['netPrice']!,
-                                              style: TextStyle(
-                                                fontSize: 14,
-                                                color: AppColors.grayColor,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-
-                                        // Action buttons (Approve, Reject, View)
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                            top: 10,
-                                          ),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.end,
-                                            children: [
-                                              // Approve button
-                                              Container(
-                                                margin: const EdgeInsets.only(
-                                                  left: 12,
-                                                ),
-                                                child: CustomTextButtons.approveButton(
-                                                  context: context,
-                                                  onApprove: () {
-                                                    _showApproveConfirmationDialog(
-                                                      order['poNumber']!,
-                                                      order['clientName']!,
-                                                    );
-                                                  },
-                                                ),
-                                              ),
-
-                                              // Reject button
-                                              Container(
-                                                margin: const EdgeInsets.only(
-                                                  left: 12,
-                                                ),
-                                                child: CustomTextButtons.rejectButton(
-                                                  context: context,
-                                                  onReject: () {
-                                                    _showRejectConfirmationDialog(
-                                                      order['poNumber']!,
-                                                      order['clientName']!,
-                                                    );
-                                                  },
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                              ],
-                            ),
-                          );
-                        }),
-
-                        // END indicator (outside the last tile)
-                        if (_filteredOrders.isNotEmpty)
-                          Container(
-                            padding: const EdgeInsets.all(30),
-                            child: Text(
-                              '- END -',
-                              style: TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.bold,
-                                color: AppColors.grayColor,
-                              ),
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
                       ],
                     ),
                   ),
                 ),
               ),
-            ),
-          ],
+
+              // Orders list (scrollable)
+              Expanded(
+                child: Center(
+                  child: SingleChildScrollView(
+                    child: Container(
+                      width: 700,
+                      margin: const EdgeInsets.symmetric(horizontal: 25),
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: AppColors.borderColor,
+                          width: 1,
+                        ),
+                      ),
+                      child: Column(
+                        children: [
+                          // Show message if no results
+                          if (_filteredOrders.isEmpty)
+                            Container(
+                              padding: const EdgeInsets.all(40),
+                              child: Text(
+                                'No orders found${_searchController.text.isNotEmpty ? ' for "${_searchController.text}"' : ''}',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  color: AppColors.grayColor,
+                                ),
+                              ),
+                            ),
+
+                          // Generate order tiles
+                          ..._filteredOrders.asMap().entries.map((entry) {
+                            final index = entry.key;
+                            final order = entry.value;
+                            final isExpanded = _isExpandedList[index];
+
+                            return Container(
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                color: AppColors.tile2Color,
+                                border: index > 0
+                                    ? const Border(
+                                        top: BorderSide(
+                                          color: AppColors.borderColor,
+                                          width: 1,
+                                        ),
+                                      )
+                                    : null,
+                              ),
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 25,
+                                vertical: 20,
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  // Main row with PO number and expand button
+                                  Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      // Order info
+                                      Expanded(
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            // PO Number
+                                            Text(
+                                              order['poNumber']!,
+                                              style: const TextStyle(
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.black,
+                                              ),
+                                            ),
+                                            const SizedBox(height: 8),
+
+                                            // Last Updated
+                                            Text(
+                                              'Last Updated: ${order['lastUpdated']!}',
+                                              style: TextStyle(
+                                                fontSize: 14,
+                                                color: AppColors.grayColor,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+
+                                      // Expand button (centered vertically)
+                                      Container(
+                                        height: 40,
+                                        width: 40,
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(
+                                            20,
+                                          ),
+                                          border: Border.all(
+                                            color: AppColors.darkGrayColor,
+                                          ),
+                                        ),
+                                        child: Material(
+                                          color: Colors.transparent,
+                                          borderRadius: BorderRadius.circular(
+                                            20,
+                                          ),
+                                          child: InkWell(
+                                            onTap: () {
+                                              setState(() {
+                                                _isExpandedList[index] =
+                                                    !isExpanded;
+                                              });
+                                            },
+                                            borderRadius: BorderRadius.circular(
+                                              20,
+                                            ),
+                                            child: Icon(
+                                              isExpanded
+                                                  ? Icons.expand_less
+                                                  : Icons.expand_more,
+                                              color: AppColors.darkGrayColor,
+                                              size: 24,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+
+                                  // Expanded content (shown when expanded)
+                                  if (isExpanded)
+                                    Padding(
+                                      padding: const EdgeInsets.only(top: 20),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          // Additional order details
+                                          Row(
+                                            children: [
+                                              Text(
+                                                'Client: ',
+                                                style: TextStyle(
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.w500,
+                                                  color: AppColors.grayColor,
+                                                ),
+                                              ),
+                                              Text(
+                                                order['clientName']!,
+                                                style: TextStyle(
+                                                  fontSize: 14,
+                                                  color: AppColors.grayColor,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          const SizedBox(height: 4),
+
+                                          Row(
+                                            children: [
+                                              Text(
+                                                'Created: ',
+                                                style: TextStyle(
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.w500,
+                                                  color: AppColors.grayColor,
+                                                ),
+                                              ),
+                                              Text(
+                                                order['creationDate']!,
+                                                style: TextStyle(
+                                                  fontSize: 14,
+                                                  color: AppColors.grayColor,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          const SizedBox(height: 4),
+
+                                          Row(
+                                            children: [
+                                              Text(
+                                                'Net Price: ',
+                                                style: TextStyle(
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.w500,
+                                                  color: AppColors.grayColor,
+                                                ),
+                                              ),
+                                              Text(
+                                                order['netPrice']!,
+                                                style: TextStyle(
+                                                  fontSize: 14,
+                                                  color: AppColors.grayColor,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+
+                                          // Action buttons (Approve, Reject, View)
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                              top: 10,
+                                            ),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.end,
+                                              children: [
+                                                // Approve button
+                                                Container(
+                                                  margin: const EdgeInsets.only(
+                                                    left: 12,
+                                                  ),
+                                                  child: CustomTextButtons.approveButton(
+                                                    context: context,
+                                                    onApprove: () {
+                                                      _showApproveConfirmationDialog(
+                                                        order['poNumber']!,
+                                                        order['clientName']!,
+                                                      );
+                                                    },
+                                                  ),
+                                                ),
+
+                                                // Reject button
+                                                Container(
+                                                  margin: const EdgeInsets.only(
+                                                    left: 12,
+                                                  ),
+                                                  child: CustomTextButtons.rejectButton(
+                                                    context: context,
+                                                    onReject: () {
+                                                      _showRejectConfirmationDialog(
+                                                        order['poNumber']!,
+                                                        order['clientName']!,
+                                                      );
+                                                    },
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                ],
+                              ),
+                            );
+                          }),
+
+                          // END indicator (outside the last tile)
+                          if (_filteredOrders.isNotEmpty)
+                            Container(
+                              padding: const EdgeInsets.all(30),
+                              child: Text(
+                                '- END -',
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold,
+                                  color: AppColors.grayColor,
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

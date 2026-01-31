@@ -81,45 +81,48 @@ class _ManageOrderScreenState extends State<ManageOrderScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return OrderListWidget(
-      screenTitle: 'Manage Order',
-      appBar: CustomAppBars.defaultAppBar(
-        context: context,
-        title: 'Manage Order',
-        onBackPressed: _handleBackNavigation,
+    return SafeArea(
+      child: OrderListWidget(
+        screenTitle: 'Manage Order',
+        appBar: CustomAppBars.defaultAppBar(
+          context: context,
+          title: 'Manage Order',
+          onBackPressed: _handleBackNavigation,
+        ),
+        buttonText: 'View', // Not used when showMultipleButtons is true
+        onButtonPressed:
+            (order) {}, // Not used when showMultipleButtons is true
+        initialOrders: _allOrders,
+        showDeleteOption: true,
+        onDelete: _performDeleteOrder,
+        showMultipleButtons: true,
+        onUpdate: (order) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => UpdateOrderScreen(
+                purchaseOrderNumber: order['poNumber']!,
+                customerName: order['clientName']!,
+                creationDate: order['creationDate']!,
+                netPrice: order['netPrice']!,
+              ),
+            ),
+          );
+        },
+        onView: (order) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ViewOrderScreen(
+                purchaseOrderNumber: order['poNumber']!,
+                customerName: order['clientName']!,
+                creationDate: order['creationDate']!,
+                netPrice: order['netPrice']!,
+              ),
+            ),
+          );
+        },
       ),
-      buttonText: 'View', // Not used when showMultipleButtons is true
-      onButtonPressed: (order) {}, // Not used when showMultipleButtons is true
-      initialOrders: _allOrders,
-      showDeleteOption: true,
-      onDelete: _performDeleteOrder,
-      showMultipleButtons: true, 
-      onUpdate: (order) {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => UpdateOrderScreen(
-              purchaseOrderNumber: order['poNumber']!,
-              customerName: order['clientName']!,
-              creationDate: order['creationDate']!,
-              netPrice: order['netPrice']!,
-            ),
-          ),
-        );
-      },
-      onView: (order) {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => ViewOrderScreen(
-              purchaseOrderNumber: order['poNumber']!,
-              customerName: order['clientName']!,
-              creationDate: order['creationDate']!,
-              netPrice: order['netPrice']!,
-            ),
-          ),
-        );
-      },
     );
   }
 }

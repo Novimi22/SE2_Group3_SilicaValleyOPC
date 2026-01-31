@@ -505,209 +505,211 @@ class _DocumentActivityHistoryScreenState
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: CustomAppBars.appBarWithSubtitle(
-        context: context,
-        title: 'Document Activity History',
-        subtitle: widget.documentTitle,
-      ),
-      body: Container(
-        width: double.infinity,
-        color: Colors.white,
-        child: Column(
-          children: [
-            // Search bar section
-            Padding(
-              padding: const EdgeInsets.fromLTRB(25.0, 40.0, 25.0, 20.0),
-              child: Center(
-                child: SizedBox(
-                  width: 700,
-                  child: Row(
-                    children: [
-                      // Search field
-                      Expanded(
-                        child: Container(
+    return SafeArea(
+      child: Scaffold(
+        appBar: CustomAppBars.appBarWithSubtitle(
+          context: context,
+          title: 'Document Activity History',
+          subtitle: widget.documentTitle,
+        ),
+        body: Container(
+          width: double.infinity,
+          color: Colors.white,
+          child: Column(
+            children: [
+              // Search bar section
+              Padding(
+                padding: const EdgeInsets.fromLTRB(25.0, 40.0, 25.0, 20.0),
+                child: Center(
+                  child: SizedBox(
+                    width: 700,
+                    child: Row(
+                      children: [
+                        // Search field
+                        Expanded(
+                          child: Container(
+                            height: 50,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(25),
+                              border: Border.all(color: AppColors.borderColor),
+                            ),
+                            child: Row(
+                              children: [
+                                const SizedBox(width: 16),
+                                const Icon(
+                                  Icons.search,
+                                  color: AppColors.grayColor,
+                                  size: 20,
+                                ),
+                                const SizedBox(width: 12),
+                                Expanded(
+                                  child: TextField(
+                                    controller: _searchController,
+                                    decoration: InputDecoration(
+                                      hintText:
+                                          'Search by name or activity type...',
+                                      hintStyle: TextStyle(
+                                        color: AppColors.grayColor,
+                                      ),
+                                      border: InputBorder.none,
+                                      contentPadding: EdgeInsets.zero,
+                                    ),
+                                    style: const TextStyle(
+                                      fontSize: 16,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                ),
+                                // Clear button
+                                if (_showClearButton)
+                                  MouseRegion(
+                                    cursor: SystemMouseCursors.click,
+                                    child: GestureDetector(
+                                      onTap: _clearSearch,
+                                      child: Container(
+                                        padding: const EdgeInsets.all(8),
+                                        margin: const EdgeInsets.only(right: 8),
+                                        child: const Icon(
+                                          Icons.close,
+                                          color: AppColors.grayColor,
+                                          size: 18,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                const SizedBox(width: 8),
+                              ],
+                            ),
+                          ),
+                        ),
+
+                        const SizedBox(width: 12),
+
+                        // Filter search icon button
+                        Container(
+                          key: _filterIconKey,
+                          width: 50,
                           height: 50,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(25),
                             border: Border.all(color: AppColors.borderColor),
                           ),
-                          child: Row(
-                            children: [
-                              const SizedBox(width: 16),
-                              const Icon(
-                                Icons.search,
-                                color: AppColors.grayColor,
-                                size: 20,
-                              ),
-                              const SizedBox(width: 12),
-                              Expanded(
-                                child: TextField(
-                                  controller: _searchController,
-                                  decoration: InputDecoration(
-                                    hintText:
-                                        'Search by name or activity type...',
-                                    hintStyle: TextStyle(
-                                      color: AppColors.grayColor,
-                                    ),
-                                    border: InputBorder.none,
-                                    contentPadding: EdgeInsets.zero,
-                                  ),
-                                  style: const TextStyle(
-                                    fontSize: 16,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                              ),
-                              // Clear button
-                              if (_showClearButton)
-                                MouseRegion(
-                                  cursor: SystemMouseCursors.click,
-                                  child: GestureDetector(
-                                    onTap: _clearSearch,
-                                    child: Container(
-                                      padding: const EdgeInsets.all(8),
-                                      margin: const EdgeInsets.only(right: 8),
-                                      child: const Icon(
-                                        Icons.close,
-                                        color: AppColors.grayColor,
-                                        size: 18,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              const SizedBox(width: 8),
-                            ],
-                          ),
-                        ),
-                      ),
-
-                      const SizedBox(width: 12),
-
-                      // Filter search icon button
-                      Container(
-                        key: _filterIconKey,
-                        width: 50,
-                        height: 50,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(25),
-                          border: Border.all(color: AppColors.borderColor),
-                        ),
-                        child: Material(
-                          color: Colors.transparent,
-                          borderRadius: BorderRadius.circular(25),
-                          child: InkWell(
-                            onTap: () {
-                              _showFilterDialog(context);
-                            },
+                          child: Material(
+                            color: Colors.transparent,
                             borderRadius: BorderRadius.circular(25),
-                            child: const Icon(
-                              Icons.filter_list,
-                              color: Colors.black,
-                              size: 24,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-
-            // Document history list (scrollable)
-            Expanded(
-              child: Center(
-                child: SingleChildScrollView(
-                  child: Container(
-                    width: 762,
-                    margin: const EdgeInsets.symmetric(horizontal: 25),
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: AppColors.borderColor,
-                        width: 1,
-                      ),
-                    ),
-                    child: Column(
-                      children: [
-                        // Show message if no results
-                        if (_filteredDocumentHistory.isEmpty)
-                          Container(
-                            padding: const EdgeInsets.all(40),
-                            child: Text(
-                              'No document history found${_searchController.text.isNotEmpty ? ' for "${_searchController.text}"' : ''}',
-                              style: TextStyle(
-                                fontSize: 16,
-                                color: AppColors.grayColor,
+                            child: InkWell(
+                              onTap: () {
+                                _showFilterDialog(context);
+                              },
+                              borderRadius: BorderRadius.circular(25),
+                              child: const Icon(
+                                Icons.filter_list,
+                                color: Colors.black,
+                                size: 24,
                               ),
                             ),
                           ),
-
-                        // Generate document history entries
-                        ..._filteredDocumentHistory.asMap().entries.map((
-                          entry,
-                        ) {
-                          final index = entry.key;
-                          final document = entry.value;
-
-                          return Container(
-                            width: double.infinity,
-                            decoration: BoxDecoration(
-                              border: index > 0
-                                  ? const Border(
-                                      top: BorderSide(
-                                        color: AppColors.borderColor,
-                                        width: 1,
-                                      ),
-                                    )
-                                  : null,
-                            ),
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 30,
-                              vertical: 20,
-                            ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                // Date
-                                Text(
-                                  document['date']!,
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    color: AppColors.grayColor,
-                                  ),
-                                ),
-                                const SizedBox(height: 12),
-
-                                // Edited by
-                                Text(
-                                  'Edited by: ${document['editedBy']!}',
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    color: AppColors.grayColor,
-                                  ),
-                                ),
-                                const SizedBox(height: 4),
-
-                                // Activity Type
-                                Text(
-                                  'Activity Type: ${document['activityType']!}',
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    color: AppColors.grayColor,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          );
-                        }),
+                        ),
                       ],
                     ),
                   ),
                 ),
               ),
-            ),
-          ],
+
+              // Document history list (scrollable)
+              Expanded(
+                child: Center(
+                  child: SingleChildScrollView(
+                    child: Container(
+                      width: 762,
+                      margin: const EdgeInsets.symmetric(horizontal: 25),
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: AppColors.borderColor,
+                          width: 1,
+                        ),
+                      ),
+                      child: Column(
+                        children: [
+                          // Show message if no results
+                          if (_filteredDocumentHistory.isEmpty)
+                            Container(
+                              padding: const EdgeInsets.all(40),
+                              child: Text(
+                                'No document history found${_searchController.text.isNotEmpty ? ' for "${_searchController.text}"' : ''}',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  color: AppColors.grayColor,
+                                ),
+                              ),
+                            ),
+
+                          // Generate document history entries
+                          ..._filteredDocumentHistory.asMap().entries.map((
+                            entry,
+                          ) {
+                            final index = entry.key;
+                            final document = entry.value;
+
+                            return Container(
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                border: index > 0
+                                    ? const Border(
+                                        top: BorderSide(
+                                          color: AppColors.borderColor,
+                                          width: 1,
+                                        ),
+                                      )
+                                    : null,
+                              ),
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 30,
+                                vertical: 20,
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  // Date
+                                  Text(
+                                    document['date']!,
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      color: AppColors.grayColor,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 12),
+
+                                  // Edited by
+                                  Text(
+                                    'Edited by: ${document['editedBy']!}',
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      color: AppColors.grayColor,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 4),
+
+                                  // Activity Type
+                                  Text(
+                                    'Activity Type: ${document['activityType']!}',
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      color: AppColors.grayColor,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            );
+                          }),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
