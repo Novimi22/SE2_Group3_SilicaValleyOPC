@@ -1,14 +1,14 @@
-import 'package:draft_screens/constants/app_bars.dart';
 import 'package:flutter/material.dart';
 import 'package:draft_screens/constants/colors.dart';
+import 'package:draft_screens/constants/app_bars.dart';
 import 'package:draft_screens/constants/buttons/elevated_buttons.dart';
 import 'package:draft_screens/constants/buttons/text_buttons.dart';
+import 'package:draft_screens/constants/base_dashboard.dart';
 
 import '../histories/order_act_history.dart';
 import '../histories/doc_act_history/doc_act_searchpage.dart';
 import '../manage_order/gen_manage_order.dart';
 import '../track_order/track_order_searchpage.dart';
-import '../all_logins/signin_screen.dart';
 import '../employee_only/create_order_dialog.dart';
 
 class EmployeeDashboardScreen extends StatefulWidget {
@@ -27,11 +27,7 @@ class _EmployeeDashboardScreenState extends State<EmployeeDashboardScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: CustomAppBars.defaultAppBar(
-          context: context,
-          title: 'Employee Dashboard',
-          navigationType: NavigationType.pop,
-        ),
+        appBar: CustomAppBars.centeredAppBar(title: 'Employee Dashboard'),
         body: SafeArea(
           child: Container(
             width: double.infinity,
@@ -42,87 +38,10 @@ class _EmployeeDashboardScreenState extends State<EmployeeDashboardScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    // Welcome section
-                    Container(
-                      width: double.infinity,
-                      padding: const EdgeInsets.all(20),
-                      margin: const EdgeInsets.only(bottom: 30),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(0),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.3),
-                            blurRadius: 2,
-                            offset: const Offset(0, 4),
-                          ),
-                        ],
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          // First row: "Welcome," and Logout button
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              // Welcome text
-                              Text(
-                                'Welcome,',
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  color: AppColors.grayColor,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                              // Logout button
-                              GestureDetector(
-                                onTap: () {
-                                  _showLogoutConfirmation(context);
-                                },
-                                child: Container(
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 12,
-                                    vertical: 8,
-                                  ),
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      Icon(
-                                        Icons.exit_to_app,
-                                        color: Colors.red,
-                                        size: 18,
-                                      ),
-                                      const SizedBox(width: 4),
-                                      Text(
-                                        'Logout',
-                                        style: TextStyle(
-                                          fontSize: 14,
-                                          color: Colors.red,
-                                          fontWeight: FontWeight.w500,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          // Second row: User name (will wrap if needed)
-                          const SizedBox(height: 4),
-                          Text(
-                            '$userName!',
-                            style: TextStyle(
-                              fontSize: 20,
-                              color: Colors.black,
-                              fontWeight: FontWeight.w900,
-                            ),
-                            overflow: TextOverflow.visible,
-                            maxLines: 2, 
-                          ),
-                        ],
-                      ),
-                    ),
+                    // Welcome section - USING COMMON FUNCTION
+                    buildWelcomeSection(userName, context, () {
+                      showLogoutConfirmation(context);
+                    }),
 
                     // Tiles section
                     Column(
@@ -133,7 +52,7 @@ class _EmployeeDashboardScreenState extends State<EmployeeDashboardScreen> {
                           child: Center(
                             child: SizedBox(
                               width: 700,
-                              child: _buildDashboardTile(
+                              child: buildDashboardTile(
                                 imagePath: 'assets/images/create_order.png',
                                 smallText: 'Create',
                                 largeText: 'Order',
@@ -152,7 +71,7 @@ class _EmployeeDashboardScreenState extends State<EmployeeDashboardScreen> {
                           child: Center(
                             child: SizedBox(
                               width: 700,
-                              child: _buildDashboardTile(
+                              child: buildDashboardTile(
                                 imagePath: 'assets/images/manage_order.png',
                                 smallText: 'Manage',
                                 largeText: 'Order',
@@ -179,7 +98,7 @@ class _EmployeeDashboardScreenState extends State<EmployeeDashboardScreen> {
                           child: Center(
                             child: SizedBox(
                               width: 700,
-                              child: _buildDashboardTile(
+                              child: buildDashboardTile(
                                 imagePath: 'assets/images/track_or.png',
                                 smallText: 'Track',
                                 largeText: 'Order Record',
@@ -204,7 +123,7 @@ class _EmployeeDashboardScreenState extends State<EmployeeDashboardScreen> {
                           child: Center(
                             child: SizedBox(
                               width: 700,
-                              child: _buildDashboardTile(
+                              child: buildDashboardTile(
                                 imagePath: 'assets/images/history.png',
                                 smallText: 'View',
                                 largeText: 'Document Activity History',
@@ -229,7 +148,7 @@ class _EmployeeDashboardScreenState extends State<EmployeeDashboardScreen> {
                           child: Center(
                             child: SizedBox(
                               width: 700,
-                              child: _buildDashboardTile(
+                              child: buildDashboardTile(
                                 imagePath: 'assets/images/history.png',
                                 smallText: 'View',
                                 largeText: 'Order Activity History',
@@ -258,85 +177,7 @@ class _EmployeeDashboardScreenState extends State<EmployeeDashboardScreen> {
     );
   }
 
-  Widget _buildDashboardTile({
-    required String imagePath,
-    required String smallText,
-    required String largeText,
-    required VoidCallback onTap,
-  }) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        width: double.infinity,
-        padding: const EdgeInsets.all(20),
-        decoration: BoxDecoration(
-          color: AppColors.tileColor,
-          borderRadius: BorderRadius.circular(20),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.3),
-              blurRadius: 2,
-              offset: const Offset(0, 4),
-            ),
-          ],
-        ),
-        child: Row(
-          children: [
-            Container(
-              width: 70,
-              height: 70,
-              decoration: BoxDecoration(
-                color: AppColors.circleColor,
-                shape: BoxShape.circle,
-              ),
-              child: Center(
-                child: Image.asset(
-                  imagePath,
-                  width: 40,
-                  height: 40,
-                  fit: BoxFit.contain,
-                  errorBuilder: (context, error, stackTrace) {
-                    return Icon(Icons.business, size: 35, color: Colors.white);
-                  },
-                ),
-              ),
-            ),
-            const SizedBox(width: 16),
-            // Text section
-            Expanded(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // Smaller text
-                  Text(
-                    smallText,
-                    style: TextStyle(
-                      fontSize: 13,
-                      color: AppColors.smallTextColor,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                  const SizedBox(height: 4),
-                  // Larger text
-                  Text(
-                    largeText,
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: AppColors.largeTextColor,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  // Show Create Order Dialog (First Dialog)
+  // Employee-specific dialog functions (UNCHANGED)
   void _showCreateOrderDialog(BuildContext context) {
     String purchaseOrderNumber = '';
     bool showError = false;
@@ -370,7 +211,6 @@ class _EmployeeDashboardScreenState extends State<EmployeeDashboardScreen> {
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      // Main Title
                       Text(
                         'CREATE ORDER',
                         style: TextStyle(
@@ -379,10 +219,7 @@ class _EmployeeDashboardScreenState extends State<EmployeeDashboardScreen> {
                           color: Colors.black,
                         ),
                       ),
-
                       const SizedBox(height: 20),
-
-                      // Gray subtitle
                       SizedBox(
                         width: 400,
                         child: Text(
@@ -394,10 +231,7 @@ class _EmployeeDashboardScreenState extends State<EmployeeDashboardScreen> {
                           ),
                         ),
                       ),
-
                       const SizedBox(height: 30),
-
-                      // Purchase Order Number Text Field
                       SizedBox(
                         width: 400,
                         child: TextField(
@@ -420,7 +254,6 @@ class _EmployeeDashboardScreenState extends State<EmployeeDashboardScreen> {
                             contentPadding: const EdgeInsets.all(16),
                           ),
                           onChanged: (value) {
-                            // Automatically capitalize if user types in lowercase
                             String formattedValue = value;
                             if (value.toLowerCase().startsWith('po')) {
                               formattedValue = 'PO${value.substring(2)}';
@@ -432,20 +265,16 @@ class _EmployeeDashboardScreenState extends State<EmployeeDashboardScreen> {
                               errorMessage = '';
                             });
                           },
-                          // Handle Enter key press
                           onSubmitted: (value) {
-                            // Format the value
                             String formattedValue = value;
                             if (value.toLowerCase().startsWith('po')) {
                               formattedValue = 'PO${value.substring(2)}';
                             }
 
-                            // Update the state
                             setState(() {
                               purchaseOrderNumber = formattedValue;
                             });
 
-                            // Perform validation
                             if (purchaseOrderNumber.isEmpty) {
                               setState(() {
                                 showError = true;
@@ -455,7 +284,6 @@ class _EmployeeDashboardScreenState extends State<EmployeeDashboardScreen> {
                               return;
                             }
 
-                            // Validate PO format: PO followed by exactly 8 digits
                             final RegExp poPattern = RegExp(r'^PO\d{8}$');
                             if (!poPattern.hasMatch(purchaseOrderNumber)) {
                               setState(() {
@@ -466,8 +294,6 @@ class _EmployeeDashboardScreenState extends State<EmployeeDashboardScreen> {
                               return;
                             }
 
-                            // TODO: Check if PO already exists in the data
-                            // For now, we 'll assume it's validand proceed to next dialog
                             Navigator.of(context).pop();
                             _showCustomerNameDialog(
                               context,
@@ -476,8 +302,6 @@ class _EmployeeDashboardScreenState extends State<EmployeeDashboardScreen> {
                           },
                         ),
                       ),
-
-                      // Error message if field is invalid or PO already exists
                       if (showError && errorMessage.isNotEmpty)
                         SizedBox(
                           width: 400,
@@ -504,10 +328,7 @@ class _EmployeeDashboardScreenState extends State<EmployeeDashboardScreen> {
                             ),
                           ),
                         ),
-
                       const SizedBox(height: 30),
-
-                      // Next button
                       SizedBox(
                         width: 200,
                         child: CustomButtons.dialogActionButton(
@@ -543,10 +364,7 @@ class _EmployeeDashboardScreenState extends State<EmployeeDashboardScreen> {
                           borderRadius: 10,
                         ),
                       ),
-
                       const SizedBox(height: 15),
-
-                      // Cancel button
                       CustomTextButtons.cancelButton(context: context),
                     ],
                   ),
@@ -559,7 +377,6 @@ class _EmployeeDashboardScreenState extends State<EmployeeDashboardScreen> {
     );
   }
 
-  // Show Customer Name Dialog (Second Dialog)
   void _showCustomerNameDialog(
     BuildContext context,
     String purchaseOrderNumber,
@@ -596,7 +413,6 @@ class _EmployeeDashboardScreenState extends State<EmployeeDashboardScreen> {
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      // Main Title
                       Text(
                         'CREATE ORDER',
                         style: TextStyle(
@@ -605,10 +421,7 @@ class _EmployeeDashboardScreenState extends State<EmployeeDashboardScreen> {
                           color: Colors.black,
                         ),
                       ),
-
                       const SizedBox(height: 20),
-
-                      // Gray subtitle with dynamic PO number
                       SizedBox(
                         width: 400,
                         child: Text(
@@ -620,10 +433,7 @@ class _EmployeeDashboardScreenState extends State<EmployeeDashboardScreen> {
                           ),
                         ),
                       ),
-
                       const SizedBox(height: 30),
-
-                      // Customer Name Text Field
                       SizedBox(
                         width: 400,
                         child: TextField(
@@ -652,14 +462,11 @@ class _EmployeeDashboardScreenState extends State<EmployeeDashboardScreen> {
                               errorMessage = '';
                             });
                           },
-                          // ADD THIS: Handle Enter key press
                           onSubmitted: (value) {
-                            // Update the state
                             setState(() {
                               customerName = value;
                             });
 
-                            // Perform validation
                             if (customerName.isEmpty) {
                               setState(() {
                                 showError = true;
@@ -668,10 +475,7 @@ class _EmployeeDashboardScreenState extends State<EmployeeDashboardScreen> {
                               return;
                             }
 
-                            // Close the dialog
                             Navigator.of(context).pop();
-
-                            // Close the dialog and navigate to full-screen order details dialog
                             Navigator.of(context).pop();
                             Navigator.push(
                               context,
@@ -687,8 +491,6 @@ class _EmployeeDashboardScreenState extends State<EmployeeDashboardScreen> {
                           },
                         ),
                       ),
-
-                      // Error message if field is empty
                       if (showError && errorMessage.isNotEmpty)
                         SizedBox(
                           width: 400,
@@ -715,10 +517,7 @@ class _EmployeeDashboardScreenState extends State<EmployeeDashboardScreen> {
                             ),
                           ),
                         ),
-
                       const SizedBox(height: 30),
-
-                      // Create button
                       SizedBox(
                         width: 200,
                         child: CustomButtons.dialogActionButton(
@@ -751,10 +550,7 @@ class _EmployeeDashboardScreenState extends State<EmployeeDashboardScreen> {
                           borderRadius: 10,
                         ),
                       ),
-
                       const SizedBox(height: 15),
-
-                      // Cancel button
                       CustomTextButtons.cancelButton(context: context),
                     ],
                   ),
@@ -764,37 +560,6 @@ class _EmployeeDashboardScreenState extends State<EmployeeDashboardScreen> {
           },
         );
       },
-    );
-  }
-
-  void _showLogoutConfirmation(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Logout'),
-          content: const Text('Are you sure you want to logout?'),
-          actions: [
-            CustomTextButtons.grayCancelButton(context: context),
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-                _performLogout(context);
-              },
-              child: const Text('Logout', style: TextStyle(color: Colors.red)),
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-  void _performLogout(BuildContext context) {
-    // Navigate back to SignInScreen and clear the navigation stack
-    Navigator.pushAndRemoveUntil(
-      context,
-      MaterialPageRoute(builder: (context) => const SignInScreen()),
-      (route) => false,
     );
   }
 }
