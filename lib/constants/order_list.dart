@@ -150,11 +150,11 @@ void _applySorting() {
           break;
         case 'Net Price':
           double priceA = double.tryParse(
-                a['netPrice']!.replaceAll('\₱', '').replaceAll(',', '').replaceAll('₱', ''),
+                a['netPrice']!.replaceAll('₱', '').replaceAll(',', '').replaceAll('₱', ''),
               ) ??
               0.0;
           double priceB = double.tryParse(
-                b['netPrice']!.replaceAll('\₱', '').replaceAll(',', '').replaceAll('₱', ''),
+                b['netPrice']!.replaceAll('₱', '').replaceAll(',', '').replaceAll('₱', ''),
               ) ??
               0.0;
           comparison = priceA.compareTo(priceB);
@@ -519,7 +519,7 @@ void _showFilterDialog(BuildContext context) {
                               ],
                             ),
                           );
-                        }).toList(),
+                        }),
                         if (_filteredOrders.isNotEmpty)
                           Container(
                             padding: const EdgeInsets.all(30),

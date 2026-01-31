@@ -18,230 +18,242 @@ class OwnerDashboardScreen extends StatefulWidget {
 }
 
 class _OwnerDashboardScreenState extends State<OwnerDashboardScreen> {
-
   // hardcoded username
   final String userName = "Juan Dela Cruz";
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: CustomAppBars.defaultAppBar(
-        context: context,
-        title: 'Owner Dashboard',
-        navigationType: NavigationType.pop,
-      ),
-      body: SafeArea(
-        child: Container(
-          width: double.infinity,
-          color: Colors.white,
-          child: SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(25.0, 40.0, 25.0, 20.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  // Welcome section 
-                  Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.all(30),
-                    margin: const EdgeInsets.only(bottom: 30),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(0), 
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.3),
-                          blurRadius: 2,
-                          offset: const Offset(0, 4),
-                        ),
-                      ],
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        // Welcome text section
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Welcome,',
-                              style: TextStyle(
-                                fontSize: 16,
-                                color: AppColors.grayColor,
-                                fontWeight: FontWeight.w500,
+    return SafeArea(
+      child: Scaffold(
+        appBar: CustomAppBars.defaultAppBar(
+          context: context,
+          title: 'Owner Dashboard',
+          navigationType: NavigationType.pop,
+        ),
+        body: SafeArea(
+          child: Container(
+            width: double.infinity,
+            color: Colors.white,
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(25.0, 40.0, 25.0, 20.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    // Welcome section
+                    Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.all(20),
+                      margin: const EdgeInsets.only(bottom: 30),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(0),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.3),
+                            blurRadius: 2,
+                            offset: const Offset(0, 4),
+                          ),
+                        ],
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          // First row: "Welcome," and Logout button
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              // Welcome text
+                              Text(
+                                'Welcome,',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  color: AppColors.grayColor,
+                                  fontWeight: FontWeight.w500,
+                                ),
                               ),
-                            ),
-                            const SizedBox(height: 8),
-                            // Username
-                            Text(
-                              '$userName!',
-                              style: TextStyle(
-                                fontSize: 24,
-                                color: Colors.black,
-                                fontWeight: FontWeight.w900,
-                              ),
-                            ),
-                          ],
-                        ),
-                        // Logout button
-                        GestureDetector(
-                          onTap: () {
-                            _showLogoutConfirmation(context);
-                          },
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 16,
-                              vertical: 10,
-                            ),
-                            child: Row(
-                              children: [
-                                Icon(Icons.exit_to_app, color: Colors.red, size: 20),
-                                const SizedBox(width: 8),
-                                Text(
-                                  'Logout',
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    color: Colors.red,
-                                    fontWeight: FontWeight.w500,
+                              // Logout button
+                              GestureDetector(
+                                onTap: () {
+                                  _showLogoutConfirmation(context);
+                                },
+                                child: Container(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 12,
+                                    vertical: 8,
+                                  ),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Icon(
+                                        Icons.exit_to_app,
+                                        color: Colors.red,
+                                        size: 18,
+                                      ),
+                                      const SizedBox(width: 4),
+                                      Text(
+                                        'Logout',
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          color: Colors.red,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
-                              ],
+                              ),
+                            ],
+                          ),
+                          // Second row: User name (will wrap if needed)
+                          const SizedBox(height: 4),
+                          Text(
+                            '$userName!',
+                            style: TextStyle(
+                              fontSize: 20,
+                              color: Colors.black,
+                              fontWeight: FontWeight.w900,
+                            ),
+                            overflow: TextOverflow.visible,
+                            maxLines: 2,
+                          ),
+                        ],
+                      ),
+                    ),
+
+                    // Tiles section
+                    Column(
+                      children: [
+                        // First tile
+                        SizedBox(
+                          height: 120,
+                          child: Center(
+                            child: SizedBox(
+                              width: 700,
+                              child: _buildDashboardTile(
+                                imagePath: 'assets/images/approve_order.png',
+                                smallText: 'Approve',
+                                largeText: 'Order',
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          const ApproveOrderScreen(),
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 20),
+
+                        // Second tile
+                        SizedBox(
+                          height: 120,
+                          child: Center(
+                            child: SizedBox(
+                              width: 700,
+                              child: _buildDashboardTile(
+                                imagePath: 'assets/images/manage_order.png',
+                                smallText: 'Manage',
+                                largeText: 'Order',
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          const ManageOrderScreen(
+                                            userType: 'owner',
+                                          ),
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 20),
+
+                        // Third tile
+                        SizedBox(
+                          height: 120,
+                          child: Center(
+                            child: SizedBox(
+                              width: 700,
+                              child: _buildDashboardTile(
+                                imagePath: 'assets/images/track_or.png',
+                                smallText: 'Track',
+                                largeText: 'Order Record',
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          const TORSearchPage(),
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 20),
+
+                        // Fourth tile
+                        SizedBox(
+                          height: 120,
+                          child: Center(
+                            child: SizedBox(
+                              width: 700,
+                              child: _buildDashboardTile(
+                                imagePath: 'assets/images/history.png',
+                                smallText: 'View',
+                                largeText: 'Document Activity History',
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          const DoctActHisSearchPage(),
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 20),
+
+                        // Fifth tile
+                        SizedBox(
+                          height: 120,
+                          child: Center(
+                            child: SizedBox(
+                              width: 700,
+                              child: _buildDashboardTile(
+                                imagePath: 'assets/images/history.png',
+                                smallText: 'View',
+                                largeText: 'Order Activity History',
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          const OrderActivityHistoryScreen(),
+                                    ),
+                                  );
+                                },
+                              ),
                             ),
                           ),
                         ),
                       ],
                     ),
-                  ),
-
-                  // Tiles section
-                  Column(
-                    children: [
-                      // First tile
-                      SizedBox(
-                        height: 120,
-                        child: Center(
-                          child: SizedBox(
-                            width: 700, 
-                            child: _buildDashboardTile(
-                              imagePath: 'assets/images/approve_order.png',
-                              smallText: 'Approve',
-                              largeText: 'Order',
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        const ApproveOrderScreen(),
-                                  ),
-                                );
-                              },
-                            ),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 20),
-
-                      // Second tile
-                      SizedBox(
-                        height: 120,
-                        child: Center(
-                          child: SizedBox(
-                            width: 700, 
-                            child: _buildDashboardTile(
-                              imagePath: 'assets/images/manage_order.png',
-                              smallText: 'Manage',
-                              largeText: 'Order',
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        const ManageOrderScreen(userType: 'owner',),
-                                  ),
-                                );
-                              },
-                            ),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 20),
-
-                      // Third tile
-                      SizedBox(
-                        height: 120,
-                        child: Center(
-                          child: SizedBox(
-                            width: 700, 
-                            child: _buildDashboardTile(
-                              imagePath: 'assets/images/track_or.png',
-                              smallText: 'Track',
-                              largeText: 'Order Record',
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        const TORSearchPage(),
-                                  ),
-                                );
-                              },
-                            ),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 20),
-
-                      // Fourth tile
-                      SizedBox(
-                        height: 120,
-                        child: Center(
-                          child: SizedBox(
-                            width: 700, 
-                            child: _buildDashboardTile(
-                              imagePath: 'assets/images/history.png',
-                              smallText: 'View',
-                              largeText: 'Document Activity History',
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => const DoctActHisSearchPage(),
-                                  ),
-                                );
-                              },
-                            ),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 20),
-
-                      // Fifth tile
-                      SizedBox(
-                        height: 120,
-                        child: Center(
-                          child: SizedBox(
-                            width: 700,
-                            child: _buildDashboardTile(
-                              imagePath: 'assets/images/history.png',
-                              smallText: 'View',
-                              largeText: 'Order Activity History',
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        const OrderActivityHistoryScreen(),
-                                  ),
-                                );
-                              },
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),
