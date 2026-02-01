@@ -995,63 +995,66 @@ class _UpdateOrderScreenState extends State<UpdateOrderScreen> {
                                                   padding: const EdgeInsets.all(
                                                     8,
                                                   ),
-                                                  child: Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .center,
-                                                    children: [
-                                                      // Pencil icon - disabled when editing, enabled when saved
-                                                      IconButton(
-                                                        onPressed: isEditing
-                                                            ? null // Disabled during editing
-                                                            : () {
-                                                                _editItem(
-                                                                  index,
-                                                                );
-                                                              },
-                                                        icon: Icon(
-                                                          Icons.edit,
-                                                          color: isEditing
-                                                              ? AppColors
-                                                                    .iconGrayColor
-                                                                    .withOpacity(
-                                                                      0.3,
-                                                                    )
-                                                              : AppColors
-                                                                    .iconGrayColor,
-                                                          size: 18,
-                                                        ),
-                                                        padding:
-                                                            EdgeInsets.zero,
-                                                        constraints:
-                                                            const BoxConstraints(
-                                                              minWidth: 20,
-                                                              minHeight: 20,
+                                                  child: Center(
+                                                    child: Container(
+                                                      width:
+                                                          44, // ← Fixed width for both
+                                                      height: 22,
+                                                      child: Stack(
+                                                        children: [
+                                                          // Pencil icon on left half
+                                                          Positioned(
+                                                            left: 0,
+                                                            child: GestureDetector(
+                                                              onTap: isEditing
+                                                                  ? null
+                                                                  : () =>
+                                                                        _editItem(
+                                                                          index,
+                                                                        ),
+                                                              child: Container(
+                                                                width: 22,
+                                                                height: 22,
+                                                                child: Icon(
+                                                                  Icons.edit,
+                                                                  color:
+                                                                      isEditing
+                                                                      ? AppColors
+                                                                            .iconGrayColor
+                                                                            .withOpacity(
+                                                                              0.3,
+                                                                            )
+                                                                      : AppColors
+                                                                            .iconGrayColor,
+                                                                  size: 16,
+                                                                ),
+                                                              ),
                                                             ),
-                                                            visualDensity: VisualDensity.compact,
-                                                      ),
-
-                                                      // Trash bin icon (always enabled)
-                                                      IconButton(
-                                                        onPressed: () {
-                                                          _deleteItem(index);
-                                                        },
-                                                        icon: Icon(
-                                                          Icons.delete_outline,
-                                                          color: AppColors
-                                                              .iconGrayColor,
-                                                          size: 18,
-                                                        ),
-                                                        padding:
-                                                            EdgeInsets.zero,
-                                                        constraints:
-                                                            const BoxConstraints(
-                                                              minWidth: 20,
-                                                              minHeight: 20,
+                                                          ),
+                                                          // Trash icon on right half
+                                                          Positioned(
+                                                            right: 0,
+                                                            child: GestureDetector(
+                                                              onTap: () =>
+                                                                  _deleteItem(
+                                                                    index,
+                                                                  ),
+                                                              child: Container(
+                                                                width: 22,
+                                                                height: 22,
+                                                                child: Icon(
+                                                                  Icons
+                                                                      .delete_outline,
+                                                                  color: AppColors
+                                                                      .iconGrayColor,
+                                                                  size: 16,
+                                                                ),
+                                                              ),
                                                             ),
-                                                            visualDensity: VisualDensity.compact,
+                                                          ),
+                                                        ],
                                                       ),
-                                                    ],
+                                                    ),
                                                   ),
                                                 ),
                                               ],
