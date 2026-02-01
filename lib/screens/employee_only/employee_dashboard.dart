@@ -38,7 +38,7 @@ class _EmployeeDashboardScreenState extends State<EmployeeDashboardScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    // Welcome section - USING COMMON FUNCTION
+                    // Welcome section 
                     buildWelcomeSection(userName, context, () {
                       showLogoutConfirmation(context);
                     }),

@@ -1,7 +1,6 @@
 // lib/widgets/base_dashboard.dart
 import 'package:flutter/material.dart';
 import 'package:draft_screens/constants/colors.dart';
-import 'package:draft_screens/constants/app_bars.dart';
 import 'package:draft_screens/constants/buttons/text_buttons.dart';
 import '../screens/all_logins/signin_screen.dart';
 

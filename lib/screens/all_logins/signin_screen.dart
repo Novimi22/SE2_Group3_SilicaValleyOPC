@@ -42,67 +42,67 @@ class _SignInScreenState extends State<SignInScreen> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-    child: Scaffold(
-      body: SafeArea(
-        child: Column(
-          children: [
-            // Top section with background image
-            Container(
-              height: 200, // fixed height
-              width: double.infinity, // Takes full available width
-              decoration: const BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage('assets/images/bg2.png'),
-                  fit: BoxFit.cover, // image cover the entire container
+      child: Scaffold(
+        body: SafeArea(
+          child: Column(
+            children: [
+              // Top section with background image
+              Container(
+                height: 200, // fixed height
+                width: double.infinity, // Takes full available width
+                decoration: const BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage('assets/images/bg2.png'),
+                    fit: BoxFit.cover, // image cover the entire container
+                  ),
                 ),
               ),
-            ),
 
-            // White form container
-            // Expanded makes this widget take all available vertical space
-            Expanded(
-              child: Material(
-                // TODO: fix rounded top corners
-                borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(40.0),
-                  topRight: Radius.circular(40.0),
-                ),
-                color: Colors.white,
-                clipBehavior: Clip.antiAlias,
-                // LayoutBuilder gives information about available space
-                child: LayoutBuilder(
-                  builder: (context, constraints) {
-                    // 'constraints' tells how much space is available
-                    return SingleChildScrollView(
-                      // Allows scrolling if content is taller than available space
-                      child: ConstrainedBox(
-                        // Forces minimum height to be the available height
-                        // This helps with layout when content is shorter than screen
-                        constraints: BoxConstraints(
-                          minHeight: constraints.maxHeight,
-                        ),
-                        // Padding adds space inside the widget
-                        child: Padding(
-                          padding: const EdgeInsets.fromLTRB(
-                            25.0,
-                            40.0,
-                            25.0,
-                            20.0,
+              // White form container
+              // Expanded makes this widget take all available vertical space
+              Expanded(
+                child: Material(
+                  // TODO: fix rounded top corners
+                  borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(40.0),
+                    topRight: Radius.circular(40.0),
+                  ),
+                  color: Colors.white,
+                  clipBehavior: Clip.antiAlias,
+                  // LayoutBuilder gives information about available space
+                  child: LayoutBuilder(
+                    builder: (context, constraints) {
+                      // 'constraints' tells how much space is available
+                      return SingleChildScrollView(
+                        // Allows scrolling if content is taller than available space
+                        child: ConstrainedBox(
+                          // Forces minimum height to be the available height
+                          // This helps with layout when content is shorter than screen
+                          constraints: BoxConstraints(
+                            minHeight: constraints.maxHeight,
                           ),
-                          // Left: 25, Top: 40, Right: 25, Bottom: 20
-                          // Calls separate method to build the form
-                          child: _buildForm(constraints.maxHeight),
+                          // Padding adds space inside the widget
+                          child: Padding(
+                            padding: const EdgeInsets.fromLTRB(
+                              25.0,
+                              40.0,
+                              25.0,
+                              20.0,
+                            ),
+                            // Left: 25, Top: 40, Right: 25, Bottom: 20
+                            // Calls separate method to build the form
+                            child: _buildForm(constraints.maxHeight),
+                          ),
                         ),
-                      ),
-                    );
-                  },
+                      );
+                    },
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
-    )
     );
   }
 
@@ -264,7 +264,7 @@ class _SignInScreenState extends State<SignInScreen> {
 
           // Forgot password link at the bottom
           Padding(
-            padding: const EdgeInsets.only(bottom: 20), 
+            padding: const EdgeInsets.only(bottom: 20),
             child: Center(
               child: CustomTextButtons.forgotPasswordButton(context: context),
             ),

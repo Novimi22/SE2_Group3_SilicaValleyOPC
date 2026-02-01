@@ -113,92 +113,100 @@ class _OrderListWidgetState extends State<OrderListWidget> {
     });
   }
 
-void _applySorting() {
-  setState(() {
-    _filteredOrders.sort((a, b) {
-      int comparison = 0;
+  void _applySorting() {
+    setState(() {
+      _filteredOrders.sort((a, b) {
+        int comparison = 0;
 
-      switch (_selectedSortBy) {
-        case 'Client Name':
-          // Extract numbers from client names for proper numeric sorting
-          final numA = _extractNumberFromString(a['clientName']!);
-          final numB = _extractNumberFromString(b['clientName']!);
-          
-          // If both have numbers, sort numerically
-          if (numA != null && numB != null) {
-            comparison = numA.compareTo(numB);
-          } else {
-            // Fallback to string comparison
-            comparison = a['clientName']!.compareTo(b['clientName']!);
-          }
-          break;
-        case 'Purchase Order Number':
-          // Extract numbers from PO numbers for proper numeric sorting
-          final numA = _extractNumberFromString(a['poNumber']!);
-          final numB = _extractNumberFromString(b['poNumber']!);
-          
-          // If both have numbers, sort numerically
-          if (numA != null && numB != null) {
-            comparison = numA.compareTo(numB);
-          } else {
-            // Fallback to string comparison
-            comparison = a['poNumber']!.compareTo(b['poNumber']!);
-          }
-          break;
-        case 'Creation Date':
-          comparison = a['creationDate']!.compareTo(b['creationDate']!);
-          break;
-        case 'Net Price':
-          double priceA = double.tryParse(
-                a['netPrice']!.replaceAll('₱', '').replaceAll(',', '').replaceAll('₱', ''),
-              ) ??
-              0.0;
-          double priceB = double.tryParse(
-                b['netPrice']!.replaceAll('₱', '').replaceAll(',', '').replaceAll('₱', ''),
-              ) ??
-              0.0;
-          comparison = priceA.compareTo(priceB);
-          break;
-        default:
-          comparison = a['creationDate']!.compareTo(b['creationDate']!);
-          break;
-      }
+        switch (_selectedSortBy) {
+          case 'Client Name':
+            // Extract numbers from client names for proper numeric sorting
+            final numA = _extractNumberFromString(a['clientName']!);
+            final numB = _extractNumberFromString(b['clientName']!);
 
-      return _selectedSortOrder == 'Descending' ? -comparison : comparison;
-    });
-  });
-}
+            // If both have numbers, sort numerically
+            if (numA != null && numB != null) {
+              comparison = numA.compareTo(numB);
+            } else {
+              // Fallback to string comparison
+              comparison = a['clientName']!.compareTo(b['clientName']!);
+            }
+            break;
+          case 'Purchase Order Number':
+            // Extract numbers from PO numbers for proper numeric sorting
+            final numA = _extractNumberFromString(a['poNumber']!);
+            final numB = _extractNumberFromString(b['poNumber']!);
 
-// Helper function to extract numbers from strings like "Client 1", "PO1000001", etc.
-int? _extractNumberFromString(String text) {
-  try {
-    // Find all sequences of digits
-    final matches = RegExp(r'\d+').allMatches(text);
-    if (matches.isNotEmpty) {
-      // Take the first number found
-      return int.parse(matches.first.group(0)!);
-    }
-  } catch (e) {
-    // If parsing fails, return null
-  }
-  return null;
-}
+            // If both have numbers, sort numerically
+            if (numA != null && numB != null) {
+              comparison = numA.compareTo(numB);
+            } else {
+              // Fallback to string comparison
+              comparison = a['poNumber']!.compareTo(b['poNumber']!);
+            }
+            break;
+          case 'Creation Date':
+            comparison = a['creationDate']!.compareTo(b['creationDate']!);
+            break;
+          case 'Net Price':
+            double priceA =
+                double.tryParse(
+                  a['netPrice']!
+                      .replaceAll('₱', '')
+                      .replaceAll(',', '')
+                      .replaceAll('₱', ''),
+                ) ??
+                0.0;
+            double priceB =
+                double.tryParse(
+                  b['netPrice']!
+                      .replaceAll('₱', '')
+                      .replaceAll(',', '')
+                      .replaceAll('₱', ''),
+                ) ??
+                0.0;
+            comparison = priceA.compareTo(priceB);
+            break;
+          default:
+            comparison = a['creationDate']!.compareTo(b['creationDate']!);
+            break;
+        }
 
-void _showFilterDialog(BuildContext context) {
-  SearchFilterDialog.showOrderFilterDialog(
-    context: context,
-    filterIconKey: _filterIconKey,
-    selectedSortBy: _selectedSortBy,
-    selectedSortOrder: _selectedSortOrder,
-    onApply: (sortBy, sortOrder) {
-      setState(() {
-        _selectedSortBy = sortBy;
-        _selectedSortOrder = sortOrder;
+        return _selectedSortOrder == 'Descending' ? -comparison : comparison;
       });
-      _applySorting();
-    },
-  );
-}
+    });
+  }
+
+  // Helper function to extract numbers from strings like "Client 1", "PO1000001", etc.
+  int? _extractNumberFromString(String text) {
+    try {
+      // Find all sequences of digits
+      final matches = RegExp(r'\d+').allMatches(text);
+      if (matches.isNotEmpty) {
+        // Take the first number found
+        return int.parse(matches.first.group(0)!);
+      }
+    } catch (e) {
+      // If parsing fails, return null
+    }
+    return null;
+  }
+
+  void _showFilterDialog(BuildContext context) {
+    SearchFilterDialog.showOrderFilterDialog(
+      context: context,
+      filterIconKey: _filterIconKey,
+      selectedSortBy: _selectedSortBy,
+      selectedSortOrder: _selectedSortOrder,
+      onApply: (sortBy, sortOrder) {
+        setState(() {
+          _selectedSortBy = sortBy;
+          _selectedSortOrder = sortOrder;
+        });
+        _applySorting();
+      },
+    );
+  }
 
   void _showDeleteConfirmationDialog(String poNumber, String clientName) {
     String purchaseOrderNumber = '';
@@ -212,7 +220,9 @@ void _showFilterDialog(BuildContext context) {
           builder: (context, setState) {
             return Dialog(
               elevation: 20,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20),
+              ),
               child: Container(
                 decoration: BoxDecoration(
                   color: AppColors.dialogBgColor,
@@ -245,7 +255,10 @@ void _showFilterDialog(BuildContext context) {
                         child: Text(
                           'Re-enter Purchase Order Number to confirm deletion',
                           textAlign: TextAlign.center,
-                          style: TextStyle(fontSize: 16, color: AppColors.grayColor),
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: AppColors.grayColor,
+                          ),
                         ),
                       ),
                       const SizedBox(height: 30),
@@ -257,11 +270,15 @@ void _showFilterDialog(BuildContext context) {
                             hintText: 'Enter Purchase Order Number',
                             hintStyle: const TextStyle(color: Colors.black26),
                             border: OutlineInputBorder(
-                              borderSide: const BorderSide(color: Color(0xFF19191B)),
+                              borderSide: const BorderSide(
+                                color: Color(0xFF19191B),
+                              ),
                               borderRadius: BorderRadius.circular(10),
                             ),
                             enabledBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(color: Color(0xFF19191B)),
+                              borderSide: const BorderSide(
+                                color: Color(0xFF19191B),
+                              ),
                               borderRadius: BorderRadius.circular(10),
                             ),
                             contentPadding: const EdgeInsets.all(16),
@@ -277,14 +294,16 @@ void _showFilterDialog(BuildContext context) {
                             if (value.isEmpty) {
                               setState(() {
                                 showError = true;
-                                errorMessage = 'Please enter the Purchase Order Number';
+                                errorMessage =
+                                    'Please enter the Purchase Order Number';
                               });
                               return;
                             }
                             if (value != poNumber) {
                               setState(() {
                                 showError = true;
-                                errorMessage = 'Purchase Order Number does not match';
+                                errorMessage =
+                                    'Purchase Order Number does not match';
                               });
                               return;
                             }
@@ -300,12 +319,19 @@ void _showFilterDialog(BuildContext context) {
                             padding: const EdgeInsets.only(top: 16.0),
                             child: Row(
                               children: [
-                                const Icon(Icons.error_outline, color: Colors.red, size: 20),
+                                const Icon(
+                                  Icons.error_outline,
+                                  color: Colors.red,
+                                  size: 20,
+                                ),
                                 const SizedBox(width: 8),
                                 Expanded(
                                   child: Text(
                                     errorMessage,
-                                    style: TextStyle(color: Colors.red, fontSize: 14),
+                                    style: TextStyle(
+                                      color: Colors.red,
+                                      fontSize: 14,
+                                    ),
                                   ),
                                 ),
                               ],
@@ -322,14 +348,16 @@ void _showFilterDialog(BuildContext context) {
                             if (purchaseOrderNumber.isEmpty) {
                               setState(() {
                                 showError = true;
-                                errorMessage = 'Please enter the Purchase Order Number';
+                                errorMessage =
+                                    'Please enter the Purchase Order Number';
                               });
                               return;
                             }
                             if (purchaseOrderNumber != poNumber) {
                               setState(() {
                                 showError = true;
-                                errorMessage = 'Purchase Order Number does not match';
+                                errorMessage =
+                                    'Purchase Order Number does not match';
                               });
                               return;
                             }
@@ -359,7 +387,9 @@ void _showFilterDialog(BuildContext context) {
     }
 
     setState(() {
-      widget.initialOrders.removeWhere((order) => order['poNumber'] == poNumber);
+      widget.initialOrders.removeWhere(
+        (order) => order['poNumber'] == poNumber,
+      );
       _filteredOrders.removeWhere((order) => order['poNumber'] == poNumber);
       _updateExpandedStates();
     });
@@ -425,7 +455,10 @@ void _showFilterDialog(BuildContext context) {
                     width: 700,
                     margin: const EdgeInsets.symmetric(horizontal: 25),
                     decoration: BoxDecoration(
-                      border: Border.all(color: AppColors.borderColor, width: 1),
+                      border: Border.all(
+                        color: AppColors.borderColor,
+                        width: 1,
+                      ),
                     ),
                     child: Column(
                       children: [
@@ -434,7 +467,10 @@ void _showFilterDialog(BuildContext context) {
                             padding: const EdgeInsets.all(40),
                             child: Text(
                               'No orders found${_searchController.text.isNotEmpty ? ' for "${_searchController.text}"' : ''}',
-                              style: TextStyle(fontSize: 16, color: AppColors.grayColor),
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: AppColors.grayColor,
+                              ),
                             ),
                           ),
                         ..._filteredOrders.asMap().entries.map((entry) {
@@ -447,10 +483,18 @@ void _showFilterDialog(BuildContext context) {
                             decoration: BoxDecoration(
                               color: AppColors.tile2Color,
                               border: index > 0
-                                  ? const Border(top: BorderSide(color: AppColors.borderColor, width: 1))
+                                  ? const Border(
+                                      top: BorderSide(
+                                        color: AppColors.borderColor,
+                                        width: 1,
+                                      ),
+                                    )
                                   : null,
                             ),
-                            padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 20),
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 25,
+                              vertical: 20,
+                            ),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -459,16 +503,24 @@ void _showFilterDialog(BuildContext context) {
                                   children: [
                                     Expanded(
                                       child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: [
                                           Text(
                                             order['poNumber']!,
-                                            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black),
+                                            style: const TextStyle(
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.black,
+                                            ),
                                           ),
                                           const SizedBox(height: 8),
                                           Text(
                                             'Last Updated: ${order['lastUpdated']!}',
-                                            style: TextStyle(fontSize: 14, color: AppColors.grayColor),
+                                            style: TextStyle(
+                                              fontSize: 14,
+                                              color: AppColors.grayColor,
+                                            ),
                                           ),
                                         ],
                                       ),
@@ -478,18 +530,27 @@ void _showFilterDialog(BuildContext context) {
                                       width: 40,
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(20),
-                                        border: Border.all(color: AppColors.darkGrayColor),
+                                        border: Border.all(
+                                          color: AppColors.darkGrayColor,
+                                        ),
                                       ),
                                       child: Material(
                                         color: Colors.transparent,
                                         borderRadius: BorderRadius.circular(20),
                                         child: InkWell(
                                           onTap: () {
-                                            setState(() => _isExpandedList[index] = !isExpanded);
+                                            setState(
+                                              () => _isExpandedList[index] =
+                                                  !isExpanded,
+                                            );
                                           },
-                                          borderRadius: BorderRadius.circular(20),
+                                          borderRadius: BorderRadius.circular(
+                                            20,
+                                          ),
                                           child: Icon(
-                                            isExpanded ? Icons.expand_less : Icons.expand_more,
+                                            isExpanded
+                                                ? Icons.expand_less
+                                                : Icons.expand_more,
                                             color: AppColors.darkGrayColor,
                                             size: 24,
                                           ),
@@ -502,11 +563,21 @@ void _showFilterDialog(BuildContext context) {
                                   Padding(
                                     padding: const EdgeInsets.only(top: 20),
                                     child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
-                                        _buildDetailRow('Client:', order['clientName']!),
-                                        _buildDetailRow('Created:', order['creationDate']!),
-                                        _buildDetailRow('Net Price:', order['netPrice']!),
+                                        _buildDetailRow(
+                                          'Client:',
+                                          order['clientName']!,
+                                        ),
+                                        _buildDetailRow(
+                                          'Created:',
+                                          order['creationDate']!,
+                                        ),
+                                        _buildDetailRow(
+                                          'Net Price:',
+                                          order['netPrice']!,
+                                        ),
                                         const SizedBox(height: 10),
                                         // BUTTONS SECTION
                                         if (widget.showMultipleButtons)
@@ -525,7 +596,11 @@ void _showFilterDialog(BuildContext context) {
                             padding: const EdgeInsets.all(30),
                             child: Text(
                               '- END -',
-                              style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: AppColors.grayColor),
+                              style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold,
+                                color: AppColors.grayColor,
+                              ),
                               textAlign: TextAlign.center,
                             ),
                           ),
@@ -548,7 +623,11 @@ void _showFilterDialog(BuildContext context) {
         children: [
           Text(
             label,
-            style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: AppColors.grayColor),
+            style: TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.w500,
+              color: AppColors.grayColor,
+            ),
           ),
           const SizedBox(width: 4),
           Text(
@@ -581,38 +660,39 @@ void _showFilterDialog(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
-        if (widget.showDeleteOption && widget.onDelete != null)
-          Container(
-            margin: const EdgeInsets.only(left: 12),
-            child: CustomTextButtons.deleteButton(
-              context: context,
-              onDelete: () => _showDeleteConfirmationDialog(order['poNumber']!, order['clientName']!),
-            ),
+        Flexible(
+          child: Wrap(
+            alignment: WrapAlignment.end,
+            crossAxisAlignment: WrapCrossAlignment.end,
+            spacing: 0, 
+            runSpacing: 8, 
+            children: [
+              if (widget.showDeleteOption && widget.onDelete != null)
+                CustomTextButtons.deleteButton(
+                  context: context,
+                  onDelete: () => _showDeleteConfirmationDialog(
+                    order['poNumber']!,
+                    order['clientName']!,
+                  ),
+                ),
+              if (widget.onUpdate != null)
+                CustomTextButtons.updateButton(
+                  context: context,
+                  onUpdate: () => widget.onUpdate!(order),
+                ),
+              if (widget.onView != null)
+                CustomTextButtons.viewButton(
+                  context: context,
+                  onView: () => widget.onView!(order),
+                ),
+              if (widget.onTrack != null)
+                CustomTextButtons.trackButton(
+                  context: context,
+                  onTrack: () => widget.onTrack!(order),
+                ),
+            ],
           ),
-        if (widget.onUpdate != null)
-          Container(
-            margin: const EdgeInsets.only(left: 12),
-            child: CustomTextButtons.updateButton(
-              context: context,
-              onUpdate: () => widget.onUpdate!(order),
-            ),
-          ),
-        if (widget.onView != null)
-          Container(
-            margin: const EdgeInsets.only(left: 12),
-            child: CustomTextButtons.viewButton(
-              context: context,
-              onView: () => widget.onView!(order),
-            ),
-          ),
-        if (widget.onTrack != null)
-          Container(
-            margin: const EdgeInsets.only(left: 12),
-            child: CustomTextButtons.trackButton(
-              context: context,
-              onTrack: () => widget.onTrack!(order),
-            ),
-          ),
+        ),
       ],
     );
   }
