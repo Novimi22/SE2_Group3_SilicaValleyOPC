@@ -19,25 +19,24 @@ class DoctActHisSearchPage extends StatelessWidget {
       };
     });
 
-    return OrderListWidget(
-      screenTitle: 'New Screen',
-            appBar: CustomAppBars.defaultAppBar(
-        context: context,
-        title: 'Document Activity History',
-        navigationType: NavigationType.pop,
+    return SafeArea(
+      child: OrderListWidget(
+        screenTitle: 'New Screen',
+        appBar: CustomAppBars.defaultAppBar(
+          context: context,
+          title: 'Document Activity History',
+          navigationType: NavigationType.pop,
+        ),
+        buttonText: 'View',
+        onButtonPressed: (order) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => EmployeeDashboardScreen()),
+          );
+        },
+        initialOrders: orders,
+        showDeleteOption: false,
       ),
-      buttonText: 'View', 
-      onButtonPressed: (order) {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => EmployeeDashboardScreen(
-            ),
-          ),
-        );
-      },
-      initialOrders: orders,
-      showDeleteOption: false, 
     );
   }
 }
