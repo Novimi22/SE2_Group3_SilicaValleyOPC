@@ -707,7 +707,7 @@ class _UpdateOrderScreenState extends State<UpdateOrderScreen> {
                                       1: FlexColumnWidth(0.8), // Qty
                                       2: FlexColumnWidth(0.8), // UoM
                                       3: FlexColumnWidth(1.2), // Unit Price
-                                      4: FixedColumnWidth(80), // Actions
+                                      4: IntrinsicColumnWidth(), // Actions
                                     },
                                     defaultVerticalAlignment:
                                         TableCellVerticalAlignment.middle,
@@ -787,7 +787,7 @@ class _UpdateOrderScreenState extends State<UpdateOrderScreen> {
                                             3: FlexColumnWidth(
                                               1.2,
                                             ), // Unit Price
-                                            4: FixedColumnWidth(80), // Actions
+                                            4: IntrinsicColumnWidth(), // Actions
                                           },
                                           defaultVerticalAlignment:
                                               TableCellVerticalAlignment.middle,
