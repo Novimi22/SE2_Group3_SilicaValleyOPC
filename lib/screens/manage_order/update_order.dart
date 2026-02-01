@@ -1025,12 +1025,11 @@ class _UpdateOrderScreenState extends State<UpdateOrderScreen> {
                                                             EdgeInsets.zero,
                                                         constraints:
                                                             const BoxConstraints(
-                                                              minWidth: 24,
-                                                              minHeight: 24,
+                                                              minWidth: 20,
+                                                              minHeight: 20,
                                                             ),
+                                                            visualDensity: VisualDensity.compact,
                                                       ),
-
-                                                      const SizedBox(width: 4),
 
                                                       // Trash bin icon (always enabled)
                                                       IconButton(
@@ -1047,9 +1046,10 @@ class _UpdateOrderScreenState extends State<UpdateOrderScreen> {
                                                             EdgeInsets.zero,
                                                         constraints:
                                                             const BoxConstraints(
-                                                              minWidth: 24,
-                                                              minHeight: 24,
+                                                              minWidth: 20,
+                                                              minHeight: 20,
                                                             ),
+                                                            visualDensity: VisualDensity.compact,
                                                       ),
                                                     ],
                                                   ),
